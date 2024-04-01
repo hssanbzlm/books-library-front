@@ -6,13 +6,11 @@ import { NotFoundComponent } from './not-found/not-found.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'user', pathMatch: 'full' },
+  { path: 'auth', component: SigninComponent },
   {
     path: 'user',
     component: HomeComponent,
-    children: [
-      { path: '', component: BookListComponent },
-      { path: 'signin', component: SigninComponent },
-    ],
+    children: [{ path: '', component: BookListComponent }],
   },
   {
     path: 'admin',
