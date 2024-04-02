@@ -6,8 +6,8 @@ import { BookListComponent } from './book-list/book-list.component';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 @NgModule({
-  declarations: [HomeComponent, BookListComponent, NavbarComponent],
-  imports: [CommonModule, RouterModule],
+  declarations: [HomeComponent, BookListComponent],
+  imports: [CommonModule, RouterModule, NavbarComponent],
   exports: [HomeComponent],
 })
 export class UserModule {}
