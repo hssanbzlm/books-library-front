@@ -8,6 +8,8 @@
           class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
           aria-controls="mobile-menu"
           aria-expanded="false"
+          id="mobile-menu-icon"
+          (click)="showMobileMenu()"
         >
           <span class="absolute -inset-0.5"></span>
           <span class="sr-only">Open main menu</span>
@@ -17,7 +19,8 @@
               Menu open: "hidden", Menu closed: "block"
             -->
           <svg
-            class="block h-6 w-6"
+            class="h-6 w-6"
+            [ngClass]="[show ? 'hidden' : 'block']"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
@@ -36,7 +39,8 @@
               Menu open: "block", Menu closed: "hidden"
             -->
           <svg
-            class="hidden h-6 w-6"
+            class="h-6 w-6"
+            [ngClass]="[show ? 'block' : 'hidden']"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
@@ -152,14 +156,6 @@
               class="block px-4 py-2 text-sm text-gray-700"
               role="menuitem"
               tabindex="-1"
-              id="user-menu-item-1"
-              >Settings</a
-            >
-            <a
-              href="#"
-              class="block px-4 py-2 text-sm text-gray-700"
-              role="menuitem"
-              tabindex="-1"
               id="user-menu-item-2"
               >Sign out</a
             >
@@ -170,7 +166,7 @@
   </div>
 
   <!-- Mobile menu, show/hide based on menu state. -->
-  <div class="sm:hidden" id="mobile-menu">
+  <div class="sm:hidden" id="mobile-menu" *ngIf="show">
     <div class="space-y-1 px-2 pb-3 pt-2">
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
       <a
@@ -183,16 +179,6 @@
         href="#"
         class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
         >Team</a
-      >
-      <a
-        href="#"
-        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-        >Projects</a
-      >
-      <a
-        href="#"
-        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-        >Calendar</a
       >
     </div>
   </div>
