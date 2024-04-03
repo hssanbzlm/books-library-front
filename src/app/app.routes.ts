@@ -9,7 +9,7 @@ export const routes: Routes = [
   { path: '', redirectTo: 'user', pathMatch: 'full' },
   { path: 'auth', component: SigninComponent },
   {
-    path: 'user',
+    path: 'book-list',
     component: HomeComponent,
     children: [
       { path: '', component: BookListComponent },
