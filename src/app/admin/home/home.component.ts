@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
   navItems = [
-    { title: 'Dashboard', path: '' },
-    { title: 'Borrow', path: '' },
-    { title: 'Books', path: '' },
-    { title: 'Users', path: '' },
+    { title: 'Dashboard', path: '/admin' },
+    { title: 'Borrow', path: './borrow-list' },
+    { title: 'Books', path: './book-list' },
+    { title: 'Users', path: './user-list' },
   ];
 }

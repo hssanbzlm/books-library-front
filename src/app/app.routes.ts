@@ -4,16 +4,19 @@ import { SigninComponent } from './signin/signin.component';
 import { BookListComponent } from './user/book-list/book-list.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { BookDetailsComponent } from './user/book-details/book-details.component';
+import { BorrowHistoryComponent } from './user/borrow-history/borrow-history.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'user', pathMatch: 'full' },
   { path: 'auth', component: SigninComponent },
   {
-    path: 'book-list',
+    path: 'user',
     component: HomeComponent,
     children: [
-      { path: '', component: BookListComponent },
+      { path: '', redirectTo: 'books', pathMatch: 'full' },
+      { path: 'books', component: BookListComponent },
       { path: 'book/:id', component: BookDetailsComponent },
+      { path: 'borrow-list', component: BorrowHistoryComponent },
     ],
   },
   {

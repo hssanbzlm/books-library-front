@@ -5,5 +5,8 @@ import { Component } from '@angular/core';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  navItems = [{ title: 'Books', path: 'book-list' }];
+  navItems = [
+    { title: 'Books', path: 'books' },
+    { title: 'Borrow', path: './borrow-list' },
+  ];
 }
