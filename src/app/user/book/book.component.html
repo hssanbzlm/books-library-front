@@ -1,0 +1,46 @@
+<div
+  class="relative flex-shrink-0 max-w-xs mx-2 mb-6 overflow-hidden bg-yellow-500 rounded-lg shadow-lg cursor-pointer"
+  (click)="toBookDetails()"
+>
+  <svg class="absolute bottom-0 left-0 mb-8" viewBox="0 0 375 283" fill="none">
+    <rect
+      x="159.52"
+      y="175"
+      width="152"
+      height="152"
+      rx="8"
+      transform="rotate(-45 159.52 175)"
+      fill="#f3c06b"
+    ></rect>
+    <rect
+      y="107.48"
+      width="152"
+      height="152"
+      rx="8"
+      transform="rotate(-45 0 107.48)"
+      fill="#f3c06b"
+    ></rect>
+  </svg>
+  <div class="relative flex items-center justify-center px-10 pt-10">
+    <div class="absolute bottom-0 left-0 block w-48 h-48 ml-3 -mb-24"></div>
+    <picture>
+      <source srcSet="/images/object/5.webp" type="image/webp" />
+      <source srcSet="/images/object/5.png" />
+      <img
+        class="relative w-40"
+        src="/images/object/5.png"
+        alt="shopping item"
+      />
+    </picture>
+  </div>
+  <div class="relative px-6 pb-6 mt-6 text-white">
+    <div class="flex justify-between">
+      <span class="block text-xl font-semibold"> Peace Lily </span>
+      <span
+        class="flex items-center px-3 py-2 text-xs font-bold leading-none text-yellow-500 bg-white rounded-full"
+      >
+        Borrow
+      </span>
+    </div>
+  </div>
+</div>

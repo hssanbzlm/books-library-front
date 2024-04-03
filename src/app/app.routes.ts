@@ -3,6 +3,7 @@ import { HomeComponent } from './user/home/home.component';
 import { SigninComponent } from './signin/signin.component';
 import { BookListComponent } from './user/book-list/book-list.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { BookDetailsComponent } from './user/book-details/book-details.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'user', pathMatch: 'full' },
@@ -10,7 +11,10 @@ export const routes: Routes = [
   {
     path: 'user',
     component: HomeComponent,
-    children: [{ path: '', component: BookListComponent }],
+    children: [
+      { path: '', component: BookListComponent },
+      { path: 'book/:id', component: BookDetailsComponent },
+    ],
   },
   {
     path: 'admin',
