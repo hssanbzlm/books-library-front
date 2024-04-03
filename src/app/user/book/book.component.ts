@@ -9,6 +9,6 @@ import { Router } from '@angular/router';
 export class BookComponent {
   constructor(private router: Router) {}
   toBookDetails() {
-    this.router.navigate(['book-list', 'book', 1]);
+    this.router.navigate(['user', 'book', 1]);
   }
 }
