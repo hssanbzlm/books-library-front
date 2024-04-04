@@ -1,5 +1,5 @@
 <div
-  class="relative flex-shrink-0 max-w-xs mx-2 mb-6 overflow-hidden bg-yellow-500 rounded-lg shadow-lg cursor-pointer"
+  class="relative flex-shrink-0 max-w-xs mx-2 mb-6 overflow-hidden bg-gray-800 rounded-lg shadow-lg cursor-pointer"
   (click)="toBookDetails()"
 >
   <svg class="absolute bottom-0 left-0 mb-8" viewBox="0 0 375 283" fill="none">
@@ -10,7 +10,7 @@
       height="152"
       rx="8"
       transform="rotate(-45 159.52 175)"
-      fill="#f3c06b"
+      fill="#FFFFFF"
     ></rect>
     <rect
       y="107.48"
@@ -18,7 +18,7 @@
       height="152"
       rx="8"
       transform="rotate(-45 0 107.48)"
-      fill="#f3c06b"
+      fill="#FFFFFF"
     ></rect>
   </svg>
   <div class="relative flex items-center justify-center px-10 pt-10">
@@ -37,7 +37,8 @@
     <div class="flex justify-between">
       <span class="block text-xl font-semibold"> Peace Lily </span>
       <span
-        class="flex items-center px-3 py-2 text-xs font-bold leading-none text-yellow-500 bg-white rounded-full"
+        (click)="borrow($event)"
+        class="flex items-center px-3 py-2 text-xs font-bold leading-none text-gray-800 bg-white rounded-full"
       >
         Borrow
       </span>

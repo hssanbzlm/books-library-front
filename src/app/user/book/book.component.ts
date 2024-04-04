@@ -11,4 +11,7 @@ export class BookComponent {
   toBookDetails() {
     this.router.navigate(['user', 'book', 1]);
   }
+  borrow(event: Event) {
+    event.stopPropagation();
+  }
 }
