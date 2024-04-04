@@ -8,6 +8,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { BookComponent } from './book/book.component';
 import { BookDetailsComponent } from './book-details/book-details.component';
 import { BorrowHistoryComponent } from './borrow-history/borrow-history.component';
+import { ModalComponent } from '../modal/modal.component';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -16,7 +17,7 @@ import { BorrowHistoryComponent } from './borrow-history/borrow-history.componen
     BookDetailsComponent,
     BorrowHistoryComponent,
   ],
-  imports: [CommonModule, RouterModule, NavbarComponent],
+  imports: [CommonModule, RouterModule, NavbarComponent, ModalComponent],
   exports: [HomeComponent],
 })
 export class UserModule {}

@@ -9,11 +9,18 @@ import { IBook } from '../../interfaces/IBook';
 })
 export class BookComponent {
   @Input() book?: IBook;
+  show = false;
+
   constructor(private router: Router) {}
   toBookDetails() {
     this.router.navigate(['user', 'book', 1]);
   }
   borrow(event: Event) {
-    event.stopPropagation();
+    this.showModal(event);
+  }
+
+  showModal(event?: Event) {
+    event?.stopPropagation();
+    this.show = !this.show;
   }
 }
