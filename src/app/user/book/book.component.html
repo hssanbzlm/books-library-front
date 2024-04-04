@@ -1,5 +1,5 @@
 <div
-  class="relative flex-shrink-0 max-w-xs mx-2 mb-6 overflow-hidden bg-gray-800 rounded-lg shadow-lg cursor-pointer"
+  class="relative flex-shrink-0 flex flex-col justify-between size-[18rem] max-w-xs mx-2 mb-6 overflow-hidden bg-gray-800 rounded-lg shadow-lg cursor-pointer"
   (click)="toBookDetails()"
 >
   <svg class="absolute bottom-0 left-0 mb-8" viewBox="0 0 375 283" fill="none">
@@ -10,7 +10,7 @@
       height="152"
       rx="8"
       transform="rotate(-45 159.52 175)"
-      fill="#FFFFFF"
+      fill="#E4E4E4"
     ></rect>
     <rect
       y="107.48"
@@ -18,27 +18,24 @@
       height="152"
       rx="8"
       transform="rotate(-45 0 107.48)"
-      fill="#FFFFFF"
+      fill="#E4E4E4"
     ></rect>
   </svg>
-  <div class="relative flex items-center justify-center px-10 pt-10">
+  <div class="relative flex items-center justify-center pt-10">
     <div class="absolute bottom-0 left-0 block w-48 h-48 ml-3 -mb-24"></div>
-    <picture>
-      <source srcSet="/images/object/5.webp" type="image/webp" />
-      <source srcSet="/images/object/5.png" />
-      <img
-        class="relative w-40"
-        src="/images/object/5.png"
-        alt="shopping item"
-      />
-    </picture>
+    <img
+      class="relative w-40 rounded max-w-[140px] max-h-[140px]"
+      [src]="book?.coverPath"
+    />
   </div>
   <div class="relative px-6 pb-6 mt-6 text-white">
     <div class="flex justify-between">
-      <span class="block text-xl font-semibold"> Peace Lily </span>
+      <span class="block text-base font-semibold px-1">
+        {{ book?.title }}
+      </span>
       <span
         (click)="borrow($event)"
-        class="flex items-center px-3 py-2 text-xs font-bold leading-none text-gray-800 bg-white rounded-full"
+        class="flex items-center px-3 py-2 text-xs font-bold leading-none hover:text-gray-800 border hover:border-gray-800/50 hover:bg-white bg-gray-800 text-white border-white rounded"
       >
         Borrow
       </span>
