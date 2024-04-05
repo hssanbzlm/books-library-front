@@ -18,6 +18,5 @@ import { ModalComponent } from '../modal/modal.component';
     BorrowHistoryComponent,
   ],
   imports: [CommonModule, RouterModule, NavbarComponent, ModalComponent],
-  exports: [HomeComponent],
 })
 export class UserModule {}
