@@ -14,7 +14,7 @@ export class BookService {
       authors: ['Hssan Boulzima'],
       coverPath: 'https://placehold.co/600x400',
       category: 'Adventure',
-      quantiy: 50,
+      quantity: 50,
       year: 2003,
     },
     {
@@ -25,7 +25,7 @@ export class BookService {
       authors: ['Elsa godart'],
       coverPath: 'https://placehold.co/700x700',
       category: 'Psychology',
-      quantiy: 10,
+      quantity: 10,
       year: 2008,
     },
     {
@@ -36,7 +36,7 @@ export class BookService {
       authors: ['Elsa godart'],
       coverPath: 'https://placehold.co/700x700',
       category: 'Psychology',
-      quantiy: 10,
+      quantity: 10,
       year: 2008,
     },
     {
@@ -47,7 +47,7 @@ export class BookService {
       authors: ['Elsa godart'],
       coverPath: 'https://placehold.co/700x1000',
       category: 'Psychology',
-      quantiy: 10,
+      quantity: 10,
       year: 2008,
     },
     {
@@ -58,7 +58,7 @@ export class BookService {
       authors: ['Elsa godart'],
       coverPath: 'https://placehold.co/700x700',
       category: 'Fantasy',
-      quantiy: 10,
+      quantity: 10,
       year: 2008,
     },
   ];
