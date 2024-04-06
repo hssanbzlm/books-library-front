@@ -1,1 +1,6 @@
-<p>book-list works!</p>
+<app-basic-table
+  [columns]="columns"
+  [data]="data"
+  (add)="onAddBook()"
+  (edit)="onEditBook($event)"
+/>
