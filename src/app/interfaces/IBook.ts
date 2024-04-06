@@ -18,7 +18,7 @@ export interface IBook {
   edition: string;
   year: number;
   category: Category;
-  quantiy: number;
+  quantity: number;
   coverPath: string;
   authors: string[];
 }
