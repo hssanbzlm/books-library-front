@@ -9,7 +9,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './modal.component.css',
 })
 export class ModalComponent {
-  @Input() show!: boolean;
   @Output() dismiss = new EventEmitter();
 
   sendDismiss(e: Event) {

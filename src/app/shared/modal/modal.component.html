@@ -3,7 +3,6 @@
   aria-labelledby="modal-title"
   role="dialog"
   aria-modal="true"
-  *ngIf="show"
   (click)="clickModal($event)"
 >
   <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
@@ -40,11 +39,9 @@
           </span>
         </button>
         <div class="bg-white px-4 pb-4 pt-2 sm:pb-4">
-          <div class="sm:flex sm:items-start">
-            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-              <ng-content select="[modal-title]"></ng-content>
-
-              <div class="mt-2">
+          <div class="sm:flex sm:items-start w-96">
+            <div class="text-center sm:ml-4 sm:mt-0 sm:text-left">
+              <div>
                 <ng-content select="[modal-content]"></ng-content>
               </div>
             </div>

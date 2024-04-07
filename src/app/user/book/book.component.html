@@ -42,7 +42,7 @@
     </div>
   </div>
 
-  <app-modal [show]="show" (dismiss)="showModal()">
+  <app-modal *ngIf="show" (dismiss)="showModal()">
     <ng-container modal-title>
       <h3 class="text-base font-semibold leading-6 text-gray-900">Hey</h3>
     </ng-container>
