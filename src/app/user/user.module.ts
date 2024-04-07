@@ -4,11 +4,11 @@ import { HomeComponent } from './home/home.component';
 
 import { BookListComponent } from './book-list/book-list.component';
 import { RouterModule } from '@angular/router';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { BookComponent } from './book/book.component';
 import { BookDetailsComponent } from './book-details/book-details.component';
 import { BorrowHistoryComponent } from './borrow-history/borrow-history.component';
-import { ModalComponent } from '../modal/modal.component';
+import { ModalComponent } from '../shared/modal/modal.component';
 @NgModule({
   declarations: [
     HomeComponent,

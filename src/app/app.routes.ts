@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './user/home/home.component';
-import { SigninComponent } from './signin/signin.component';
+import { SigninComponent } from './shared/signin/signin.component';
 import { BookListComponent } from './user/book-list/book-list.component';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { BookDetailsComponent } from './user/book-details/book-details.component';
 import { BorrowHistoryComponent } from './user/borrow-history/borrow-history.component';
 

@@ -2,7 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
 import { HomeComponent } from './home/home.component';
-import { SigninComponent } from '../signin/signin.component';
+import { SigninComponent } from '../shared/signin/signin.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { BookListComponent } from './book-list/book-list.component';
 import { BorrowListComponent } from './borrow-list/borrow-list.component';

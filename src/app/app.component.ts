@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SigninComponent } from './signin/signin.component';
+import { SigninComponent } from './shared/signin/signin.component';
 import { UserModule } from './user/user.module';
 
 @Component({
