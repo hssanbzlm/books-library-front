@@ -25,6 +25,7 @@ export class SigninComponent {
     this.errorMessage = '';
     this.authService.signin(this.userEmail, this.userPassword).subscribe({
       next: (response) => {
+        this.authService.setAuthUser(response);
         if (response.admin) this.router.navigateByUrl('admin');
         else this.router.navigateByUrl('user');
       },

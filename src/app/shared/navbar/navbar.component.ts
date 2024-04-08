@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +13,14 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 export class NavbarComponent {
   @Input() navItems: { title: string; path: string }[] = [];
   show = false;
+  constructor(private authService: AuthService, private router: Router) {}
   showMobileMenu() {
     this.show = !this.show;
+  }
+
+  logout() {
+    this.authService.signout().subscribe(() => {
+      this.router.navigateByUrl('auth');
+    });
   }
 }

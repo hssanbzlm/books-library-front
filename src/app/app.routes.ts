@@ -5,6 +5,8 @@ import { BookListComponent } from './user/book-list/book-list.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { BookDetailsComponent } from './user/book-details/book-details.component';
 import { BorrowHistoryComponent } from './user/borrow-history/borrow-history.component';
+import { adminGuard } from './guards/admin.guard';
+import { inject } from '@angular/core';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'user', pathMatch: 'full' },

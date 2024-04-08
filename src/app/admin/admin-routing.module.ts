@@ -6,11 +6,13 @@ import { SigninComponent } from '../shared/signin/signin.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { BookListComponent } from './book-list/book-list.component';
 import { BorrowListComponent } from './borrow-list/borrow-list.component';
+import { adminGuard } from '../guards/admin.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    canActivate: [adminGuard],
     children: [
       { path: '', component: DashboardComponent },
       { path: 'signin', component: SigninComponent },
