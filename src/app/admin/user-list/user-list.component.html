@@ -4,3 +4,20 @@
   (add)="onUserAdd()"
   (edit)="onUserEdit($event)"
 />
+<app-modal *ngIf="showUpdateModal" (dismiss)="toggleUpdateModal()">
+  <ng-container modal-title>
+    <h3 class="text-base font-semibold leading-6 text-gray-900">Update user</h3>
+  </ng-container>
+  <ng-container modal-content>
+    <app-update-user [user]="updateUser" (userUpdate)="handleUpdateUser()" />
+  </ng-container>
+</app-modal>
+
+<app-modal *ngIf="showAddModal" (dismiss)="toggleAddModal()">
+  <ng-container modal-title>
+    <h3 class="text-base font-semibold leading-6 text-gray-900">Add user</h3>
+  </ng-container>
+  <ng-container modal-content>
+    <app-add-user (userAdd)="handleAddUser()" />
+  </ng-container>
+</app-modal>

@@ -1,7 +1,6 @@
 <div class="container max-w-3xl px-4 mx-auto sm:px-8">
   <div class="py-8">
     <div class="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
-      <!-- Add user button at the top left -->
       <div class="mt-4 mb-8 flex justify-start">
         <button
           class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
@@ -25,6 +24,11 @@
                 scope="col"
                 class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200"
               ></th>
+              <th
+                *ngIf="deletable"
+                scope="col"
+                class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200"
+              ></th>
             </tr>
           </thead>
           <tbody>
@@ -44,6 +48,29 @@
                   class="text-indigo-600 hover:text-indigo-900"
                 >
                   Edit
+                </a>
+              </td>
+
+              <td
+                class="px-5 py-5 text-sm bg-white border-b border-gray-200"
+                *ngIf="deletable"
+              >
+                <a
+                  class="text-red-600 hover:text-red-900"
+                  (click)="onDelete(item)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 15.707a1 1 0 011.414 0L10 11.414l3.293 3.293a1 1 0 11-1.414 1.414L10 13.414l-3.293 3.293a1 1 0 01-1.414-1.414L8.586 12 5.293 8.707a1 1 0 111.414-1.414L10 10.586l3.293-3.293a1 1 0 111.414 1.414L11.414 12l3.293 3.293a1 1 0 010 1.414 1 1 0 01-1.414 0L10 13.414 6.707 16.707a1 1 0 01-1.414 0z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
                 </a>
               </td>
             </tr>

@@ -12,6 +12,10 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { AddBookComponent } from './add-book/add-book.component';
 import { UpdateBookComponent } from './update-book/update-book.component';
+import { ModalComponent } from '../shared/modal/modal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DeleteBookComponent } from './delete-book/delete-book.component';
+import { DynamicButtonComponent } from './dynamic-button/dynamic-button.component';
 
 @NgModule({
   declarations: [
@@ -24,12 +28,17 @@ import { UpdateBookComponent } from './update-book/update-book.component';
     UpdateUserComponent,
     AddBookComponent,
     UpdateBookComponent,
+    DeleteBookComponent,
+    DynamicButtonComponent,
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     NavbarComponent,
     BasicTableComponent,
+    ModalComponent,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [HomeComponent],
 })

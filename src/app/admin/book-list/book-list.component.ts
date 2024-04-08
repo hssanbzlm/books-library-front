@@ -8,6 +8,11 @@ import { IBook } from '../../interfaces/IBook';
   styleUrl: './book-list.component.css',
 })
 export class BookListComponent {
+  showAddModal = false;
+  showUpdateModal = false;
+  showDeleteModal = false;
+  updatingBook!: IBook;
+  deletingBook!: IBook;
   columns = [
     { column: 'title', dataKey: 'title' },
     { column: 'category', dataKey: 'category' },
@@ -20,11 +25,35 @@ export class BookListComponent {
     this.data = this.bookService.getBooks();
   }
   onAddBook() {
-    // open modal to add new book
-    console.log('add book');
+    this.toggleAddModal();
   }
   onEditBook(book: IBook) {
-    // open modal to edit book
-    console.log('book ', book);
+    this.updatingBook = book;
+    this.toggleUpdateModal();
+  }
+
+  onDeleteBook(book: IBook) {
+    this.deletingBook = book;
+    this.toggleDeleteModal();
+  }
+  handleAddBook() {
+    this.toggleAddModal();
+  }
+  handleUpdateBook() {
+    this.toggleUpdateModal();
+  }
+  handleDeleteBook() {
+    this.toggleDeleteModal();
+  }
+
+  toggleAddModal() {
+    this.showAddModal = !this.showAddModal;
+  }
+  toggleUpdateModal() {
+    this.showUpdateModal = !this.showUpdateModal;
+  }
+
+  toggleDeleteModal() {
+    this.showDeleteModal = !this.showDeleteModal;
   }
 }

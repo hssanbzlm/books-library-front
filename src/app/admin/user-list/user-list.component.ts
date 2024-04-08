@@ -8,6 +8,9 @@ import { UserService } from '../../services/user.service';
   styleUrl: './user-list.component.css',
 })
 export class UserListComponent {
+  showUpdateModal = false;
+  showAddModal = false;
+  updateUser!: IUser;
   columns = [
     { column: 'name', dataKey: 'name' },
     { column: 'Last name', dataKey: 'lastName' },
@@ -21,11 +24,23 @@ export class UserListComponent {
     this.data = this.userService.getUsers();
   }
   onUserAdd() {
-    //open modal to add a new user
-    console.log('add user');
+    this.toggleAddModal();
   }
   onUserEdit(user: IUser) {
-    // open modal to edit user
-    console.log('user', user);
+    this.toggleUpdateModal();
+    this.updateUser = user;
+  }
+  handleUpdateUser() {
+    this.toggleUpdateModal();
+  }
+  handleAddUser() {
+    this.toggleAddModal();
+  }
+
+  toggleUpdateModal() {
+    this.showUpdateModal = !this.showUpdateModal;
+  }
+  toggleAddModal() {
+    this.showAddModal = !this.showAddModal;
   }
 }

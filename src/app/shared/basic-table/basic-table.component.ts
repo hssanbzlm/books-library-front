@@ -9,11 +9,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './basic-table.component.css',
 })
 export class BasicTableComponent {
+  @Input() deletable = false;
   @Input() columns!: any[];
   @Input() data!: any[];
 
   @Output() add = new EventEmitter();
   @Output() edit = new EventEmitter();
+  @Output() delete = new EventEmitter();
 
   ngOnInit(): void {}
 
@@ -22,5 +24,8 @@ export class BasicTableComponent {
   }
   onEdit(item: any) {
     this.edit.emit(item);
+  }
+  onDelete(item: any) {
+    this.delete.emit(item);
   }
 }

@@ -1,6 +1,25 @@
 <app-basic-table
   [columns]="columns"
   [data]="data"
+  [deletable]="true"
   (add)="onAddBook()"
   (edit)="onEditBook($event)"
+  (delete)="onDeleteBook($event)"
 />
+
+<app-modal *ngIf="showAddModal" (dismiss)="toggleAddModal()">
+  <ng-container modal-content>
+    <app-add-book (bookAdd)="handleAddBook()" />
+  </ng-container>
+</app-modal>
+<app-modal *ngIf="showUpdateModal" (dismiss)="toggleUpdateModal()">
+  <ng-container modal-content>
+    <app-update-book (bookUpdate)="handleUpdateBook()" [book]="updatingBook" />
+  </ng-container>
+</app-modal>
+
+<app-modal *ngIf="showDeleteModal" (dismiss)="toggleDeleteModal()">
+  <ng-container modal-content>
+    <app-delete-book [book]="deletingBook" (delete)="handleDeleteBook()" />
+  </ng-container>
+</app-modal>

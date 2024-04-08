@@ -1,1 +1,174 @@
-<p>update-book works!</p>
+<div class="w-96 mx-auto">
+  <div class="bg-white rounded px-8 pt-6 pb-8 mb-4">
+    <h2 class="text-2xl font-semibold mb-4">Add Book</h2>
+    <form [formGroup]="bookForm" (ngSubmit)="updateBook()">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="title"
+          >Title</label
+        >
+        <input
+          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="title"
+          formControlName="title"
+          type="text"
+          placeholder="Title"
+        />
+        <div
+          *ngIf="
+            bookForm.get('title')?.invalid && bookForm.get('title')?.touched
+          "
+          class="text-red-500 text-xs mt-1"
+        >
+          Title is required
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label
+          class="block text-gray-700 text-sm font-bold mb-2"
+          for="numberOfPages"
+          >Number of Pages</label
+        >
+        <input
+          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="numberOfPages"
+          formControlName="numberOfPages"
+          type="number"
+          placeholder="Number of Pages"
+        />
+        <div
+          *ngIf="
+            bookForm.get('numberOfPages')?.invalid &&
+            bookForm.get('numberOfPages')?.touched
+          "
+          class="text-red-500 text-xs mt-1"
+        >
+          Number of Pages is required
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="edition"
+          >Edition</label
+        >
+        <input
+          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="edition"
+          formControlName="edition"
+          type="text"
+          placeholder="Edition"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="year"
+          >Year</label
+        >
+        <input
+          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="year"
+          formControlName="year"
+          type="number"
+          placeholder="Year"
+        />
+        <div
+          *ngIf="bookForm.get('year')?.invalid && bookForm.get('year')?.touched"
+          class="text-red-500 text-xs mt-1"
+        >
+          Year is required
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="category"
+          >Category</label
+        >
+        <select
+          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="category"
+          formControlName="category"
+        >
+          <option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="quantity"
+          >Quantity</label
+        >
+        <input
+          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="quantity"
+          formControlName="quantity"
+          type="number"
+          placeholder="Quantity"
+        />
+        <div
+          *ngIf="
+            bookForm.get('quantity')?.invalid &&
+            bookForm.get('quantity')?.touched
+          "
+          class="text-red-500 text-xs mt-1"
+        >
+          Quantity must be greater than 0
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label
+          class="block text-gray-700 text-sm font-bold mb-2"
+          for="coverPath"
+          >Cover Path</label
+        >
+        <input
+          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="coverPath"
+          formControlName="coverPath"
+          type="file"
+          accept="image/*"
+        />
+        <div
+          *ngIf="
+            bookForm.get('coverPath')?.invalid &&
+            bookForm.get('coverPath')?.touched
+          "
+          class="text-red-500 text-xs mt-1"
+        >
+          Cover Path is required and must be an image
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="authors"
+          >Authors</label
+        >
+        <input
+          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="authors"
+          formControlName="authors"
+          type="text"
+          placeholder="Authors"
+        />
+        <div
+          *ngIf="
+            bookForm.get('authors')?.invalid && bookForm.get('authors')?.touched
+          "
+          class="text-red-500 text-xs mt-1"
+        >
+          Authors are required
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <app-dynamic-button
+          [isDisabled]="bookForm.invalid"
+          [label]="'Update'"
+          [waitingLabel]="'Updating...'"
+          [isWaiting]="updating"
+        />
+      </div>
+    </form>
+  </div>
+</div>
