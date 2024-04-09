@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
   selector: 'app-signin',
   standalone: true,
   imports: [FormsModule, HttpClientModule, CommonModule],
-  providers: [{ provide: AuthService }],
   templateUrl: './signin.component.html',
   styleUrl: './signin.component.css',
 })
