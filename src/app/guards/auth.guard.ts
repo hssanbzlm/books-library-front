@@ -9,7 +9,7 @@ export const authGuard = () => {
   return authService.whoami().pipe(
     take(1),
     map((user) => {
-      if (user && user.active && !user.admin) return true;
+      if (user && user.active) return true;
       return false;
     }),
     catchError((err) => {
