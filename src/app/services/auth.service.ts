@@ -42,4 +42,8 @@ export class AuthService {
   setAuthUser(user: IUser | null) {
     this.$user.next(user);
   }
+
+  getAuthListener() {
+    return this.$user;
+  }
 }

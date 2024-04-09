@@ -7,6 +7,7 @@ import { BookDetailsComponent } from './user/book-details/book-details.component
 import { BorrowHistoryComponent } from './user/borrow-history/borrow-history.component';
 import { adminGuard } from './guards/admin.guard';
 import { inject } from '@angular/core';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'user', pathMatch: 'full' },
@@ -18,7 +19,11 @@ export const routes: Routes = [
       { path: '', redirectTo: 'books', pathMatch: 'full' },
       { path: 'books', component: BookListComponent },
       { path: 'book/:id', component: BookDetailsComponent },
-      { path: 'borrow-list', component: BorrowHistoryComponent },
+      {
+        path: 'borrow-list',
+        component: BorrowHistoryComponent,
+        canActivate: [authGuard],
+      },
     ],
   },
   {
