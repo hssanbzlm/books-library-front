@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Category, IBook } from '../../interfaces/IBook';
+import { Category } from '../../interfaces/IBook';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({

@@ -16,7 +16,6 @@ import { ModalComponent } from '../shared/modal/modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeleteBookComponent } from './delete-book/delete-book.component';
 import { DynamicButtonComponent } from './dynamic-button/dynamic-button.component';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
