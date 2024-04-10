@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { UserStatusPipe } from '../../user-status.pipe';
 
 @Component({
   selector: 'app-basic-table',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, UserStatusPipe],
   templateUrl: './basic-table.component.html',
   styleUrl: './basic-table.component.css',
 })
