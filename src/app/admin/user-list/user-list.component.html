@@ -1,9 +1,11 @@
-<app-basic-table
-  [data]="data"
-  [columns]="columns"
-  (add)="onUserAdd()"
-  (edit)="onUserEdit($event)"
-/>
+<div *ngIf="users$ | async as userList">
+  <app-basic-table
+    [data]="userList"
+    [columns]="columns"
+    (add)="onUserAdd()"
+    (edit)="onUserEdit($event)"
+  />
+</div>
 <app-modal *ngIf="showUpdateModal" (dismiss)="toggleUpdateModal()">
   <ng-container modal-title>
     <h3 class="text-base font-semibold leading-6 text-gray-900">Update user</h3>

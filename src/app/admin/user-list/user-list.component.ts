@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { IUser } from '../../interfaces/IUser';
 import { UserService } from '../../services/user.service';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as UsersActionsTypes from '../../store/user/users.actions';
+import { UsersStateShape } from '../../store/user/users.reducer';
 
 @Component({
   selector: 'app-user-list',
@@ -17,11 +21,12 @@ export class UserListComponent {
     { column: 'email', dataKey: 'email' },
     { column: 'active', dataKey: 'active' },
   ];
-  data!: Partial<IUser>[];
-
-  constructor(private userService: UserService) {}
+  users$: Observable<IUser[]> = this.store.select(
+    (state) => state.users.userList
+  );
+  constructor(private store: Store<{ users: UsersStateShape }>) {}
   ngOnInit(): void {
-    this.data = this.userService.getUsers();
+    this.store.dispatch(UsersActionsTypes.init());
   }
   onUserAdd() {
     this.toggleAddModal();
