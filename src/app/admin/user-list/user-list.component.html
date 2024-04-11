@@ -1,9 +1,11 @@
 <div *ngIf="users$ | async as userList">
   <app-basic-table
     [data]="userList"
+    [deletable]="true"
     [columns]="columns"
     (add)="onUserAdd()"
     (edit)="onUserEdit($event)"
+    (delete)="onUserDelete($event)"
   />
 </div>
 <app-modal *ngIf="showUpdateModal" (dismiss)="toggleUpdateModal()">
@@ -21,5 +23,11 @@
   </ng-container>
   <ng-container modal-content>
     <app-add-user (userAdd)="handleAddUser()" />
+  </ng-container>
+</app-modal>
+
+<app-modal *ngIf="showDeleteModal" (dismiss)="toggleDeleteModal()">
+  <ng-container modal-content>
+    <app-delete-user [user]="deleteUser" (delete)="handleDeleteUser()" />
   </ng-container>
 </app-modal>

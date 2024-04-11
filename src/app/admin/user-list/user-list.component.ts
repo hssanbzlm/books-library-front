@@ -14,7 +14,9 @@ import { UsersStateShape } from '../../store/user/users.reducer';
 export class UserListComponent {
   showUpdateModal = false;
   showAddModal = false;
+  showDeleteModal = false;
   updateUser!: IUser;
+  deleteUser!: IUser;
   columns = [
     { column: 'name', dataKey: 'name' },
     { column: 'Last name', dataKey: 'lastName' },
@@ -35,11 +37,18 @@ export class UserListComponent {
     this.toggleUpdateModal();
     this.updateUser = user;
   }
+  onUserDelete(user: IUser) {
+    this.toggleAddModal();
+    this.deleteUser = user;
+  }
   handleUpdateUser() {
     this.toggleUpdateModal();
   }
   handleAddUser() {
     this.toggleAddModal();
+  }
+  handleDeleteUser() {
+    this.toggleDeleteModal();
   }
 
   toggleUpdateModal() {
@@ -47,5 +56,8 @@ export class UserListComponent {
   }
   toggleAddModal() {
     this.showAddModal = !this.showAddModal;
+  }
+  toggleDeleteModal() {
+    this.showDeleteModal = !this.showDeleteModal;
   }
 }

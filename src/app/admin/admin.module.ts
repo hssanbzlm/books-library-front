@@ -16,6 +16,7 @@ import { ModalComponent } from '../shared/modal/modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeleteBookComponent } from './delete-book/delete-book.component';
 import { DynamicButtonComponent } from './dynamic-button/dynamic-button.component';
+import { DeleteUserComponent } from './delete-user/delete-user.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { DynamicButtonComponent } from './dynamic-button/dynamic-button.componen
     UpdateBookComponent,
     DeleteBookComponent,
     DynamicButtonComponent,
+    DeleteUserComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,9 @@
+<p>Are you sure you want to delete {{ user.name }} {{ user.lastName }} ?</p>
+
+<app-dynamic-button
+  (clicked)="onDelete()"
+  [classes]="'mt-5'"
+  [label]="'Delete'"
+  [waitingLabel]="'Deleting'"
+  [isWaiting]="deleting"
+/>
