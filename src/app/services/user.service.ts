@@ -15,4 +15,9 @@ export class UserService {
   removeUser(id: number) {
     return this.http.delete(`${usersUrl}/${id}`, { withCredentials: true });
   }
+  updateUserActivity(id: number, userActivity: { active: boolean }) {
+    return this.http.patch(`${usersUrl}/update-activity/${id}`, userActivity, {
+      withCredentials: true,
+    });
+  }
 }

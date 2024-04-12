@@ -6,6 +6,7 @@ import {
   initSuccess,
   remove,
   removeError,
+  updateActivity,
 } from './users.actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -31,6 +32,25 @@ export class UsersEffects {
           map(() => ({ type: '[User] Remove success', payload })),
           catchError(() => of({ type: '[User] Remove error' }))
         );
+      })
+    )
+  );
+
+  updateUserActivity$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateActivity),
+      mergeMap(({ payload }) => {
+        return this.usersService
+          .updateUserActivity(payload.userId, {
+            active: payload.activity,
+          })
+          .pipe(
+            map(() => ({
+              type: '[User] Update activity success',
+              payload,
+            })),
+            catchError(() => of({ type: '[User] Update activity error' }))
+          );
       })
     )
   );

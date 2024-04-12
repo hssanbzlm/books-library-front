@@ -20,5 +20,15 @@ export const removeSuccess = createAction(
 );
 export const removeError = createAction('[User] Remove error');
 
+export const updateActivity = createAction(
+  '[User] Update activity',
+  props<{ payload: { userId: number; activity: boolean } }>()
+);
+export const updateActivitySuccess = createAction(
+  '[User] Update activity success',
+  props<{ payload: { userId: number; activity: boolean } }>()
+);
+export const updateActivityError = createAction('[User] Update activity error');
+
 export const add = createAction('[User] Add');
 export const update = createAction('[User] Update');

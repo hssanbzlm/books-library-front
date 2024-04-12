@@ -50,5 +50,27 @@ export const userReducer = createReducer(
     ...state,
     loading: false,
     error: 'Error while removing the resource',
+  })),
+
+  on(UsersActionsTypes.updateActivity, (state) => ({
+    ...state,
+    error: null,
+    loading: true,
+  })),
+
+  on(UsersActionsTypes.updateActivitySuccess, (state, { payload }) => {
+    return {
+      ...state,
+      loading: false,
+      userList: state.userList.map((user) =>
+        user.id == payload.userId ? { ...user, active: payload.activity } : user
+      ),
+    };
+  }),
+
+  on(UsersActionsTypes.updateActivityError, (state) => ({
+    ...state,
+    loading: false,
+    error: 'Error while updating this user',
   }))
 );

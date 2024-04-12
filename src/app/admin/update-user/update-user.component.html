@@ -14,6 +14,7 @@
         <option [ngValue]="false">Inactive</option>
       </select>
     </div>
+    <p *ngIf="confirmUpdate && !waiting && error">{{ error }}</p>
     <div class="flex items-center justify-between">
       <app-dynamic-button
         [isDisabled]="user.active == newUserValue.active"
