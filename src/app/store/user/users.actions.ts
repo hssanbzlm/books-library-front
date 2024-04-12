@@ -10,5 +10,15 @@ export const initError = createAction(
   props<{ payload: string }>()
 );
 
+export const remove = createAction(
+  '[User] Remove',
+  props<{ payload: number }>()
+);
+export const removeSuccess = createAction(
+  '[User] Remove success',
+  props<{ payload: number }>()
+);
+export const removeError = createAction('[User] Remove error');
+
 export const add = createAction('[User] Add');
 export const update = createAction('[User] Update');

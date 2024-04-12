@@ -38,7 +38,7 @@ export class UserListComponent {
     this.updateUser = user;
   }
   onUserDelete(user: IUser) {
-    this.toggleAddModal();
+    this.toggleDeleteModal();
     this.deleteUser = user;
   }
   handleUpdateUser() {

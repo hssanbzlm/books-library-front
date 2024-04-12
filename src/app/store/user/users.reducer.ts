@@ -30,5 +30,25 @@ export const userReducer = createReducer(
     ...state,
     loading: false,
     error: payload,
+  })),
+
+  on(UsersActionsTypes.remove, (state) => ({
+    ...state,
+    error: null,
+    loading: true,
+  })),
+
+  on(UsersActionsTypes.removeSuccess, (state, { payload }) => {
+    return {
+      ...state,
+      loading: false,
+      userList: state.userList.filter((user) => user.id != payload),
+    };
+  }),
+
+  on(UsersActionsTypes.removeError, (state) => ({
+    ...state,
+    loading: false,
+    error: 'Error while removing the resource',
   }))
 );

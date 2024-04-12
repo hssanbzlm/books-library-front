@@ -1,9 +1,11 @@
 <p>Are you sure you want to delete {{ user.name }} {{ user.lastName }} ?</p>
 
+<p *ngIf="confirmDelete && !waiting && error">{{ error }}</p>
+
 <app-dynamic-button
   (clicked)="onDelete()"
   [classes]="'mt-5'"
   [label]="'Delete'"
   [waitingLabel]="'Deleting'"
-  [isWaiting]="deleting"
+  [isWaiting]="waiting"
 />

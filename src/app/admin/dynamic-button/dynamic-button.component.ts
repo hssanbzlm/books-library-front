@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './dynamic-button.component.css',
 })
 export class DynamicButtonComponent {
-  @Input() isWaiting!: boolean;
+  @Input() isWaiting!: boolean | null;
   @Input() isDisabled!: boolean;
   @Input() label!: string;
   @Input() classes?: string;

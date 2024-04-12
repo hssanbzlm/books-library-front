@@ -12,4 +12,7 @@ export class UserService {
   getUsers() {
     return this.http.get<IUser[]>(usersUrl, { withCredentials: true });
   }
+  removeUser(id: number) {
+    return this.http.delete(`${usersUrl}/${id}`, { withCredentials: true });
+  }
 }
