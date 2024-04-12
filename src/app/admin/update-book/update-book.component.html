@@ -161,6 +161,8 @@
         </div>
       </div>
 
+      <p *ngIf="!updating && confirmUpdate && error">{{ error }}</p>
+
       <div class="flex items-center justify-between">
         <app-dynamic-button
           [isDisabled]="bookForm.invalid"

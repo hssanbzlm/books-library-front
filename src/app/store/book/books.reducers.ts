@@ -56,5 +56,29 @@ export const bookReducer = createReducer(
       loading: false,
       error: payload,
     };
+  }),
+  on(BookActionsTypes.update, (state) => {
+    return {
+      ...state,
+      loading: true,
+      error: null,
+    };
+  }),
+  on(BookActionsTypes.updateSuccess, (state, { book }) => {
+    return {
+      loading: false,
+      error: null,
+      bookList: state.bookList.map((prevBook) => {
+        if (prevBook.id == book.id) return book;
+        return prevBook;
+      }),
+    };
+  }),
+  on(BookActionsTypes.updateError, (state, { payload }) => {
+    return {
+      ...state,
+      loading: false,
+      error: payload,
+    };
   })
 );

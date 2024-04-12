@@ -20,3 +20,18 @@ export const addError = createAction(
   '[Book] Add error',
   props<{ payload: string }>()
 );
+
+export const update = createAction(
+  '[Book] Update',
+  props<{ book: FormData; id: number }>()
+);
+
+export const updateSuccess = createAction(
+  '[Book] Update success',
+  props<{ book: IBook }>()
+);
+
+export const updateError = createAction(
+  '[Book] Update error',
+  props<{ payload: string }>()
+);

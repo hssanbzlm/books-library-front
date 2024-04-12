@@ -11,6 +11,9 @@ import { Store } from '@ngrx/store';
 })
 export class UpdateBookComponent {
   updating = false;
+  error: null | string = null;
+  confirmUpdate = false;
+  bookState$ = this.store.select(({ appState }) => appState.books);
   @Input() book!: IBook;
   updatingBook!: IBook;
   @Output() bookUpdate = new EventEmitter();
@@ -48,16 +51,34 @@ export class UpdateBookComponent {
       coverPath: ['', [Validators.required]],
       authors: [this.updatingBook.authors, Validators.required],
     });
+
+    this.bookState$.subscribe((bookState) => {
+      this.updating = bookState.loading;
+      this.error = bookState.error;
+      if (!this.updating && !this.error && this.confirmUpdate)
+        this.bookUpdate.emit();
+    });
   }
 
   updateBook() {
     if (this.bookForm.valid) {
-      this.updating = true;
-      console.log(this.bookForm.value);
-      setTimeout(() => {
-        this.bookUpdate.emit();
-      }, 5000);
-    } else {
+      this.confirmUpdate = true;
+      const formData = new FormData();
+      formData.append('title', this.bookForm.get('title')!.value);
+      formData.append(
+        'numberOfPages',
+        this.bookForm.get('numberOfPages')!.value
+      );
+      formData.append('edition', this.bookForm.get('edition')?.value);
+      formData.append('year', this.bookForm.get('year')!.value);
+      formData.append('category', this.bookForm.get('category')!.value);
+      formData.append('quantity', this.bookForm.get('quantity')!.value);
+      formData.append('authors[]', this.bookForm.get('authors')!.value);
+      this.store.dispatch({
+        type: '[Book] Update',
+        book: formData,
+        id: this.book.id,
+      });
     }
   }
 }

@@ -16,4 +16,10 @@ export class BookService {
   addBook(book: FormData) {
     return this.http.post<IBook>(booksUrl, book, { withCredentials: true });
   }
+
+  updateBook(id: number, book: FormData) {
+    return this.http.patch<IBook>(`${booksUrl}/${id}`, book, {
+      withCredentials: true,
+    });
+  }
 }

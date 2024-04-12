@@ -39,5 +39,22 @@ export class BooksEffects {
     )
   );
 
+  updateBook$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BooksActionsTypes.update),
+      mergeMap(({ book, id }) => {
+        return this.bookService.updateBook(id, book).pipe(
+          map((book) => ({ type: '[Book] Update success', book })),
+          catchError(() =>
+            of({
+              type: '[Book] Update error',
+              payload: 'Error updating this book',
+            })
+          )
+        );
+      })
+    )
+  );
+
   constructor(private actions$: Actions, private bookService: BookService) {}
 }
