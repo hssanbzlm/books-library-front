@@ -35,5 +35,26 @@ export const bookReducer = createReducer(
       loading: false,
       error: payload,
     };
+  }),
+  on(BookActionsTypes.add, (state) => {
+    return {
+      ...state,
+      loading: true,
+      error: null,
+    };
+  }),
+  on(BookActionsTypes.addSuccess, (state, { book }) => {
+    return {
+      loading: false,
+      error: null,
+      bookList: [...state.bookList, book],
+    };
+  }),
+  on(BookActionsTypes.addError, (state, { payload }) => {
+    return {
+      ...state,
+      loading: false,
+      error: payload,
+    };
   })
 );

@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Category, IBook } from '../../interfaces/IBook';
+import { AppStateShape } from '../../store';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-update-book',
@@ -27,7 +29,10 @@ export class UpdateBookComponent {
     'Science',
     'N/A',
   ];
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<{ appState: AppStateShape }>
+  ) {}
   ngOnInit(): void {
     this.updatingBook = { ...this.book };
     this.bookForm = this.fb.group({

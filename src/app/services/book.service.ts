@@ -12,4 +12,8 @@ export class BookService {
   getBooks() {
     return this.http.get<IBook[]>(booksUrl, { withCredentials: true });
   }
+
+  addBook(book: FormData) {
+    return this.http.post<IBook>(booksUrl, book, { withCredentials: true });
+  }
 }

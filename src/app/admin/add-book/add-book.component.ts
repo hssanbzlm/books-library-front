@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Category } from '../../interfaces/IBook';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AppStateShape } from '../../store';
 
 @Component({
   selector: 'app-add-book',
@@ -9,8 +11,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AddBookComponent {
   adding = false;
+  error: null | string = null;
+  confirmAdd = false;
+  bookState$ = this.store.select(({ appState }) => appState.books);
   @Output() bookAdd = new EventEmitter();
   bookForm!: FormGroup;
+  coverImg!: File;
   categories: Category[] = [
     'Horror',
     'Thriller',
@@ -25,7 +31,10 @@ export class AddBookComponent {
     'Science',
     'N/A',
   ];
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<{ appState: AppStateShape }>
+  ) {}
   ngOnInit(): void {
     this.bookForm = this.fb.group({
       title: ['', Validators.required],
@@ -37,16 +46,35 @@ export class AddBookComponent {
       coverPath: ['', [Validators.required]],
       authors: ['', Validators.required],
     });
+    this.bookState$.subscribe((bookState) => {
+      this.adding = bookState.loading;
+      this.error = bookState.error;
+      if (!this.adding && !this.error && this.confirmAdd) this.bookAdd.emit();
+    });
+  }
+
+  onFileSelect(event: any) {
+    if (event.target.files.length > 0) {
+      this.coverImg = event.target.files[0];
+    }
   }
 
   addBook() {
     if (this.bookForm.valid) {
-      this.adding = true;
-      console.log(this.bookForm.value);
-      setTimeout(() => {
-        this.bookAdd.emit();
-      }, 5000);
-    } else {
+      this.confirmAdd = true;
+      const formData = new FormData();
+      formData.append('title', this.bookForm.get('title')!.value);
+      formData.append(
+        'numberOfPages',
+        this.bookForm.get('numberOfPages')!.value
+      );
+      formData.append('edition', this.bookForm.get('edition')?.value);
+      formData.append('year', this.bookForm.get('year')!.value);
+      formData.append('category', this.bookForm.get('category')!.value);
+      formData.append('quantity', this.bookForm.get('quantity')!.value);
+      formData.append('authors[]', this.bookForm.get('authors')!.value);
+      formData.append('cover', this.coverImg);
+      this.store.dispatch({ type: '[Book] Add', book: formData });
     }
   }
 }
