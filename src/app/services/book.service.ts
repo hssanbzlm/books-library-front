@@ -22,4 +22,7 @@ export class BookService {
       withCredentials: true,
     });
   }
+  removeBook(id: number) {
+    return this.http.delete(`${booksUrl}/${id}`, { withCredentials: true });
+  }
 }

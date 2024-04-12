@@ -56,5 +56,17 @@ export class BooksEffects {
     )
   );
 
+  removeUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BooksActionsTypes.remove),
+      mergeMap(({ payload }) => {
+        return this.bookService.removeBook(payload).pipe(
+          map(() => ({ type: '[Book] Remove success', payload })),
+          catchError(() => of({ type: '[Book] Remove error' }))
+        );
+      })
+    )
+  );
+
   constructor(private actions$: Actions, private bookService: BookService) {}
 }

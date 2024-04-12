@@ -35,3 +35,13 @@ export const updateError = createAction(
   '[Book] Update error',
   props<{ payload: string }>()
 );
+
+export const remove = createAction(
+  '[Book] Remove',
+  props<{ payload: number }>()
+);
+export const removeSuccess = createAction(
+  '[Book] Remove success',
+  props<{ payload: number }>()
+);
+export const removeError = createAction('[Book] Remove error');

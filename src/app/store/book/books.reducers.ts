@@ -80,5 +80,24 @@ export const bookReducer = createReducer(
       loading: false,
       error: payload,
     };
-  })
+  }),
+  on(BookActionsTypes.remove, (state) => ({
+    ...state,
+    error: null,
+    loading: true,
+  })),
+
+  on(BookActionsTypes.removeSuccess, (state, { payload }) => {
+    return {
+      error: null,
+      loading: false,
+      bookList: state.bookList.filter((book) => book.id != payload),
+    };
+  }),
+
+  on(BookActionsTypes.removeError, (state) => ({
+    ...state,
+    loading: false,
+    error: 'Error while removing the resource',
+  }))
 );
