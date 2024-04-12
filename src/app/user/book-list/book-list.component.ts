@@ -11,6 +11,6 @@ export class BookListComponent {
   books: IBook[] = [];
   constructor(private bookService: BookService) {}
   ngOnInit(): void {
-    this.books = this.bookService.getBooks();
+    // this.books = this.bookService.getBooks();
   }
 }

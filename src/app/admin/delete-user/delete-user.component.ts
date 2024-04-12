@@ -3,6 +3,7 @@ import { IUser } from '../../interfaces/IUser';
 import { Store } from '@ngrx/store';
 import { UsersStateShape } from '../../store/user/users.reducer';
 import * as UsersActionsTypes from '../../store/user/users.actions';
+import { AppStateShape } from '../../store';
 
 @Component({
   selector: 'app-delete-user',
@@ -10,7 +11,7 @@ import * as UsersActionsTypes from '../../store/user/users.actions';
   styleUrl: './delete-user.component.css',
 })
 export class DeleteUserComponent {
-  users$ = this.store.select((state) => state.users);
+  users$ = this.store.select(({ appState }) => appState.users);
   waiting = false;
   error!: string | null;
   confirmDelete = false;
@@ -18,7 +19,7 @@ export class DeleteUserComponent {
   @Input() user!: IUser;
   @Output() delete = new EventEmitter();
 
-  constructor(private store: Store<{ users: UsersStateShape }>) {}
+  constructor(private store: Store<{ appState: AppStateShape }>) {}
   ngOnInit(): void {
     this.users$.subscribe((userState) => {
       this.waiting = userState.loading;

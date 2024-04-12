@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { BookService } from '../../services/book.service';
 import { IBook } from '../../interfaces/IBook';
+import { Store } from '@ngrx/store';
+import * as BooksActionsTypes from '../../store/book/books.actions';
+import { AppStateShape } from '../../store';
 
 @Component({
   selector: 'app-book-list',
@@ -19,10 +21,11 @@ export class BookListComponent {
     { column: 'pages', dataKey: 'numberOfPages' },
     { column: 'quantity', dataKey: 'quantity' },
   ];
-  data!: Partial<IBook>[];
-  constructor(private bookService: BookService) {}
+  books$ = this.store.select(({ appState }) => appState.books.bookList);
+
+  constructor(private store: Store<{ appState: AppStateShape }>) {}
   ngOnInit(): void {
-    this.data = this.bookService.getBooks();
+    this.store.dispatch(BooksActionsTypes.init());
   }
   onAddBook() {
     this.toggleAddModal();

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IUser } from '../../interfaces/IUser';
 import { UsersStateShape } from '../../store/user/users.reducer';
 import { Store } from '@ngrx/store';
+import { AppStateShape } from '../../store';
 
 @Component({
   selector: 'app-update-user',
@@ -12,12 +13,12 @@ export class UpdateUserComponent {
   @Input() user!: Partial<IUser>;
   newUserValue!: Partial<IUser>;
   @Output() userUpdate = new EventEmitter();
-  users$ = this.store.select((state) => state.users);
+  users$ = this.store.select(({ appState }) => appState.users);
   confirmUpdate = false;
   waiting = false;
   error: null | string = null;
 
-  constructor(private store: Store<{ users: UsersStateShape }>) {}
+  constructor(private store: Store<{ appState: AppStateShape }>) {}
 
   ngOnInit(): void {
     this.newUserValue = { ...this.user };

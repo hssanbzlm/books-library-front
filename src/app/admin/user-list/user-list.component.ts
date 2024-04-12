@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as UsersActionsTypes from '../../store/user/users.actions';
 import { UsersStateShape } from '../../store/user/users.reducer';
+import { AppStateShape } from '../../store';
 
 @Component({
   selector: 'app-user-list',
@@ -24,9 +25,9 @@ export class UserListComponent {
     { column: 'active', dataKey: 'active' },
   ];
   users$: Observable<IUser[]> = this.store.select(
-    (state) => state.users.userList
+    ({ appState }) => appState.users.userList
   );
-  constructor(private store: Store<{ users: UsersStateShape }>) {}
+  constructor(private store: Store<{ appState: AppStateShape }>) {}
   ngOnInit(): void {
     this.store.dispatch(UsersActionsTypes.init());
   }

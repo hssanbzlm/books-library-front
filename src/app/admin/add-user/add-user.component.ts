@@ -3,6 +3,7 @@ import { IUser } from '../../interfaces/IUser';
 import { UsersStateShape } from '../../store/user/users.reducer';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
+import { AppStateShape } from '../../store';
 
 @Component({
   selector: 'app-add-user',
@@ -14,9 +15,9 @@ export class AddUserComponent {
   adding = false;
   error: null | string = null;
   confirmAdding = false;
-  users$ = this.store.select((state) => state.users);
+  users$ = this.store.select(({ appState }) => appState.users);
   @Output() userAdd = new EventEmitter();
-  constructor(private store: Store<{ users: UsersStateShape }>) {}
+  constructor(private store: Store<{ appState: AppStateShape }>) {}
   ngOnInit(): void {
     this.users$.subscribe((userState) => {
       this.adding = userState.loading;
