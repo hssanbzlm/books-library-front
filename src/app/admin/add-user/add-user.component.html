@@ -83,6 +83,8 @@
         </div>
       </div>
 
+      <p *ngIf="confirmAdding && error && !adding">{{ error }}</p>
+
       <div class="flex items-center justify-between">
         <app-dynamic-button
           [isDisabled]="userForm.invalid!"

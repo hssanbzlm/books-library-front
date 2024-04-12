@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IUser } from '../interfaces/IUser';
 import { HttpClient } from '@angular/common/http';
-import { usersUrl } from '../../API/api';
+import { signupUrl, usersUrl } from '../../API/api';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +9,9 @@ import { usersUrl } from '../../API/api';
 export class UserService {
   constructor(private http: HttpClient) {}
 
+  addUser(user: Partial<IUser>) {
+    return this.http.post<IUser>(signupUrl, user, { withCredentials: true });
+  }
   getUsers() {
     return this.http.get<IUser[]>(usersUrl, { withCredentials: true });
   }

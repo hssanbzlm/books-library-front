@@ -72,5 +72,25 @@ export const userReducer = createReducer(
     ...state,
     loading: false,
     error: 'Error while updating this user',
-  }))
+  })),
+
+  on(UsersActionsTypes.add, (state) => ({
+    ...state,
+    error: null,
+    loading: true,
+  })),
+
+  on(UsersActionsTypes.addUserError, (state) => ({
+    ...state,
+    loading: false,
+    error: 'Error while adding this user',
+  })),
+
+  on(UsersActionsTypes.addUserSuccess, (state, { payload }) => {
+    return {
+      ...state,
+      loading: false,
+      userList: [...state.userList, payload],
+    };
+  })
 );

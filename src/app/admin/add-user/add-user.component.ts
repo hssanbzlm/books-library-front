@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { IUser } from '../../interfaces/IUser';
+import { UsersStateShape } from '../../store/user/users.reducer';
+import { Store } from '@ngrx/store';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-add-user',
@@ -9,14 +12,22 @@ import { IUser } from '../../interfaces/IUser';
 export class AddUserComponent {
   newUser: Partial<IUser> = { name: '', lastName: '', email: '' };
   adding = false;
+  error: null | string = null;
+  confirmAdding = false;
+  users$ = this.store.select((state) => state.users);
   @Output() userAdd = new EventEmitter();
-  constructor() {}
-
+  constructor(private store: Store<{ users: UsersStateShape }>) {}
+  ngOnInit(): void {
+    this.users$.subscribe((userState) => {
+      this.adding = userState.loading;
+      this.error = userState.error;
+      if (this.confirmAdding && !this.adding && !this.error) {
+        this.userAdd.emit();
+      }
+    });
+  }
   addUser() {
-    this.adding = true;
-    setTimeout(() => {
-      this.adding = false;
-      this.userAdd.emit();
-    }, 5000);
+    this.confirmAdding = true;
+    this.store.dispatch({ type: '[User] Add', user: { ...this.newUser } });
   }
 }

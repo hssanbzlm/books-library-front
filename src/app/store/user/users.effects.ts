@@ -1,6 +1,7 @@
 import { Actions, act, createEffect, ofType } from '@ngrx/effects';
 import { UserService } from '../../services/user.service';
 import {
+  add,
   init,
   initError,
   initSuccess,
@@ -12,6 +13,23 @@ import { catchError, map, mergeMap, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class UsersEffects {
+  addUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(add),
+      mergeMap(({ user }) => {
+        return this.usersService.addUser(user).pipe(
+          map((user) => ({ type: '[User] Add success', payload: user })),
+          catchError(() =>
+            of({
+              type: '[User] Add error',
+              payload: 'Error while adding this user',
+            })
+          )
+        );
+      })
+    )
+  );
+
   loadUsers$ = createEffect(() =>
     this.actions$.pipe(
       ofType(init),

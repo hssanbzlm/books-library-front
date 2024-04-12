@@ -30,5 +30,18 @@ export const updateActivitySuccess = createAction(
 );
 export const updateActivityError = createAction('[User] Update activity error');
 
-export const add = createAction('[User] Add');
+export const add = createAction(
+  '[User] Add',
+  props<{ user: Partial<IUser> }>()
+);
+
+export const addUserSuccess = createAction(
+  '[User] Add success',
+  props<{ payload: IUser }>()
+);
+export const addUserError = createAction(
+  '[User] Add error',
+  props<{ payload: string }>()
+);
+
 export const update = createAction('[User] Update');
