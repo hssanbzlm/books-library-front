@@ -1,3 +1,5 @@
 <div class="flex flex-wrap items-center justify-center mt-10">
-  <app-book *ngFor="let book of books" [book]="book" />
+  <div *ngIf="loading$ | async">LOADING</div>
+  <div *ngIf="error$ | async">Eroor</div>
+  <app-book *ngFor="let book of books$ | async" [book]="book" />
 </div>

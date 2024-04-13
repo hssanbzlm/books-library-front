@@ -10,7 +10,7 @@ import { IUser } from '../../interfaces/IUser';
   styleUrl: './book.component.css',
 })
 export class BookComponent {
-  @Input() book?: IBook;
+  @Input() book!: IBook;
   show = false;
   isAuth!: IUser | null;
 
@@ -21,7 +21,7 @@ export class BookComponent {
     });
   }
   toBookDetails() {
-    this.router.navigate(['user', 'book', 1]);
+    this.router.navigate(['user', 'book', this.book.id]);
   }
   borrow(event: Event) {
     if (this.isAuth) this.showModal(event);

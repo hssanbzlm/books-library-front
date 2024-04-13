@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { IUser } from '../../interfaces/IUser';
+import { AppStateShape } from '../../store';
+import { Store } from '@ngrx/store';
+import { IBook } from '../../interfaces/IBook';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-book-details',
@@ -11,13 +15,19 @@ import { IUser } from '../../interfaces/IUser';
 export class BookDetailsComponent {
   show = false;
   isAuth!: IUser | null;
+  book$!: Observable<IBook | undefined>;
+  @Input('id') bookId!: string;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private store: Store<{ appState: AppStateShape }>
   ) {}
   ngOnInit(): void {
-    const bookId = this.route.snapshot.paramMap.get('id');
+    this.book$ = this.store.select(({ appState }) =>
+      appState.books.bookList.find((book) => book.id == +this.bookId)
+    );
+
     this.authService.getAuthListener().subscribe((v) => {
       this.isAuth = v;
     });

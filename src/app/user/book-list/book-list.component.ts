@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BookService } from '../../services/book.service';
-import { IBook } from '../../interfaces/IBook';
+import { AppStateShape } from '../../store';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-book-list',
@@ -8,9 +8,9 @@ import { IBook } from '../../interfaces/IBook';
   styleUrl: './book-list.component.css',
 })
 export class BookListComponent {
-  books: IBook[] = [];
-  constructor(private bookService: BookService) {}
-  ngOnInit(): void {
-    // this.books = this.bookService.getBooks();
-  }
+  books$ = this.store.select(({ appState }) => appState.books.bookList);
+  loading$ = this.store.select(({ appState }) => appState.books.loading);
+  error$ = this.store.select(({ appState }) => appState.books.error);
+  constructor(private store: Store<{ appState: AppStateShape }>) {}
+  ngOnInit(): void {}
 }
