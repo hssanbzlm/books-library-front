@@ -120,23 +120,37 @@
         <label
           class="block text-gray-700 text-sm font-bold mb-2"
           for="coverPath"
-          >Cover Path</label
+          >Cover Image</label
         >
-        <input
-          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="coverPath"
-          formControlName="coverPath"
-          type="file"
-          accept="image/*"
-        />
-        <div
-          *ngIf="
-            bookForm.get('coverPath')?.invalid &&
-            bookForm.get('coverPath')?.touched
-          "
-          class="text-red-500 text-xs mt-1"
-        >
-          Cover Path is required and must be an image
+        <div class="flex items-center">
+          <img
+            *ngIf="previewNewCoverImg"
+            [src]="previewNewCoverImg"
+            class="w-24 h-24 mr-4 cursor-pointer"
+            (click)="coverInput.click()"
+          />
+          <img
+            *ngIf="!previewNewCoverImg && updatingBook.coverPath"
+            [src]="updatingBook.coverPath"
+            class="w-24 h-24 mr-4 cursor-pointer"
+            (click)="coverInput.click()"
+          />
+          <input
+            #coverInput
+            type="file"
+            class="hidden"
+            (change)="onFileSelect($event)"
+            accept="image/*"
+          />
+          <div
+            *ngIf="
+              bookForm.get('coverPath')?.invalid &&
+              bookForm.get('coverPath')?.touched
+            "
+            class="text-red-500 text-xs mt-1"
+          >
+            Cover Path is required and must be an image
+          </div>
         </div>
       </div>
 

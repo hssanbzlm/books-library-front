@@ -13,6 +13,8 @@ export class UpdateBookComponent {
   updating = false;
   error: null | string = null;
   confirmUpdate = false;
+  newCoverImg: File | null = null;
+  previewNewCoverImg: string | null = null;
   bookState$ = this.store.select(({ appState }) => appState.books);
   @Input() book!: IBook;
   updatingBook!: IBook;
@@ -48,7 +50,7 @@ export class UpdateBookComponent {
         this.updatingBook.quantity,
         [Validators.required, Validators.min(1)],
       ],
-      coverPath: ['', [Validators.required]],
+      coverPath: [this.updatingBook.coverPath, [Validators.required]],
       authors: [this.updatingBook.authors, Validators.required],
     });
 
@@ -60,6 +62,12 @@ export class UpdateBookComponent {
     });
   }
 
+  onFileSelect(event: any) {
+    if (event.target.files.length > 0) {
+      this.previewNewCoverImg = URL.createObjectURL(event.target.files[0]);
+      this.newCoverImg = event.target.files[0];
+    }
+  }
   updateBook() {
     if (this.bookForm.valid) {
       this.confirmUpdate = true;
@@ -74,6 +82,7 @@ export class UpdateBookComponent {
       formData.append('category', this.bookForm.get('category')!.value);
       formData.append('quantity', this.bookForm.get('quantity')!.value);
       formData.append('authors[]', this.bookForm.get('authors')!.value);
+      if (this.newCoverImg) formData.append('cover', this.newCoverImg);
       this.store.dispatch({
         type: '[Book] Update',
         book: formData,
