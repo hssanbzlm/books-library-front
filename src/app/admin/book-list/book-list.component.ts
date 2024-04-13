@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IBook } from '../../interfaces/IBook';
 import { Store } from '@ngrx/store';
-import * as BooksActionsTypes from '../../store/book/books.actions';
 import { AppStateShape } from '../../store';
 
 @Component({
@@ -24,9 +23,7 @@ export class BookListComponent {
   books$ = this.store.select(({ appState }) => appState.books.bookList);
 
   constructor(private store: Store<{ appState: AppStateShape }>) {}
-  ngOnInit(): void {
-    this.store.dispatch(BooksActionsTypes.init());
-  }
+  ngOnInit(): void {}
   onAddBook() {
     this.toggleAddModal();
   }

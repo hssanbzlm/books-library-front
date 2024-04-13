@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { AppStateShape } from '../../store';
+import * as UsersActionsTypes from '../../store/user/users.actions';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +19,11 @@ export class HomeComponent {
     { title: 'Books', path: './book-list' },
     { title: 'Users', path: './user-list' },
   ];
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private store: Store<{ appState: AppStateShape }>
+  ) {
+    this.store.dispatch(UsersActionsTypes.init());
     this.title = this.getCurrentTitle(this.router.url);
   }
   ngOnInit(): void {

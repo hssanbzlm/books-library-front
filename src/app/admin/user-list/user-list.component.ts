@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { IUser } from '../../interfaces/IUser';
-import { UserService } from '../../services/user.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import * as UsersActionsTypes from '../../store/user/users.actions';
-import { UsersStateShape } from '../../store/user/users.reducer';
 import { AppStateShape } from '../../store';
 
 @Component({
@@ -28,9 +25,7 @@ export class UserListComponent {
     ({ appState }) => appState.users.userList
   );
   constructor(private store: Store<{ appState: AppStateShape }>) {}
-  ngOnInit(): void {
-    this.store.dispatch(UsersActionsTypes.init());
-  }
+  ngOnInit(): void {}
   onUserAdd() {
     this.toggleAddModal();
   }
