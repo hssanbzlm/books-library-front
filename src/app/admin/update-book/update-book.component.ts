@@ -79,9 +79,9 @@ export class UpdateBookComponent {
     const authors = this.bookForm.get('authors') as FormArray;
     authors.push(this.createAuthor());
   }
-  removeAuthor(): void {
+  removeAuthor(index: number): void {
     const authors = this.bookForm.get('authors') as FormArray;
-    authors.removeAt(authors.length - 1);
+    authors.removeAt(index);
   }
   onFileSelect(event: any) {
     if (event.target.files.length > 0) {

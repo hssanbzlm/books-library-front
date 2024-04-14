@@ -158,17 +158,17 @@
             type="text"
             placeholder="Author"
           />
+          <button
+            *ngIf="authorControls.length > 1"
+            type="button"
+            (click)="removeAuthor(i)"
+            class="text-red-500"
+          >
+            -
+          </button>
         </div>
         <button type="button" (click)="addAuthor()" class="text-blue-500">
           +
-        </button>
-        <button
-          *ngIf="authorControls.length > 1"
-          type="button"
-          (click)="removeAuthor()"
-          class="text-red-500"
-        >
-          -
         </button>
       </div>
       <p *ngIf="error && confirmAdd && !adding">
