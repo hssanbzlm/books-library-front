@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Category } from '../../interfaces/IBook';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppStateShape } from '../../store';
 
@@ -44,13 +44,32 @@ export class AddBookComponent {
       category: ['N/A'],
       quantity: ['', [Validators.required, Validators.min(1)]],
       coverPath: ['', [Validators.required]],
-      authors: ['', Validators.required],
+      authors: this.fb.array([this.createAuthor()]),
     });
     this.bookState$.subscribe((bookState) => {
       this.adding = bookState.loading;
       this.error = bookState.error;
       if (!this.adding && !this.error && this.confirmAdd) this.bookAdd.emit();
     });
+  }
+
+  get authorControls() {
+    return (this.bookForm.get('authors') as FormArray).controls;
+  }
+
+  createAuthor(): FormGroup {
+    return this.fb.group({
+      author: ['', Validators.required],
+    });
+  }
+
+  addAuthor(): void {
+    const authors = this.bookForm.get('authors') as FormArray;
+    authors.push(this.createAuthor());
+  }
+  removeAuthor(): void {
+    const authors = this.bookForm.get('authors') as FormArray;
+    authors.removeAt(authors.length - 1);
   }
 
   onFileSelect(event: any) {
@@ -72,7 +91,12 @@ export class AddBookComponent {
       formData.append('year', this.bookForm.get('year')!.value);
       formData.append('category', this.bookForm.get('category')!.value);
       formData.append('quantity', this.bookForm.get('quantity')!.value);
-      formData.append('authors[]', this.bookForm.get('authors')!.value);
+      for (let i = 0; i < this.bookForm.get('authors')!.value.length; i++) {
+        formData.append(
+          'authors[]',
+          this.bookForm.get('authors')!.value[i].author
+        );
+      }
       formData.append('cover', this.coverImg);
       this.store.dispatch({ type: '[Book] Add', book: formData });
     }

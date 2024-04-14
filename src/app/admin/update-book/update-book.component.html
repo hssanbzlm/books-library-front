@@ -154,25 +154,35 @@
         </div>
       </div>
 
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="authors"
-          >Authors</label
-        >
-        <input
-          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="authors"
-          formControlName="authors"
-          type="text"
-          placeholder="Authors"
-        />
+      <div class="mb-4" formArrayName="authors">
         <div
-          *ngIf="
-            bookForm.get('authors')?.invalid && bookForm.get('authors')?.touched
-          "
-          class="text-red-500 text-xs mt-1"
+          *ngFor="let authorControl of authorControls; let i = index"
+          [formGroupName]="i"
         >
-          Authors are required
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            [for]="'author_' + i"
+            >Author {{ i + 1 }}</label
+          >
+          <input
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            [id]="'author_' + i"
+            formControlName="author"
+            type="text"
+            placeholder="Author"
+          />
         </div>
+        <button type="button" (click)="addAuthor()" class="text-blue-500">
+          +
+        </button>
+        <button
+          *ngIf="authorControls.length > 1"
+          type="button"
+          (click)="removeAuthor()"
+          class="text-red-500"
+        >
+          -
+        </button>
       </div>
 
       <p *ngIf="!updating && confirmUpdate && error">{{ error }}</p>

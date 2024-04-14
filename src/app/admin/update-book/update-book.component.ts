@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Category, IBook } from '../../interfaces/IBook';
 import { AppStateShape } from '../../store';
 import { Store } from '@ngrx/store';
@@ -40,6 +40,10 @@ export class UpdateBookComponent {
   ) {}
   ngOnInit(): void {
     this.updatingBook = { ...this.book };
+    const authorsArray = this.updatingBook.authors.map((author) =>
+      this.createAuthor(author)
+    );
+
     this.bookForm = this.fb.group({
       title: [this.updatingBook.title, Validators.required],
       numberOfPages: [this.updatingBook.numberOfPages, [Validators.required]],
@@ -51,7 +55,7 @@ export class UpdateBookComponent {
         [Validators.required, Validators.min(1)],
       ],
       coverPath: [this.updatingBook.coverPath, [Validators.required]],
-      authors: [this.updatingBook.authors, Validators.required],
+      authors: this.fb.array(authorsArray),
     });
 
     this.bookState$.subscribe((bookState) => {
@@ -61,7 +65,24 @@ export class UpdateBookComponent {
         this.bookUpdate.emit();
     });
   }
+  get authorControls() {
+    return (this.bookForm.get('authors') as FormArray).controls;
+  }
 
+  createAuthor(author: string = ''): FormGroup {
+    return this.fb.group({
+      author: [author, Validators.required],
+    });
+  }
+
+  addAuthor(): void {
+    const authors = this.bookForm.get('authors') as FormArray;
+    authors.push(this.createAuthor());
+  }
+  removeAuthor(): void {
+    const authors = this.bookForm.get('authors') as FormArray;
+    authors.removeAt(authors.length - 1);
+  }
   onFileSelect(event: any) {
     if (event.target.files.length > 0) {
       this.previewNewCoverImg = URL.createObjectURL(event.target.files[0]);
@@ -81,7 +102,12 @@ export class UpdateBookComponent {
       formData.append('year', this.bookForm.get('year')!.value);
       formData.append('category', this.bookForm.get('category')!.value);
       formData.append('quantity', this.bookForm.get('quantity')!.value);
-      formData.append('authors[]', this.bookForm.get('authors')!.value);
+      for (let i = 0; i < this.bookForm.get('authors')!.value.length; i++) {
+        formData.append(
+          'authors[]',
+          this.bookForm.get('authors')!.value[i].author
+        );
+      }
       if (this.newCoverImg) formData.append('cover', this.newCoverImg);
       this.store.dispatch({
         type: '[Book] Update',
