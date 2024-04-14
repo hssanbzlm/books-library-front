@@ -25,13 +25,13 @@
     <div class="absolute bottom-0 left-0 block w-48 h-48 ml-3 -mb-24"></div>
     <img
       class="relative w-40 rounded max-w-[140px] max-h-[140px]"
-      [src]="book?.coverPath"
+      [src]="book.coverPath"
     />
   </div>
   <div class="relative px-6 pb-6 mt-6 text-white">
     <div class="flex justify-between">
       <span class="block text-base font-semibold px-1">
-        {{ book?.title }}
+        {{ book.title }}
       </span>
       <span
         (click)="borrow($event)"
