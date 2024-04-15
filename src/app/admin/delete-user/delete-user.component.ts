@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { UsersStateShape } from '../../store/user/users.reducer';
 import * as UsersActionsTypes from '../../store/user/users.actions';
 import { AppStateShape } from '../../store';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-delete-user',
@@ -18,10 +19,11 @@ export class DeleteUserComponent {
 
   @Input() user!: IUser;
   @Output() delete = new EventEmitter();
+  private destroy$ = new Subject();
 
   constructor(private store: Store<{ appState: AppStateShape }>) {}
   ngOnInit(): void {
-    this.users$.subscribe((userState) => {
+    this.users$.pipe(takeUntil(this.destroy$)).subscribe((userState) => {
       this.waiting = userState.loading;
       this.error = userState.error;
       if (!userState.error && !userState.loading && this.confirmDelete)
@@ -32,5 +34,8 @@ export class DeleteUserComponent {
   onDelete() {
     this.store.dispatch(UsersActionsTypes.remove({ payload: this.user.id }));
     this.confirmDelete = true;
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }

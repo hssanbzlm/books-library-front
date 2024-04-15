@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { signinUrl, signoutUrl, whoamiUrl } from '../../API/api';
 import { IUser } from '../interfaces/IUser';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,14 +11,16 @@ export class AuthService {
   private $user: BehaviorSubject<IUser | null> =
     new BehaviorSubject<IUser | null>(null);
   constructor(private http: HttpClient) {
-    this.whoami().subscribe({
-      next: (user) => {
-        this.$user.next(user);
-      },
-      error: () => {
-        this.$user?.next(null);
-      },
-    });
+    this.whoami()
+      .pipe(take(1))
+      .subscribe({
+        next: (user) => {
+          this.$user.next(user);
+        },
+        error: () => {
+          this.$user?.next(null);
+        },
+      });
   }
 
   signin(email: string, password: string) {

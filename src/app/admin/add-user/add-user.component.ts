@@ -2,7 +2,15 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { IUser } from '../../interfaces/IUser';
 import { UsersStateShape } from '../../store/user/users.reducer';
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs';
+import {
+  Subject,
+  Subscription,
+  delay,
+  map,
+  mergeMap,
+  take,
+  takeUntil,
+} from 'rxjs';
 import { AppStateShape } from '../../store';
 
 @Component({
@@ -16,10 +24,11 @@ export class AddUserComponent {
   error: null | string = null;
   confirmAdding = false;
   users$ = this.store.select(({ appState }) => appState.users);
+  private destroy$ = new Subject();
   @Output() userAdd = new EventEmitter();
   constructor(private store: Store<{ appState: AppStateShape }>) {}
   ngOnInit(): void {
-    this.users$.subscribe((userState) => {
+    this.users$.pipe(takeUntil(this.destroy$)).subscribe((userState) => {
       this.adding = userState.loading;
       this.error = userState.error;
       if (this.confirmAdding && !this.adding && !this.error) {
@@ -30,5 +39,8 @@ export class AddUserComponent {
   addUser() {
     this.confirmAdding = true;
     this.store.dispatch({ type: '[User] Add', user: { ...this.newUser } });
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }

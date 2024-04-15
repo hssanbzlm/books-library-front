@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Subject, take } from 'rxjs';
 
 @Component({
   selector: 'app-signin',
@@ -17,20 +18,25 @@ export class SigninComponent {
   readonly userPassword = '';
   submitted = false;
   errorMessage = '';
+  private destroy$ = new Subject();
+
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
     this.submitted = true;
     this.errorMessage = '';
-    this.authService.signin(this.userEmail, this.userPassword).subscribe({
-      next: (response) => {
-        this.authService.setAuthUser(response);
-        if (response.admin) this.router.navigateByUrl('admin');
-        else this.router.navigateByUrl('user');
-      },
-      error: (error) => {
-        this.errorMessage = 'Please verify your credentials';
-      },
-    });
+    this.authService
+      .signin(this.userEmail, this.userPassword)
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => {
+          this.authService.setAuthUser(response);
+          if (response.admin) this.router.navigateByUrl('admin');
+          else this.router.navigateByUrl('user');
+        },
+        error: (error) => {
+          this.errorMessage = 'Please verify your credentials';
+        },
+      });
   }
 }

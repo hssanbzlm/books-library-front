@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Category, IBook } from '../../interfaces/IBook';
 import { AppStateShape } from '../../store';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-update-book',
@@ -16,6 +17,8 @@ export class UpdateBookComponent {
   newCoverImg: File | null = null;
   previewNewCoverImg: string | null = null;
   bookState$ = this.store.select(({ appState }) => appState.books);
+  private destroy$ = new Subject();
+
   @Input() book!: IBook;
   updatingBook!: IBook;
   @Output() bookUpdate = new EventEmitter();
@@ -115,5 +118,8 @@ export class UpdateBookComponent {
         id: this.book.id,
       });
     }
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }

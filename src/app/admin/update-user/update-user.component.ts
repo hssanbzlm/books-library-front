@@ -3,6 +3,7 @@ import { IUser } from '../../interfaces/IUser';
 import { UsersStateShape } from '../../store/user/users.reducer';
 import { Store } from '@ngrx/store';
 import { AppStateShape } from '../../store';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-update-user',
@@ -14,6 +15,7 @@ export class UpdateUserComponent {
   newUserValue!: Partial<IUser>;
   @Output() userUpdate = new EventEmitter();
   users$ = this.store.select(({ appState }) => appState.users);
+  private destroy$ = new Subject();
   confirmUpdate = false;
   waiting = false;
   error: null | string = null;
@@ -22,7 +24,7 @@ export class UpdateUserComponent {
 
   ngOnInit(): void {
     this.newUserValue = { ...this.user };
-    this.users$.subscribe((userState) => {
+    this.users$.pipe(takeUntil(this.destroy$)).subscribe((userState) => {
       this.waiting = userState.loading;
       this.error = userState.error;
       if (this.confirmUpdate && !this.waiting && !this.error) {
@@ -37,5 +39,8 @@ export class UpdateUserComponent {
       type: '[User] Update activity',
       payload: { userId: this.user.id, activity: this.newUserValue.active },
     });
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }

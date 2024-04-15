@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { IBook } from '../../interfaces/IBook';
 import { AuthService } from '../../services/auth.service';
 import { IUser } from '../../interfaces/IUser';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-book',
@@ -13,12 +14,16 @@ export class BookComponent {
   @Input() book!: IBook;
   show = false;
   isAuth!: IUser | null;
+  private destroy$ = new Subject();
 
   constructor(private router: Router, private authservice: AuthService) {}
   ngOnInit(): void {
-    this.authservice.getAuthListener().subscribe((v) => {
-      this.isAuth = v;
-    });
+    this.authservice
+      .getAuthListener()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((v) => {
+        this.isAuth = v;
+      });
   }
   toBookDetails() {
     this.router.navigate(['user', 'book', this.book.id]);
@@ -31,5 +36,8 @@ export class BookComponent {
   showModal(event?: Event) {
     event?.stopPropagation();
     this.show = !this.show;
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }

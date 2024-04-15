@@ -5,7 +5,7 @@ import { IUser } from '../../interfaces/IUser';
 import { AppStateShape } from '../../store';
 import { Store } from '@ngrx/store';
 import { IBook } from '../../interfaces/IBook';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-book-details',
@@ -16,6 +16,7 @@ export class BookDetailsComponent {
   show = false;
   isAuth!: IUser | null;
   book$!: Observable<IBook | undefined>;
+  private destroy$ = new Subject();
   @Input('id') bookId!: string;
   constructor(
     private router: Router,
@@ -28,9 +29,12 @@ export class BookDetailsComponent {
       appState.books.bookList.find((book) => book.id == +this.bookId)
     );
 
-    this.authService.getAuthListener().subscribe((v) => {
-      this.isAuth = v;
-    });
+    this.authService
+      .getAuthListener()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((v) => {
+        this.isAuth = v;
+      });
   }
 
   onBorrow() {
@@ -40,5 +44,8 @@ export class BookDetailsComponent {
 
   showModal() {
     this.show = !this.show;
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }

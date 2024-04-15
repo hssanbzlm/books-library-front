@@ -3,6 +3,7 @@ import { Category } from '../../interfaces/IBook';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppStateShape } from '../../store';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-add-book',
@@ -14,6 +15,8 @@ export class AddBookComponent {
   error: null | string = null;
   confirmAdd = false;
   bookState$ = this.store.select(({ appState }) => appState.books);
+  private destroy$ = new Subject();
+
   @Output() bookAdd = new EventEmitter();
   bookForm!: FormGroup;
   coverImg!: File;
@@ -46,7 +49,7 @@ export class AddBookComponent {
       coverPath: ['', [Validators.required]],
       authors: this.fb.array([this.createAuthor()]),
     });
-    this.bookState$.subscribe((bookState) => {
+    this.bookState$.pipe(takeUntil(this.destroy$)).subscribe((bookState) => {
       this.adding = bookState.loading;
       this.error = bookState.error;
       if (!this.adding && !this.error && this.confirmAdd) this.bookAdd.emit();
@@ -100,5 +103,8 @@ export class AddBookComponent {
       formData.append('cover', this.coverImg);
       this.store.dispatch({ type: '[Book] Add', book: formData });
     }
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }
