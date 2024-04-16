@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { IUser } from '../../interfaces/IUser';
-import { Subject, map, take, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IUser } from '../../interfaces/IUser';
-import { UsersStateShape } from '../../store/user/users.reducer';
 import { Store } from '@ngrx/store';
 import { AppStateShape } from '../../store';
 import { Subject, takeUntil } from 'rxjs';
