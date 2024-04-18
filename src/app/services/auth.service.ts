@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { signinUrl, signoutUrl, whoamiUrl } from '../../API/api';
+import { authUrl } from '../../API/api';
 import { IUser } from '../interfaces/IUser';
 import { BehaviorSubject, take } from 'rxjs';
 
@@ -25,18 +25,18 @@ export class AuthService {
 
   signin(email: string, password: string) {
     return this.http.post<IUser>(
-      signinUrl,
+      `${authUrl}/signin`,
       { email, password },
       { withCredentials: true }
     );
   }
 
   signout() {
-    return this.http.post(signoutUrl, {}, { withCredentials: true });
+    return this.http.post(`${authUrl}/signout`, {}, { withCredentials: true });
   }
 
   whoami() {
-    return this.http.get<IUser>(whoamiUrl, { withCredentials: true });
+    return this.http.get<IUser>(`${authUrl}/whoami`, { withCredentials: true });
   }
   getAuthUser() {
     return this.$user.value;
