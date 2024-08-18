@@ -10,7 +10,7 @@ export const adminGuard = () => {
     take(1),
     map((user) => {
       if (user && user.active && user.admin) return true;
-      return false;
+      return router.navigateByUrl('user');
     }),
     catchError((err) => {
       return router.navigateByUrl('auth');
