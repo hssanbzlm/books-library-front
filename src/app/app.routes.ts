@@ -8,10 +8,11 @@ import { BorrowHistoryComponent } from './user/borrow-history/borrow-history.com
 import { adminGuard } from './guards/admin.guard';
 import { inject } from '@angular/core';
 import { authGuard } from './guards/auth.guard';
+import { signinGuard } from './guards/signin.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'user', pathMatch: 'full' },
-  { path: 'auth', component: SigninComponent },
+  { path: 'auth', component: SigninComponent, canActivate: [signinGuard] },
   {
     path: 'user',
     component: HomeComponent,
