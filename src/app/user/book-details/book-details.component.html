@@ -72,11 +72,4 @@
 </ng-container>
 <ng-template #NotFound> Book does not exist </ng-template>
 
-<app-modal *ngIf="show" (dismiss)="showModal()">
-  <ng-container modal-title>
-    <h3 class="text-base font-semibold leading-6 text-gray-900">Hey</h3>
-  </ng-container>
-  <ng-container modal-content>
-    <p class="text-sm text-gray-500">Waiting...</p>
-  </ng-container>
-</app-modal>
+<app-borrow-request *ngIf="show" (onDismiss)="showModal()" />

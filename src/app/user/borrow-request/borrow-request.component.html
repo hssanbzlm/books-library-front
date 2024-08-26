@@ -1,0 +1,46 @@
+<app-modal (dismiss)="showModal()">
+  <ng-container modal-title>
+    <h3 class="text-base font-semibold leading-6 text-gray-900">Hey</h3>
+  </ng-container>
+  <ng-container modal-content>
+    <p class="text-sm text-gray-500">
+      <mat-form-field>
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input
+            (dateChange)="onStartChange($event)"
+            matStartDate
+            placeholder="Start date"
+          />
+          <input
+            (dateChange)="onEndChange($event)"
+            matEndDate
+            placeholder="End date"
+          />
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </p>
+  </ng-container>
+  <ng-container modal-btns>
+    <button
+      (click)="showModal($event)"
+      type="button"
+      class="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:w-auto"
+    >
+      Cancel
+    </button>
+    <button
+      (click)="confirmRequest()"
+      type="button"
+      class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto mt-3 sm:mt-0"
+    >
+      Confirm
+    </button>
+  </ng-container>
+</app-modal>

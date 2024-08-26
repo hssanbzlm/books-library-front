@@ -9,6 +9,18 @@ import { BookComponent } from './book/book.component';
 import { BookDetailsComponent } from './book-details/book-details.component';
 import { BorrowHistoryComponent } from './borrow-history/borrow-history.component';
 import { ModalComponent } from '../shared/modal/modal.component';
+import {
+  MatDateRangePicker,
+  MatDateRangeInput,
+  MatDatepickerToggle,
+} from '@angular/material/datepicker';
+import { MatHint } from '@angular/material/form-field';
+import { MatLabel } from '@angular/material/form-field';
+import { MatFormField } from '@angular/material/form-field';
+import { MatStartDate } from '@angular/material/datepicker';
+import { MatEndDate } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { BorrowRequestComponent } from './borrow-request/borrow-request.component';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -16,7 +28,22 @@ import { ModalComponent } from '../shared/modal/modal.component';
     BookComponent,
     BookDetailsComponent,
     BorrowHistoryComponent,
+    BorrowRequestComponent,
   ],
-  imports: [CommonModule, RouterModule, NavbarComponent, ModalComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NavbarComponent,
+    ModalComponent,
+    MatDateRangePicker,
+    MatDateRangeInput,
+    MatDatepickerToggle,
+    MatHint,
+    MatLabel,
+    MatFormField,
+    MatStartDate,
+    MatEndDate,
+    MatFormFieldModule,
+  ],
 })
 export class UserModule {}
