@@ -10,7 +10,7 @@ import {
   DateRange,
   MatDatepickerInputEvent,
 } from '@angular/material/datepicker';
-import { AuthService } from '../../services/auth.service';
+import { UserToBookService } from '../../services/user-to-book.service';
 
 @Component({
   selector: 'app-borrow-request',
@@ -25,7 +25,8 @@ export class BorrowRequestComponent {
   startDate!: string;
   endDate!: string;
   isSuccess = false;
-  constructor(private authService: AuthService) {}
+  isError = false;
+  constructor(private userToBookService: UserToBookService) {}
 
   showModal(event?: Event) {
     event?.stopPropagation();
@@ -38,9 +39,15 @@ export class BorrowRequestComponent {
     this.endDate = new Date(event.value).toLocaleDateString();
   }
   confirmRequest() {
-    console.log('start date ', this.startDate);
-    console.log('end date ', this.endDate);
-    console.log('user ', this.authService.getAuthUser()?.id);
-    console.log('book ', this.bookId);
+    this.userToBookService
+      .borrow(this.bookId, this.startDate, this.endDate)
+      .subscribe({
+        next: (response) => {
+          this.isSuccess = true;
+        },
+        error: (error) => {
+          this.isError = true;
+        },
+      });
   }
 }

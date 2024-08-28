@@ -71,5 +71,10 @@
   </div>
 </ng-container>
 <ng-template #NotFound> Book does not exist </ng-template>
-
-<app-borrow-request *ngIf="show" (onDismiss)="showModal()" />
+<div *ngIf="book$ | async as book">
+  <app-borrow-request
+    *ngIf="show"
+    (onDismiss)="showModal()"
+    [bookId]="book.id"
+  />
+</div>
