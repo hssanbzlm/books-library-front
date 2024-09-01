@@ -1,6 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { userToBookUrl } from '../../API/api';
+import { IBorrow } from '../interfaces/IBorrow';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,9 @@ export class UserToBookService {
   constructor(private http: HttpClient) {}
 
   borrowList() {
-    return this.http.get(`${userToBookUrl}`, { withCredentials: true });
+    return this.http.get<IBorrow[]>(`${userToBookUrl}`, {
+      withCredentials: true,
+    });
   }
 
   borrow(idBook: number, startDate: string, endDate: string) {
