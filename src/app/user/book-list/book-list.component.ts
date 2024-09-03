@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AppStateShape } from '../../store';
 import { Store } from '@ngrx/store';
+import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-book-list',
@@ -13,4 +14,11 @@ export class BookListComponent {
   error$ = this.store.select(({ appState }) => appState.books.error);
   constructor(private store: Store<{ appState: AppStateShape }>) {}
   ngOnInit(): void {}
+  pageSize = 4;
+  page = 0;
+
+  handlePageEvent(e: PageEvent) {
+    this.page = e.pageIndex;
+    this.pageSize = e.pageSize;
+  }
 }

@@ -21,6 +21,8 @@ import { MatStartDate } from '@angular/material/datepicker';
 import { MatEndDate } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BorrowRequestComponent } from './borrow-request/borrow-request.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -44,6 +46,7 @@ import { BorrowRequestComponent } from './borrow-request/borrow-request.componen
     MatStartDate,
     MatEndDate,
     MatFormFieldModule,
+    MatPaginatorModule,
   ],
 })
 export class UserModule {}
