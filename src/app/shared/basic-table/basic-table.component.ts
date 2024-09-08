@@ -11,6 +11,7 @@ import { UserStatusPipe } from '../../user-status.pipe';
 })
 export class BasicTableComponent {
   @Input() deletable = false;
+  @Input() addable = true;
   @Input() columns!: any[];
   @Input() data!: any[];
 

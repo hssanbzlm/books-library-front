@@ -29,6 +29,7 @@ export class BookComponent {
     this.router.navigate(['user', 'book', this.book.id]);
   }
   borrow(event: Event) {
+    event.stopPropagation();
     if (this.isAuth) this.showModal(event);
     else this.router.navigateByUrl('auth');
   }

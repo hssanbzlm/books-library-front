@@ -8,6 +8,8 @@ import { provideEffects } from '@ngrx/effects';
 import { UsersEffects } from './store/user/users.effects';
 import { BooksEffects } from './store/book/books.effects';
 import { reducers } from './store';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideNativeDateAdapter } from '@angular/material/core';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withComponentInputBinding()),
@@ -18,5 +20,7 @@ export const appConfig: ApplicationConfig = {
       name: 'appState',
       reducer: reducers,
     }),
+    provideAnimations(),
+    provideNativeDateAdapter(),
   ],
 };
