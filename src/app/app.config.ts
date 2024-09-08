@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -8,7 +8,6 @@ import { provideEffects } from '@ngrx/effects';
 import { UsersEffects } from './store/user/users.effects';
 import { BooksEffects } from './store/book/books.effects';
 import { reducers } from './store';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideNativeDateAdapter } from '@angular/material/core';
 export const appConfig: ApplicationConfig = {
@@ -21,7 +20,6 @@ export const appConfig: ApplicationConfig = {
       name: 'appState',
       reducer: reducers,
     }),
-    provideAnimationsAsync(),
     provideAnimations(),
     provideNativeDateAdapter(),
   ],
