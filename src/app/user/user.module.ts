@@ -22,6 +22,7 @@ import { MatEndDate } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BorrowRequestComponent } from './borrow-request/borrow-request.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { BasicTableComponent } from '../shared/basic-table/basic-table.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     BorrowRequestComponent,
   ],
   imports: [
+    BasicTableComponent,
     CommonModule,
     RouterModule,
     NavbarComponent,
