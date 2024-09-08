@@ -27,15 +27,7 @@ export class BorrowListComponent {
   getBorrowList() {
     this.userToBookService.borrowList().subscribe({
       next: (response) => {
-        this.borrowList = response.map((value) => ({
-          ...value,
-          userId: value.user.id,
-          userName: value.user.name,
-          userLastName: value.user.lastName,
-          email: value.user.email,
-          bookId: value.book.id,
-          bookTitle: value.book.title,
-        }));
+        this.borrowList = response;
       },
       error: (error) => {
         this.borrowList = error;

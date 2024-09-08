@@ -13,8 +13,8 @@ export interface IBorrow {
     | 'coverPath'
     | 'authors'
   >;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   status:
     | 'Pending'
     | 'Checked-out'
