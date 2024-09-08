@@ -16,6 +16,7 @@ export class BookListComponent {
   ngOnInit(): void {}
   pageSize = 4;
   page = 0;
+  pageSizeOptions = [4, 7, 10, 20, 25];
 
   handlePageEvent(e: PageEvent) {
     this.page = e.pageIndex;

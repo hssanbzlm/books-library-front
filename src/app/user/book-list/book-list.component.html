@@ -2,7 +2,7 @@
 <div *ngIf="error$ | async">Eroor</div>
 
 <ng-container *ngIf="books$ | async as books">
-  <div class="flex flex-wrap items-center justify-center mt-10">
+  <div class="flex flex-wrap items-center justify-center mt-10 w-screen">
     <app-book
       *ngFor="
         let book of books | slice : page * pageSize : page * pageSize + pageSize
@@ -10,11 +10,13 @@
       [book]="book"
     />
   </div>
-  <mat-paginator
-    (page)="handlePageEvent($event)"
-    [length]="books.length"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="[5, 10, 25, 100]"
-  >
-  </mat-paginator>
+  <div *ngIf="books.length" class="flex justify-center w-screen">
+    <mat-paginator
+      (page)="handlePageEvent($event)"
+      [length]="books.length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+    >
+    </mat-paginator>
+  </div>
 </ng-container>
