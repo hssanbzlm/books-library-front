@@ -1,27 +1,22 @@
-import { IBook } from './IBook';
-import { IUser } from './IUser';
-
 export interface IBorrow {
-  user: Omit<IUser, 'admin' | 'active'>;
-  book: Omit<
-    IBook,
-    | 'numberOfPages'
-    | 'edition'
-    | 'year'
-    | 'category'
-    | 'quantity'
-    | 'coverPath'
-    | 'authors'
-  >;
-  startDate: string;
+  userToBookId: number;
+  status: Status;
+  userId: number;
+  userName: string;
+  userLastName: string;
+  email: string;
+  bookId: number;
+  bookTitle: string;
   endDate: string;
-  status:
-    | 'Pending'
-    | 'Checked-out'
-    | 'Refused'
-    | 'Accepted'
-    | 'Damaged'
-    | 'Lost'
-    | 'Returned'
-    | 'Overdue';
+  startDate: string;
 }
+export type Status =
+  | 'Pending'
+  | 'Checked-out'
+  | 'Refused'
+  | 'Accepted'
+  | 'Damaged'
+  | 'Lost'
+  | 'Returned'
+  | 'Overdue'
+  | 'Canceled';

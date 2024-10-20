@@ -1,1 +1,18 @@
-<app-basic-table [columns]="columns" [data]="borrowList" [addable]="false" />
+<div *ngIf="isLoading$ | async">Loading</div>
+<div *ngIf="isError$ | async">Error</div>
+<ng-container *ngIf="borrowList$ | async as borrowList">
+  <app-basic-table
+    [columns]="columns"
+    [data]="borrowList"
+    [addable]="false"
+    (edit)="onEditStatus($event)"
+  />
+</ng-container>
+<app-modal *ngIf="showUpdateStatusModal" (dismiss)="toggleUpdateStatusModal()">
+  <ng-container modal-content>
+    <app-update-status
+      (statusUpdate)="handleUpdateStatus()"
+      [borrow]="updatingBorrow"
+    />
+  </ng-container>
+</app-modal>

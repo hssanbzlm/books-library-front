@@ -17,6 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeleteBookComponent } from './delete-book/delete-book.component';
 import { DynamicButtonComponent } from './dynamic-button/dynamic-button.component';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
+import { UpdateStatusComponent } from './update-status/update-status.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { DeleteUserComponent } from './delete-user/delete-user.component';
     DeleteBookComponent,
     DynamicButtonComponent,
     DeleteUserComponent,
+    UpdateStatusComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +44,7 @@ import { DeleteUserComponent } from './delete-user/delete-user.component';
     ModalComponent,
     FormsModule,
     ReactiveFormsModule,
+    MatSelectModule,
   ],
   exports: [HomeComponent],
 })
