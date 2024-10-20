@@ -1,7 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { userToBookUrl } from '../../API/api';
-import { IBorrow } from '../interfaces/IBorrow';
+import { IBorrow, Status } from '../interfaces/IBorrow';
 import { map, mergeMap } from 'rxjs';
 import { format } from 'date-fns';
 
@@ -10,6 +10,28 @@ import { format } from 'date-fns';
 })
 export class UserToBookService {
   constructor(private http: HttpClient) {}
+
+  getStatusProperties(status: Status) {
+    let possibleNextStatus: Status[] = [];
+    switch (status) {
+      case 'Pending':
+        possibleNextStatus = ['Accepted', 'Refused'];
+        break;
+      case 'Accepted':
+        possibleNextStatus = ['Checked-out', 'Canceled'];
+        break;
+      case 'Checked-out':
+        possibleNextStatus = ['Returned', 'Damaged', 'Lost', 'Overdue'];
+        break;
+      case 'Overdue':
+        possibleNextStatus = ['Returned', 'Damaged', 'Lost'];
+        break;
+      case 'Lost':
+        possibleNextStatus = ['Damaged', 'Returned'];
+        break;
+    }
+    return possibleNextStatus;
+  }
 
   borrowList() {
     return this.http
@@ -22,12 +44,6 @@ export class UserToBookService {
             ...borrowItem,
             endDate: format(borrowItem.endDate, 'dd-MM-yyyy'),
             startDate: format(borrowItem.startDate, 'dd-MM-yyyy'),
-            userId: borrowItem.user.id,
-            userName: borrowItem.user.name,
-            userLastName: borrowItem.user.lastName,
-            email: borrowItem.user.email,
-            bookId: borrowItem.book.id,
-            bookTitle: borrowItem.book.title,
           }));
         })
       );
@@ -37,6 +53,14 @@ export class UserToBookService {
     return this.http.post<HttpResponse<any>>(
       `${userToBookUrl}/borrow`,
       { idBook, startDate, endDate },
+      { withCredentials: true }
+    );
+  }
+
+  updateBorrow(borrowId: number, newStatus: string) {
+    return this.http.patch(
+      `${userToBookUrl}/borrow-status`,
+      { borrowId, status: newStatus },
       { withCredentials: true }
     );
   }

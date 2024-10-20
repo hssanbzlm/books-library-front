@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, isDevMode } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -10,17 +10,20 @@ import { BooksEffects } from './store/book/books.effects';
 import { reducers } from './store';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { BorrowEffects } from './store/borrow/borrow.effects';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(),
     provideStore(),
-    provideEffects(UsersEffects, BooksEffects),
+    provideEffects(UsersEffects, BooksEffects, BorrowEffects),
     provideState({
-      name: 'appState',
-      reducer: reducers,
+        name: 'appState',
+        reducer: reducers,
     }),
     provideAnimations(),
     provideNativeDateAdapter(),
-  ],
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
+],
 };
