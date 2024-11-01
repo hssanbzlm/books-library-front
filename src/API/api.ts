@@ -3,3 +3,6 @@ export const authUrl = `${environment.apiUrl}/auth`;
 export const usersUrl = `${environment.apiUrl}/user`;
 export const booksUrl = `${environment.apiUrl}/book`;
 export const userToBookUrl = `${environment.apiUrl}/user-to-book`;
+export const notificationEventSourceUrl = `${environment.apiUrl}/user-to-book/borrow-notification`;
+export const missedNotificationUrl = `${environment.apiUrl}/user-to-book/notifications`;
+export const notificationsSeenUrl = `${environment.apiUrl}/user-to-book/notifications-seen`;

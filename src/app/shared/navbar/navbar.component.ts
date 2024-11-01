@@ -3,11 +3,15 @@ import { Component, Input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { IUser } from '../../interfaces/IUser';
-import { fromEvent, Subject, take, takeUntil } from 'rxjs';
+import { fromEvent, ReplaySubject, Subject, take, takeUntil } from 'rxjs';
+import { NotificationService } from '../../services/notification.service';
+import { IBorrow } from '../../interfaces/IBorrow';
+import { MatBadgeModule } from '@angular/material/badge';
+import { NotSeenNotifPipe } from '../../not-seen-notif.pipe';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, MatBadgeModule, NotSeenNotifPipe],
   standalone: true,
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
@@ -18,10 +22,16 @@ export class NavbarComponent {
   showUserMenu = false;
   showUserNotification = false;
   isAuth!: IUser | null;
+  notifications$!: ReplaySubject<IBorrow[]>;
   private destroy$ = new Subject();
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private notificationService: NotificationService
+  ) {}
   ngOnInit(): void {
+    this.notifications$ = this.notificationService.getNotificationsStream();
     this.authService
       .getAuthListener()
       .pipe(takeUntil(this.destroy$))
@@ -48,6 +58,9 @@ export class NavbarComponent {
   }
   openUserNotification() {
     this.showUserNotification = !this.showUserNotification;
+    if (this.showUserNotification) {
+      this.notificationService.notificationSeen();
+    }
   }
 
   logout() {
@@ -61,5 +74,6 @@ export class NavbarComponent {
   }
   ngOnDestroy(): void {
     this.destroy$.next(true);
+    this.notificationService.closeEventSource();
   }
 }

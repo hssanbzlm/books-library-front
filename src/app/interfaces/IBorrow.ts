@@ -9,6 +9,8 @@ export interface IBorrow {
   bookTitle: string;
   endDate: string;
   startDate: string;
+  receiverRole: 'admin' | 'user';
+  receiverSeen: boolean;
 }
 export type Status =
   | 'Pending'
