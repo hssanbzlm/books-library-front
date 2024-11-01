@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AppStateShape } from '../../store';
 import { Store } from '@ngrx/store';
-import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-book-list',

@@ -32,7 +32,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of data">
+            <tr
+              *ngFor="
+                let item of data
+                  | slice : page * pageSize : page * pageSize + pageSize
+              "
+            >
               <td
                 *ngFor="let column of columns"
                 class="px-5 py-5 text-sm bg-white border-b border-gray-200"
@@ -80,6 +85,15 @@
             </tr>
           </tbody>
         </table>
+        <div *ngIf="data?.length">
+          <mat-paginator
+            (page)="handlePageEvent($event)"
+            [length]="data.length"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+          >
+          </mat-paginator>
+        </div>
       </div>
     </div>
   </div>

@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { IUser } from '../../interfaces/IUser';
-import { Subject, take, takeUntil } from 'rxjs';
+import { fromEvent, Subject, take, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +15,8 @@ import { Subject, take, takeUntil } from 'rxjs';
 export class NavbarComponent {
   @Input() navItems: { title: string; path: string }[] = [];
   show = false;
+  showUserMenu = false;
+  showUserNotification = false;
   isAuth!: IUser | null;
   private destroy$ = new Subject();
 
@@ -26,9 +28,26 @@ export class NavbarComponent {
       .subscribe((v) => {
         this.isAuth = v;
       });
+    fromEvent(document, 'click')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((clickEvent) => {
+        const targetId = (clickEvent.target as HTMLElement)?.id;
+        if (this.showUserNotification && targetId != 'openNotificationButton') {
+          this.showUserNotification = false;
+        }
+        if (this.showUserMenu && targetId != 'openUserMenuButton') {
+          this.showUserMenu = false;
+        }
+      });
   }
   showMobileMenu() {
     this.show = !this.show;
+  }
+  openUserMenu() {
+    this.showUserMenu = !this.showUserMenu;
+  }
+  openUserNotification() {
+    this.showUserNotification = !this.showUserNotification;
   }
 
   logout() {
