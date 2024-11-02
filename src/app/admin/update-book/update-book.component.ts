@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Category, IBook } from '../../interfaces/IBook';
 import { AppStateShape } from '../../store';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil, takeWhile } from 'rxjs';
 
 @Component({
   selector: 'app-update-book',
@@ -61,7 +61,7 @@ export class UpdateBookComponent {
       authors: this.fb.array(authorsArray),
     });
 
-    this.bookState$.subscribe((bookState) => {
+    this.bookState$.pipe(takeUntil(this.destroy$)).subscribe((bookState) => {
       this.updating = bookState.loading;
       this.error = bookState.error;
       if (!this.updating && !this.error && this.confirmUpdate)

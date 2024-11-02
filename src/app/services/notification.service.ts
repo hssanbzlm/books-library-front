@@ -19,12 +19,15 @@ export class NotificationService {
   notifications$ = new ReplaySubject<IBorrow[]>();
 
   constructor(private authService: AuthService, private http: HttpClient) {
-    this.authService.getAuthListener().subscribe((user: IUser | null) => {
-      if (user) {
-        this.initSseEventSource(user);
-        this.getNotifications();
-      }
-    });
+    this.authService
+      .getAuthListener()
+      .pipe(take(1))
+      .subscribe((user: IUser | null) => {
+        if (user) {
+          this.initSseEventSource(user);
+          this.getNotifications();
+        }
+      });
   }
 
   initSseEventSource(user: IUser) {
@@ -60,6 +63,7 @@ export class NotificationService {
   private getNotifications() {
     this.http
       .get<IBorrow[]>(missedNotificationUrl, { withCredentials: true })
+      .pipe(take(1))
       .subscribe((notifications: IBorrow[]) => {
         this.notifications.push(...notifications);
         this.notifications$.next(notifications);
@@ -70,16 +74,18 @@ export class NotificationService {
   }
   notificationSeen() {
     if (this.notifications.filter((notif) => !notif.receiverSeen).length > 0) {
+      const notificationsIds = this.notifications.map(
+        (userToBook) => userToBook.userToBookId
+      );
       this.http
         .put(
           notificationsSeenUrl,
           {
-            notifications: this.notifications.map(
-              (userToBook) => userToBook.userToBookId
-            ),
+            notifications: notificationsIds,
           },
           { withCredentials: true }
         )
+        .pipe(take(1))
         .subscribe({
           next: () => {
             this.notifications = this.notifications.map((userToBook) => ({
