@@ -1,29 +1,22 @@
-import { Actions, act, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { UserService } from '../../services/user.service';
-import {
-  add,
-  init,
-  initError,
-  initSuccess,
-  remove,
-  removeError,
-  updateActivity,
-} from './users.actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { Injectable } from '@angular/core';
+import * as UserActions from './users.actions';
 @Injectable({ providedIn: 'root' })
 export class UsersEffects {
   addUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(add),
+      ofType(UserActions.add),
       mergeMap(({ user }) => {
         return this.usersService.addUser(user).pipe(
-          map((user) => ({ type: '[User] Add success', payload: user })),
+          map((user) => UserActions.addUserSuccess({ payload: user })),
           catchError(() =>
-            of({
-              type: '[User] Add error',
-              payload: 'Error while adding this user',
-            })
+            of(
+              UserActions.addUserError({
+                payload: 'Error while adding this user',
+              })
+            )
           )
         );
       })
@@ -32,11 +25,13 @@ export class UsersEffects {
 
   loadUsers$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(init),
+      ofType(UserActions.init),
       mergeMap(() => {
         return this.usersService.getUsers().pipe(
-          map((users) => ({ type: '[User] Init success', users })),
-          catchError(() => of({ type: initError }))
+          map((users) => UserActions.initSuccess({ users })),
+          catchError(() =>
+            of(UserActions.initError({ payload: 'Error while loading users' }))
+          )
         );
       })
     )
@@ -44,11 +39,11 @@ export class UsersEffects {
 
   removeUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(remove),
+      ofType(UserActions.remove),
       mergeMap(({ payload }) => {
         return this.usersService.removeUser(payload).pipe(
-          map(() => ({ type: '[User] Remove success', payload })),
-          catchError(() => of({ type: '[User] Remove error' }))
+          map(() => UserActions.removeSuccess({ payload })),
+          catchError(() => of(UserActions.removeError()))
         );
       })
     )
@@ -56,18 +51,15 @@ export class UsersEffects {
 
   updateUserActivity$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(updateActivity),
+      ofType(UserActions.updateActivity),
       mergeMap(({ payload }) => {
         return this.usersService
           .updateUserActivity(payload.userId, {
             active: payload.activity,
           })
           .pipe(
-            map(() => ({
-              type: '[User] Update activity success',
-              payload,
-            })),
-            catchError(() => of({ type: '[User] Update activity error' }))
+            map(() => UserActions.updateActivitySuccess({ payload })),
+            catchError(() => of(UserActions.updateActivityError()))
           );
       })
     )
