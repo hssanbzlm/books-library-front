@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserToBookService } from '../../services/user-to-book.service';
 import { IBorrow } from '../../interfaces/IBorrow';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-borrow-history',
@@ -21,13 +22,16 @@ export class BorrowHistoryComponent {
   }
 
   getBorrowList() {
-    this.userToBookService.borrowList().subscribe({
-      next: (response) => {
-        this.borrowList = response;
-      },
-      error: (error) => {
-        this.borrowList = error;
-      },
-    });
+    this.userToBookService
+      .borrowList()
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => {
+          this.borrowList = response;
+        },
+        error: (error) => {
+          this.borrowList = error;
+        },
+      });
   }
 }

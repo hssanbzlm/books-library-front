@@ -5,11 +5,12 @@ import { SigninComponent } from './shared/signin/signin.component';
 import { AppStateShape } from './store';
 import { Store } from '@ngrx/store';
 import * as BooksActionsTypes from './store/book/books.actions';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [SigninComponent, RouterModule, UserModule],
+  imports: [SigninComponent, RouterModule, UserModule, MatPaginatorModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

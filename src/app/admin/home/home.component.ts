@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { AppStateShape } from '../../store';
 import * as UsersActionsTypes from '../../store/user/users.actions';
 
@@ -27,7 +27,7 @@ export class HomeComponent {
     this.title = this.getCurrentTitle(this.router.url);
   }
   ngOnInit(): void {
-    this.$routeChange = this.router.events.subscribe((v) => {
+    this.$routeChange = this.router.events.pipe(take(1)).subscribe((v) => {
       if (v instanceof NavigationEnd) {
         this.title = this.getCurrentTitle(v.url);
       }

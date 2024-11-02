@@ -4,7 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Subject, take } from 'rxjs';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-signin',
@@ -18,7 +18,6 @@ export class SigninComponent {
   readonly userPassword = '';
   submitted = false;
   errorMessage = '';
-  private destroy$ = new Subject();
 
   constructor(private authService: AuthService, private router: Router) {}
 

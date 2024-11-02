@@ -3,7 +3,6 @@ import { IBorrow } from '../../interfaces/IBorrow';
 import { Store } from '@ngrx/store';
 import * as BorrowActionsTypes from '../../store/borrow/borrow.actions';
 import { AppStateShape } from '../../store';
-import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-borrow-list',
@@ -15,7 +14,6 @@ export class BorrowListComponent {
   isLoading$ = this.store.select(({ appState }) => appState.borrow.loading);
   isError$ = this.store.select(({ appState }) => appState.borrow.error);
 
-  destroy$ = new Subject();
   updatingBorrow!: IBorrow;
   showUpdateStatusModal = false;
   columns = [
@@ -45,8 +43,5 @@ export class BorrowListComponent {
   }
   toggleUpdateStatusModal() {
     this.showUpdateStatusModal = !this.showUpdateStatusModal;
-  }
-  ngOnDestroy(): void {
-    this.destroy$.next(true);
   }
 }

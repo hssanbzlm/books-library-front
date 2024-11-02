@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { BookService } from '../../services/book.service';
-import * as BooksActionsTypes from './books.actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
+import * as BooksActions from './books.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -10,15 +10,12 @@ import { catchError, map, mergeMap, of } from 'rxjs';
 export class BooksEffects {
   initBooks$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(BooksActionsTypes.init),
+      ofType(BooksActions.init),
       mergeMap(() => {
         return this.bookService.getBooks().pipe(
           map((books) => ({ type: '[Book] Init success', books })),
           catchError(() =>
-            of({
-              type: '[Book] Init error',
-              payload: 'Error loading book list',
-            })
+            of(BooksActions.initError({ payload: 'Error loading book list' }))
           )
         );
       })
@@ -27,12 +24,12 @@ export class BooksEffects {
 
   addBook$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(BooksActionsTypes.add),
+      ofType(BooksActions.add),
       mergeMap(({ book }) => {
         return this.bookService.addBook(book).pipe(
-          map((book) => ({ type: '[Book] Add success', book })),
+          map((book) => BooksActions.addSuccess({ book })),
           catchError(() =>
-            of({ type: '[Book] Add error', payload: 'Error adding this book' })
+            of(BooksActions.addError({ payload: 'Error adding this book' }))
           )
         );
       })
@@ -41,28 +38,27 @@ export class BooksEffects {
 
   updateBook$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(BooksActionsTypes.update),
+      ofType(BooksActions.update),
       mergeMap(({ book, id }) => {
         return this.bookService.updateBook(id, book).pipe(
-          map((book) => ({ type: '[Book] Update success', book })),
+          map((book) => BooksActions.updateSuccess({ book })),
           catchError(() =>
-            of({
-              type: '[Book] Update error',
-              payload: 'Error updating this book',
-            })
+            of(
+              BooksActions.updateError({ payload: 'Error updating this book' })
+            )
           )
         );
       })
     )
   );
 
-  removeUser$ = createEffect(() =>
+  removeBook$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(BooksActionsTypes.remove),
+      ofType(BooksActions.remove),
       mergeMap(({ payload }) => {
         return this.bookService.removeBook(payload).pipe(
-          map(() => ({ type: '[Book] Remove success', payload })),
-          catchError(() => of({ type: '[Book] Remove error' }))
+          map(() => BooksActions.removeSuccess({ payload })),
+          catchError(() => of(BooksActions.removeError()))
         );
       })
     )
