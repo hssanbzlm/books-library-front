@@ -1,0 +1,62 @@
+{
+    "table": {
+        "title": "العنوان",
+        "category": "الفئة",
+        "pages": "الصفحات",
+        "quantity": "الكمية",
+        "edit": "تحديث",
+        "add": "الإضافة",
+        "name": "الاسم",
+        "Last name": "اسم العائلة",
+        "active": "نشط",
+        "email": "البريد الإلكتروني",
+        "book title": "عنوان الكتاب",
+        "start date": "تاريخ البدء",
+        "end date": "تاريخ الانتهاء",
+        "last name": "اسم العائلة",
+        "status": "الحالة"
+    },
+    "page": {
+        "Books": "الكتب",
+        "Users": "المستخدمين",
+        "Dashboard": "لوحة القيادة",
+        "Borrow": "سجل الإعارة"
+    },
+    "navbar": {
+        "Borrow": "سجل الإعارة",
+        "Books": "الكتب",
+        "Users": "المستخدمين",
+        "Dashboard": "لوحة القيادة"
+    },
+    "update": {
+        "borrow": "تحديث سجل الإعارة"
+    },
+    "signin": {
+        "title": "قم بتسجيل الدخول إلى حسابك",
+        "email": "البريد الإلكتروني",
+        "password": "كلمة المرور",
+        "forgot-password": "هل نسيت كلمة السر؟",
+        "signin-btn": "تسجيل الدخول"
+    },
+    "update-user": {
+        "status": "الحالة",
+        "title": "تحديث المستخدم"
+    },
+    "update-borrow": {
+        "current-status": "الوضع الحالي",
+        "confirm-btn": "تأكيد"
+    },
+    "update-book": {
+        "page-title": "تحديث الكتاب",
+        "title": "العنوان",
+        "number-of-pages": "عدد الصفحات",
+        "edition": "الطبعة",
+        "year": "السنة",
+        "category": "الفئة",
+        "quantity": "الكمية",
+        "cover": "صورة الغلاف",
+        "author": "المؤلف",
+        "update-btn": "تحديث",
+        "update-btn-waiting": "جاري التحديث"
+    }
+}

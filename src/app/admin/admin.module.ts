@@ -19,6 +19,7 @@ import { DynamicButtonComponent } from './dynamic-button/dynamic-button.componen
 import { DeleteUserComponent } from './delete-user/delete-user.component';
 import { UpdateStatusComponent } from './update-status/update-status.component';
 import { MatSelectModule } from '@angular/material/select';
+import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,8 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
+    TranslateDirective,
+    TranslatePipe,
   ],
   exports: [HomeComponent],
 })

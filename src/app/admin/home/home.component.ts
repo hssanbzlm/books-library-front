@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription, take } from 'rxjs';
+import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
 import { AppStateShape } from '../../store';
 import * as UsersActionsTypes from '../../store/user/users.actions';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,8 @@ import * as UsersActionsTypes from '../../store/user/users.actions';
 export class HomeComponent {
   title: string;
   $routeChange: Subscription = new Subscription();
+  $destroy = new Subject();
+  pageDirection!: 'rtl' | 'ltr';
   navItems = [
     { title: 'Dashboard', path: '/admin' },
     { title: 'Borrow', path: './borrow-list' },
@@ -21,13 +24,22 @@ export class HomeComponent {
   ];
   constructor(
     private router: Router,
-    private store: Store<{ appState: AppStateShape }>
+    private store: Store<{ appState: AppStateShape }>,
+    private translate: TranslateService
   ) {
     this.store.dispatch(UsersActionsTypes.init());
     this.title = this.getCurrentTitle(this.router.url);
   }
   ngOnInit(): void {
-    this.$routeChange = this.router.events.pipe(take(1)).subscribe((v) => {
+    if (this.translate.currentLang == 'ar') this.pageDirection = 'rtl';
+    else this.pageDirection = 'ltr';
+    this.translate.onLangChange
+      .pipe(takeUntil(this.$destroy))
+      .subscribe((languageEvent: LangChangeEvent) => {
+        if (languageEvent.lang == 'ar') this.pageDirection = 'rtl';
+        else this.pageDirection = 'ltr';
+      });
+    this.$routeChange = this.router.events.subscribe((v) => {
       if (v instanceof NavigationEnd) {
         this.title = this.getCurrentTitle(v.url);
       }
@@ -40,6 +52,7 @@ export class HomeComponent {
   }
 
   ngOnDestroy(): void {
+    this.$destroy.next(true);
     this.$routeChange.unsubscribe();
   }
 }

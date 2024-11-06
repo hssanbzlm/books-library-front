@@ -4,6 +4,7 @@ import { Category, IBook } from '../../interfaces/IBook';
 import { AppStateShape } from '../../store';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil, takeWhile } from 'rxjs';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-update-book',
@@ -37,11 +38,14 @@ export class UpdateBookComponent {
     'Science',
     'N/A',
   ];
+  pageDirection!: 'rtl' | 'ltr';
   constructor(
     private fb: FormBuilder,
-    private store: Store<{ appState: AppStateShape }>
+    private store: Store<{ appState: AppStateShape }>,
+    private translate: TranslateService
   ) {}
   ngOnInit(): void {
+    this.pageDirection = this.translate.currentLang == 'ar' ? 'rtl' : 'ltr';
     this.updatingBook = { ...this.book };
     const authorsArray = this.updatingBook.authors.map((author) =>
       this.createAuthor(author)

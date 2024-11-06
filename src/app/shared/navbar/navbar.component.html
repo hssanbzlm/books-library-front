@@ -61,11 +61,24 @@
               [routerLink]="[item.path]"
               class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
               aria-current="page"
-              >{{ item.title }}</a
+              >{{ "navbar." + item.title | translate }}</a
             >
           </div>
         </div>
       </div>
+      <mat-form-field>
+        <mat-label>Language</mat-label>
+        <mat-select
+          (valueChange)="onLanguageChange($event)"
+          [(ngModel)]="selectedLanguage"
+        >
+          @for (language of languages; track language) {
+          <mat-option [value]="language.value">{{
+            language.viewValue
+          }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
       <div
         *ngIf="isAuth"
         class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"

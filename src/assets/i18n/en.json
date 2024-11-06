@@ -1,0 +1,61 @@
+{
+    "table": {
+        "title": "title",
+        "category": "category",
+        "pages": "pages",
+        "quantity": "quantity",
+        "edit": "edit",
+        "add": "add",
+        "name": "name",
+        "Last name": "Last name",
+        "active": "active",
+        "email": "email",
+        "book title": "title",
+        "start date": "start date",
+        "end date": "end date",
+        "last name": "Last name",
+        "status": "status"
+    },
+    "page": {
+        "Books": "Books",
+        "Users": "Users",
+        "Dashboard": "Dashboard"
+    },
+    "navbar": {
+        "Dashboard": "Dashboard",
+        "Borrow": "Borrow",
+        "Books": "Books",
+        "Users": "Users"
+    },
+    "update": {
+        "borrow": "Update borrow"
+    },
+    "signin": {
+        "title": "Sign in to your account",
+        "email": "Email",
+        "password": "Password",
+        "forgot-password": "Forgot password?",
+        "signin-btn": "Signin"
+    },
+    "update-user": {
+        "title": "Update user",
+        "status": "status"
+    },
+    "update-borrow": {
+        "current-status": "Current status",
+        "confirm-btn": "confirm"
+    },
+    "update-book": {
+        "page-title": "Update book",
+        "title": "Title",
+        "number-of-pages": "Number of pages",
+        "edition": "Edition",
+        "year": "Year",
+        "category": "Category",
+        "quantity": "Quantity",
+        "cover": "Cover",
+        "author": "Author",
+        "update-btn": "Update",
+        "update-btn-waiting": "Updating..."
+    }
+}

@@ -3,6 +3,7 @@ import { IUser } from '../../interfaces/IUser';
 import { Store } from '@ngrx/store';
 import { AppStateShape } from '../../store';
 import { Subject, takeUntil } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-update-user',
@@ -18,10 +19,15 @@ export class UpdateUserComponent {
   confirmUpdate = false;
   waiting = false;
   error: null | string = null;
+  pageDirection!: 'rtl' | 'ltr';
 
-  constructor(private store: Store<{ appState: AppStateShape }>) {}
+  constructor(
+    private store: Store<{ appState: AppStateShape }>,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit(): void {
+    this.pageDirection = this.translate.currentLang == 'ar' ? 'rtl' : 'ltr';
     this.newUserValue = { ...this.user };
     this.users$.pipe(takeUntil(this.destroy$)).subscribe((userState) => {
       this.waiting = userState.loading;

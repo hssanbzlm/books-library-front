@@ -8,10 +8,29 @@ import { NotificationService } from '../../services/notification.service';
 import { IBorrow } from '../../interfaces/IBorrow';
 import { MatBadgeModule } from '@angular/material/badge';
 import { NotSeenNotifPipe } from '../../not-seen-notif.pipe';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import {
+  MatSelect,
+  MatFormField,
+  MatLabel,
+  MatOption,
+} from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink, MatBadgeModule, NotSeenNotifPipe],
+  imports: [
+    CommonModule,
+    RouterLink,
+    MatBadgeModule,
+    NotSeenNotifPipe,
+    TranslatePipe,
+    MatSelect,
+    MatFormField,
+    MatLabel,
+    MatOption,
+    FormsModule,
+  ],
   standalone: true,
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
@@ -23,12 +42,19 @@ export class NavbarComponent {
   showUserNotification = false;
   isAuth!: IUser | null;
   notifications$!: ReplaySubject<IBorrow[]>;
+  languages = [
+    { value: 'ar', viewValue: 'Arabic' },
+    { value: 'fr', viewValue: 'French' },
+    { value: 'en', viewValue: 'English' },
+  ];
+  selectedLanguage = localStorage.getItem('borrow-language') ?? 'en';
   private destroy$ = new Subject();
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private translate: TranslateService
   ) {}
   ngOnInit(): void {
     this.notifications$ = this.notificationService.getNotificationsStream();
@@ -50,6 +76,11 @@ export class NavbarComponent {
         }
       });
   }
+  onLanguageChange(newLanguage: string) {
+    this.translate.use(newLanguage);
+    localStorage.setItem('borrow-language', newLanguage);
+  }
+
   showMobileMenu() {
     this.show = !this.show;
   }

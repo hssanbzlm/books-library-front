@@ -1,11 +1,19 @@
 <div class="w-96 mx-auto">
-  <div class="bg-white rounded px-8 pt-6 pb-8 mb-4">
-    <h2 class="text-2xl font-semibold mb-4">Update Book</h2>
+  <div class="bg-white rounded px-8 pt-6 pb-8 mb-4" [dir]="pageDirection">
+    <h2
+      class="text-2xl font-semibold mb-4"
+      [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
+    >
+      {{ "update-book.page-title" | translate }}
+    </h2>
     <form [formGroup]="bookForm" (ngSubmit)="updateBook()">
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="title"
-          >Title</label
-        >
+      <div
+        class="mb-4"
+        [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
+      >
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+          {{ "update-book.title" | translate }}
+        </label>
         <input
           class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="title"
@@ -23,12 +31,16 @@
         </div>
       </div>
 
-      <div class="mb-4">
+      <div
+        class="mb-4"
+        [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
+      >
         <label
           class="block text-gray-700 text-sm font-bold mb-2"
           for="numberOfPages"
-          >Number of Pages</label
         >
+          {{ "update-book.number-of-pages" | translate }}
+        </label>
         <input
           class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="numberOfPages"
@@ -47,10 +59,13 @@
         </div>
       </div>
 
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="edition"
-          >Edition</label
-        >
+      <div
+        class="mb-4"
+        [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
+      >
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="edition">
+          {{ "update-book.edition" | translate }}
+        </label>
         <input
           class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="edition"
@@ -60,10 +75,13 @@
         />
       </div>
 
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="year"
-          >Year</label
-        >
+      <div
+        class="mb-4"
+        [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
+      >
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="year">
+          {{ "update-book.year" | translate }}
+        </label>
         <input
           class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="year"
@@ -80,10 +98,15 @@
       </div>
 
       <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="category"
-          >Category</label
+        <label
+          class="block text-gray-700 text-sm font-bold mb-2"
+          [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
+          for="category"
         >
+          {{ "update-book.category" | translate }}
+        </label>
         <select
+          [dir]="pageDirection"
           class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="category"
           formControlName="category"
@@ -94,10 +117,16 @@
         </select>
       </div>
 
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="quantity"
-          >Quantity</label
+      <div
+        class="mb-4"
+        [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
+      >
+        <label
+          class="block text-gray-700 text-sm font-bold mb-2"
+          for="quantity"
         >
+          {{ "update-book.quantity" | translate }}
+        </label>
         <input
           class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="quantity"
@@ -116,12 +145,16 @@
         </div>
       </div>
 
-      <div class="mb-4">
+      <div
+        class="mb-4"
+        [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
+      >
         <label
           class="block text-gray-700 text-sm font-bold mb-2"
           for="coverPath"
-          >Cover Image</label
         >
+          {{ "update-book.cover" | translate }}
+        </label>
         <div class="flex items-center">
           <img
             *ngIf="previewNewCoverImg"
@@ -154,7 +187,11 @@
         </div>
       </div>
 
-      <div class="mb-4" formArrayName="authors">
+      <div
+        class="mb-4"
+        formArrayName="authors"
+        [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
+      >
         <div
           *ngFor="let authorControl of authorControls; let i = index"
           [formGroupName]="i"
@@ -162,7 +199,8 @@
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
             [for]="'author_' + i"
-            >Author {{ i + 1 }}</label
+          >
+            {{ "update-book.author" | translate }} {{ i + 1 }}</label
           >
           <input
             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -190,8 +228,8 @@
       <div class="flex items-center justify-between">
         <app-dynamic-button
           [isDisabled]="bookForm.invalid"
-          [label]="'Update'"
-          [waitingLabel]="'Updating...'"
+          [label]="'update-book.update-btn' | translate"
+          [waitingLabel]="'update-book.update-btn-waiting' | translate"
           [isWaiting]="updating"
         />
       </div>

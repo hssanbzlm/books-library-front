@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import * as BorrowActionsTypes from '../../store/borrow/borrow.actions';
 import { UserToBookService } from '../../services/user-to-book.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-update-status',
@@ -23,13 +24,18 @@ export class UpdateStatusComponent {
   statusUpdate = new EventEmitter();
   possibleStatus: Status[] = [];
   selectedStatus!: Status;
+  pageDirection!: 'rtl' | 'ltr';
+
   private destroy$ = new Subject();
 
   constructor(
     private store: Store<{ appState: AppStateShape }>,
-    private userToBookService: UserToBookService
+    private userToBookService: UserToBookService,
+    private translate: TranslateService
   ) {}
   ngOnInit(): void {
+    this.pageDirection = this.translate.currentLang == 'ar' ? 'rtl' : 'ltr';
+
     this.possibleStatus = this.userToBookService.getStatusProperties(
       this.borrow.status
     );
