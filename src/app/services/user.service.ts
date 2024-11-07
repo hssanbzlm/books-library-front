@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IUser } from '../common/types';
+import { IUser } from '@src/common/types';
 import { HttpClient } from '@angular/common/http';
 import { authUrl, usersUrl } from '@api/api';
 

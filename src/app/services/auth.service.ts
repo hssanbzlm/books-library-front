@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { authUrl } from '@api/api';
-import { IUser } from '../common/types';
+import { IUser } from '@src/common/types';
 import { BehaviorSubject, take } from 'rxjs';
 
 @Injectable({

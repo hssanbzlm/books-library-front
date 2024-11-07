@@ -31,8 +31,8 @@ export class BookDetailsComponent {
     this.authService
       .getAuthListener()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((v) => {
-        this.isAuth = v;
+      .subscribe((auth) => {
+        this.isAuth = auth;
       });
   }
 

@@ -56,15 +56,15 @@ export class NavbarComponent {
     public translate: TranslateFacadeService
   ) {}
   ngOnInit(): void {
-    this.translate.getCurrentLanguage().subscribe((v) => {
-      this.currentLanguage = v;
+    this.translate.getCurrentLanguage().subscribe((currentLanguage) => {
+      this.currentLanguage = currentLanguage;
     });
     this.notifications$ = this.notificationService.getNotificationsStream();
     this.authService
       .getAuthListener()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((v) => {
-        this.isAuth = v;
+      .subscribe((auth) => {
+        this.isAuth = auth;
       });
     fromEvent(document, 'click')
       .pipe(takeUntil(this.destroy$))

@@ -20,8 +20,8 @@ export class BookComponent {
     this.authservice
       .getAuthListener()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((v) => {
-        this.isAuth = v;
+      .subscribe((auth) => {
+        this.isAuth = auth;
       });
   }
   toBookDetails() {

@@ -39,16 +39,17 @@ export class HomeComponent {
         this.pageDirection = pageDirection;
       });
 
-    this.$routeChange = this.router.events.subscribe((v) => {
-      if (v instanceof NavigationEnd) {
-        this.title = this.getCurrentTitle(v.url);
+    this.$routeChange = this.router.events.subscribe((routerEvent) => {
+      if (routerEvent instanceof NavigationEnd) {
+        this.title = this.getCurrentTitle(routerEvent.url);
       }
     });
   }
 
   private getCurrentTitle(url: String): string {
     const currentPath = url.slice(url.lastIndexOf('/') + 1);
-    return this.navItems.find((v) => v.path.includes(currentPath))!.title;
+    return this.navItems.find((navItem) => navItem.path.includes(currentPath))!
+      .title;
   }
   setDirectionClass() {
     return this.translate.getDirectionClass();
