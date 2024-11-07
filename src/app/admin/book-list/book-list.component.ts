@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IBook } from '../../interfaces/IBook';
+import { IBook } from '@src/common/types';
 import { Store } from '@ngrx/store';
-import { AppStateShape } from '../../store';
+import { AppStateShape } from '@src/store';
 
 @Component({
   selector: 'app-book-list',

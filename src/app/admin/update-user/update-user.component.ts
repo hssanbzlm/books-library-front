@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IUser } from '../../interfaces/IUser';
+import { IUser, LanguageDirection } from '@src/common/types';
 import { Store } from '@ngrx/store';
-import { AppStateShape } from '../../store';
+import { AppStateShape } from '@src/store';
 import { Subject, takeUntil } from 'rxjs';
+import { TranslateFacadeService } from '@src/services/translate-facade.service';
 
 @Component({
   selector: 'app-update-user',
@@ -18,10 +19,20 @@ export class UpdateUserComponent {
   confirmUpdate = false;
   waiting = false;
   error: null | string = null;
+  pageDirection!: LanguageDirection;
 
-  constructor(private store: Store<{ appState: AppStateShape }>) {}
+  constructor(
+    private store: Store<{ appState: AppStateShape }>,
+    private translate: TranslateFacadeService
+  ) {}
 
   ngOnInit(): void {
+    this.translate
+      .getPageDirection()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((pageDirection) => {
+        this.pageDirection = pageDirection;
+      });
     this.newUserValue = { ...this.user };
     this.users$.pipe(takeUntil(this.destroy$)).subscribe((userState) => {
       this.waiting = userState.loading;
@@ -38,6 +49,9 @@ export class UpdateUserComponent {
       type: '[User] Update activity',
       payload: { userId: this.user.id, activity: this.newUserValue.active },
     });
+  }
+  setDirectionClass() {
+    return this.translate.getDirectionClass();
   }
   ngOnDestroy(): void {
     this.destroy$.next(true);

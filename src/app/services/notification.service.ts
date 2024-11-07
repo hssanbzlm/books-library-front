@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
-import { IUser } from '../interfaces/IUser';
+import { IUser } from '@src/common/types';
 import {
   missedNotificationUrl,
   notificationEventSourceUrl,
   notificationsSeenUrl,
-} from '../../API/api';
+} from '@api/api';
 import { HttpClient } from '@angular/common/http';
-import { IBorrow } from '../interfaces/IBorrow';
-import { Observable, ReplaySubject, Subject, take } from 'rxjs';
+import { IBorrow } from '@src/common/types';
+import { ReplaySubject, Subject, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Category } from '../../interfaces/IBook';
+import { Category } from '@src/common/types';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AppStateShape } from '../../store';
+import { AppStateShape } from '@src/store';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({

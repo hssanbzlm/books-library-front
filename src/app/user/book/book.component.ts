@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { IBook } from '../../interfaces/IBook';
-import { AuthService } from '../../services/auth.service';
-import { IUser } from '../../interfaces/IUser';
+import { IBook, IUser } from '@src/common/types';
+import { AuthService } from '@src/services/auth.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -21,8 +20,8 @@ export class BookComponent {
     this.authservice
       .getAuthListener()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((v) => {
-        this.isAuth = v;
+      .subscribe((auth) => {
+        this.isAuth = auth;
       });
   }
   toBookDetails() {

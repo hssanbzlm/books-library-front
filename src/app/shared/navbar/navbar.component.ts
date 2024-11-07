@@ -1,17 +1,37 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { IUser } from '../../interfaces/IUser';
+import { AuthService } from '@src/services/auth.service';
+import { IUser, LanguageDirection } from '@src/common/types';
 import { fromEvent, ReplaySubject, Subject, take, takeUntil } from 'rxjs';
-import { NotificationService } from '../../services/notification.service';
-import { IBorrow } from '../../interfaces/IBorrow';
+import { NotificationService } from '@src/services/notification.service';
+import { IBorrow } from '@src/common/types';
 import { MatBadgeModule } from '@angular/material/badge';
-import { NotSeenNotifPipe } from '../../not-seen-notif.pipe';
+import { NotSeenNotifPipe } from '@src/pipes/not-seen-notif.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
+import {
+  MatSelect,
+  MatFormField,
+  MatLabel,
+  MatOption,
+} from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import { TranslateFacadeService } from '@src/services/translate-facade.service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink, MatBadgeModule, NotSeenNotifPipe],
+  imports: [
+    CommonModule,
+    RouterLink,
+    MatBadgeModule,
+    NotSeenNotifPipe,
+    TranslatePipe,
+    MatSelect,
+    MatFormField,
+    MatLabel,
+    MatOption,
+    FormsModule,
+  ],
   standalone: true,
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
@@ -23,20 +43,28 @@ export class NavbarComponent {
   showUserNotification = false;
   isAuth!: IUser | null;
   notifications$!: ReplaySubject<IBorrow[]>;
+  languages = this.translate.getLanguages();
+  currentLanguage!: string;
+  pageDirection!: LanguageDirection;
+
   private destroy$ = new Subject();
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    public translate: TranslateFacadeService
   ) {}
   ngOnInit(): void {
+    this.translate.getCurrentLanguage().subscribe((currentLanguage) => {
+      this.currentLanguage = currentLanguage;
+    });
     this.notifications$ = this.notificationService.getNotificationsStream();
     this.authService
       .getAuthListener()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((v) => {
-        this.isAuth = v;
+      .subscribe((auth) => {
+        this.isAuth = auth;
       });
     fromEvent(document, 'click')
       .pipe(takeUntil(this.destroy$))
@@ -50,6 +78,7 @@ export class NavbarComponent {
         }
       });
   }
+
   showMobileMenu() {
     this.show = !this.show;
   }
@@ -75,5 +104,8 @@ export class NavbarComponent {
   ngOnDestroy(): void {
     this.destroy$.next(true);
     this.notificationService.closeEventSource();
+  }
+  onLanguageChange(newLanguage: string) {
+    this.translate.onLanguageChange(newLanguage);
   }
 }

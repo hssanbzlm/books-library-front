@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IUser } from '../../interfaces/IUser';
+import { IUser } from '@src/common/types';
 import { Store } from '@ngrx/store';
-import { UsersStateShape } from '../../store/user/users.reducer';
-import * as UsersActionsTypes from '../../store/user/users.actions';
-import { AppStateShape } from '../../store';
+import * as UsersActionsTypes from '@src/store/user/users.actions';
+import { AppStateShape } from '@src/store';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({

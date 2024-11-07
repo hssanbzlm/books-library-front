@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IUser } from '../../interfaces/IUser';
+import { IUser } from '@src/common/types';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppStateShape } from '../../store';
+import { AppStateShape } from '@src/store';
 
 @Component({
   selector: 'app-user-list',

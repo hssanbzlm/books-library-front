@@ -1,17 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { IUser } from '../../interfaces/IUser';
-import { UsersStateShape } from '../../store/user/users.reducer';
+import { IUser } from '@src/common/types';
 import { Store } from '@ngrx/store';
-import {
-  Subject,
-  Subscription,
-  delay,
-  map,
-  mergeMap,
-  take,
-  takeUntil,
-} from 'rxjs';
-import { AppStateShape } from '../../store';
+import { Subject, takeUntil } from 'rxjs';
+import { AppStateShape } from '@src/store';
 
 @Component({
   selector: 'app-add-user',

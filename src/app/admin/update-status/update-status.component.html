@@ -1,17 +1,22 @@
-<div class="w-96 mx-auto">
+<div class="w-96 mx-auto" [dir]="pageDirection">
   <div class="bg-white rounded px-8 pt-6 pb-8 mb-4">
-    <h2 class="text-2xl font-semibold mb-4">Update Status</h2>
+    <h2 class="text-2xl font-semibold mb-4" [ngClass]="setDirectionClass()">
+      {{ "update.borrow" | translate }}
+    </h2>
 
-    Current status: {{ borrow.status }}
-
-    <mat-form-field>
-      <mat-label>status</mat-label>
-      <mat-select [(value)]="selectedStatus">
-        @for (value of possibleStatus ; track value) {
-        <mat-option [value]="value">{{ value }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+    <p [ngClass]="setDirectionClass()">
+      {{ "update-borrow.current-status" | translate }} : {{ borrow.status }}
+    </p>
+    <div [ngClass]="setDirectionClass()">
+      <mat-form-field>
+        <mat-label>status</mat-label>
+        <mat-select [(value)]="selectedStatus">
+          @for (value of possibleStatus ; track value) {
+          <mat-option [value]="value">{{ value }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
 
     <p *ngIf="confirmUpdate && !isLoading && isError">{{ isError }}</p>
 
@@ -19,7 +24,7 @@
       <app-dynamic-button
         (clicked)="onUpdateStatus()"
         [isDisabled]="false"
-        [label]="'Confirm'"
+        [label]="'update-borrow.confirm-btn' | translate"
         [waitingLabel]="'Updating...'"
         [isWaiting]="isLoading"
       />

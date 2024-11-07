@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { IBook } from '../../interfaces/IBook';
+import { IBook } from '@src/common/types';
 import * as BookActionsTypes from './books.actions';
 export interface BookStateShape {
   bookList: IBook[];

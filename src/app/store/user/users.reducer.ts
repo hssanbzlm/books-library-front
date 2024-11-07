@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { IUser } from '../../interfaces/IUser';
+import { IUser } from '@src/common/types';
 import * as UsersActionsTypes from './users.actions';
 
 export interface UsersStateShape {

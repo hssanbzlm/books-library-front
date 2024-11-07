@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IBorrow } from './interfaces/IBorrow';
+import { IBorrow } from '@src/common/types';
 
 @Pipe({
   name: 'notSeenNotif',

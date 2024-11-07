@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IBorrow, Status } from '../../interfaces/IBorrow';
-import { AppStateShape } from '../../store';
+import { IBorrow, LanguageDirection, Status } from '@src/common/types';
+import { AppStateShape } from '@src/store';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
-import * as BorrowActionsTypes from '../../store/borrow/borrow.actions';
-import { UserToBookService } from '../../services/user-to-book.service';
+import * as BorrowActionsTypes from '@src/store/borrow/borrow.actions';
+import { UserToBookService } from '@src/services/user-to-book.service';
+import { TranslateFacadeService } from '@src/services/translate-facade.service';
 
 @Component({
   selector: 'app-update-status',
@@ -23,13 +24,23 @@ export class UpdateStatusComponent {
   statusUpdate = new EventEmitter();
   possibleStatus: Status[] = [];
   selectedStatus!: Status;
+  pageDirection!: LanguageDirection;
+
   private destroy$ = new Subject();
 
   constructor(
     private store: Store<{ appState: AppStateShape }>,
-    private userToBookService: UserToBookService
+    private userToBookService: UserToBookService,
+    private translate: TranslateFacadeService
   ) {}
   ngOnInit(): void {
+    this.translate
+      .getPageDirection()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((pageDirection) => {
+        this.pageDirection = pageDirection;
+      });
+
     this.possibleStatus = this.userToBookService.getStatusProperties(
       this.borrow.status
     );
@@ -51,7 +62,9 @@ export class UpdateStatusComponent {
     );
     this.confirmUpdate = true;
   }
-
+  setDirectionClass() {
+    return this.translate.getDirectionClass();
+  }
   ngOnDestroy(): void {
     this.destroy$.next(true);
   }

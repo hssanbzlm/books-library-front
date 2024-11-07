@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IBook } from '../../interfaces/IBook';
-import { AppStateShape } from '../../store';
+import { IBook } from '@src/common/types';
+import { AppStateShape } from '@src/store';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 

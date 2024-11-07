@@ -1,4 +1,4 @@
-import { UserStatusPipe } from './user-status.pipe';
+import { UserStatusPipe } from './pipes/user-status.pipe';
 
 describe('UserStatusPipe', () => {
   it('create an instance', () => {

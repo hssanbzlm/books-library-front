@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription, take } from 'rxjs';
-import { AppStateShape } from '../../store';
-import * as UsersActionsTypes from '../../store/user/users.actions';
+import { Subject, Subscription, takeUntil } from 'rxjs';
+import { AppStateShape } from '@src/store';
+import * as UsersActionsTypes from '@src/store/user/users.actions';
+import { LanguageDirection } from '@src/common/types';
+import { TranslateFacadeService } from '@src/services/translate-facade.service';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +15,8 @@ import * as UsersActionsTypes from '../../store/user/users.actions';
 export class HomeComponent {
   title: string;
   $routeChange: Subscription = new Subscription();
+  $destroy = new Subject();
+  pageDirection!: LanguageDirection;
   navItems = [
     { title: 'Dashboard', path: '/admin' },
     { title: 'Borrow', path: './borrow-list' },
@@ -21,25 +25,38 @@ export class HomeComponent {
   ];
   constructor(
     private router: Router,
-    private store: Store<{ appState: AppStateShape }>
+    private store: Store<{ appState: AppStateShape }>,
+    private translate: TranslateFacadeService
   ) {
     this.store.dispatch(UsersActionsTypes.init());
     this.title = this.getCurrentTitle(this.router.url);
   }
   ngOnInit(): void {
-    this.$routeChange = this.router.events.pipe(take(1)).subscribe((v) => {
-      if (v instanceof NavigationEnd) {
-        this.title = this.getCurrentTitle(v.url);
+    this.translate
+      .getPageDirection()
+      .pipe(takeUntil(this.$destroy))
+      .subscribe((pageDirection) => {
+        this.pageDirection = pageDirection;
+      });
+
+    this.$routeChange = this.router.events.subscribe((routerEvent) => {
+      if (routerEvent instanceof NavigationEnd) {
+        this.title = this.getCurrentTitle(routerEvent.url);
       }
     });
   }
 
   private getCurrentTitle(url: String): string {
     const currentPath = url.slice(url.lastIndexOf('/') + 1);
-    return this.navItems.find((v) => v.path.includes(currentPath))!.title;
+    return this.navItems.find((navItem) => navItem.path.includes(currentPath))!
+      .title;
+  }
+  setDirectionClass() {
+    return this.translate.getDirectionClass();
   }
 
   ngOnDestroy(): void {
+    this.$destroy.next(true);
     this.$routeChange.unsubscribe();
   }
 }
