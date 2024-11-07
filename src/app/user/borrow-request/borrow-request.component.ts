@@ -10,7 +10,7 @@ import {
   DateRange,
   MatDatepickerInputEvent,
 } from '@angular/material/datepicker';
-import { UserToBookService } from '../../services/user-to-book.service';
+import { UserToBookService } from '@src/services/user-to-book.service';
 
 @Component({
   selector: 'app-borrow-request',

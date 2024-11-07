@@ -1,10 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { IUser } from '../../interfaces/IUser';
-import { AppStateShape } from '../../store';
+import { AuthService } from '@src/services/auth.service';
+import { IUser, IBook } from '@src/common/types';
+import { AppStateShape } from '@src/store';
 import { Store } from '@ngrx/store';
-import { IBook } from '../../interfaces/IBook';
 import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({

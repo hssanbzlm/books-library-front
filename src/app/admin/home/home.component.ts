@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
-import { AppStateShape } from '../../store';
-import * as UsersActionsTypes from '../../store/user/users.actions';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { Subject, Subscription, takeUntil } from 'rxjs';
+import { AppStateShape } from '@src/store';
+import * as UsersActionsTypes from '@src/store/user/users.actions';
+import { LanguageDirection } from '@src/common/types';
+import { TranslateFacadeService } from '@src/services/translate-facade.service';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,7 @@ export class HomeComponent {
   title: string;
   $routeChange: Subscription = new Subscription();
   $destroy = new Subject();
-  pageDirection!: 'rtl' | 'ltr';
+  pageDirection!: LanguageDirection;
   navItems = [
     { title: 'Dashboard', path: '/admin' },
     { title: 'Borrow', path: './borrow-list' },
@@ -25,20 +26,19 @@ export class HomeComponent {
   constructor(
     private router: Router,
     private store: Store<{ appState: AppStateShape }>,
-    private translate: TranslateService
+    private translate: TranslateFacadeService
   ) {
     this.store.dispatch(UsersActionsTypes.init());
     this.title = this.getCurrentTitle(this.router.url);
   }
   ngOnInit(): void {
-    if (this.translate.currentLang == 'ar') this.pageDirection = 'rtl';
-    else this.pageDirection = 'ltr';
-    this.translate.onLangChange
+    this.translate
+      .getPageDirection()
       .pipe(takeUntil(this.$destroy))
-      .subscribe((languageEvent: LangChangeEvent) => {
-        if (languageEvent.lang == 'ar') this.pageDirection = 'rtl';
-        else this.pageDirection = 'ltr';
+      .subscribe((pageDirection) => {
+        this.pageDirection = pageDirection;
       });
+
     this.$routeChange = this.router.events.subscribe((v) => {
       if (v instanceof NavigationEnd) {
         this.title = this.getCurrentTitle(v.url);
@@ -49,6 +49,9 @@ export class HomeComponent {
   private getCurrentTitle(url: String): string {
     const currentPath = url.slice(url.lastIndexOf('/') + 1);
     return this.navItems.find((v) => v.path.includes(currentPath))!.title;
+  }
+  setDirectionClass() {
+    return this.translate.getDirectionClass();
   }
 
   ngOnDestroy(): void {

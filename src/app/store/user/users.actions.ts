@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IUser } from '../../interfaces/IUser';
+import { IUser } from '@src/common/types';
 export const init = createAction('[User] Init');
 export const initSuccess = createAction(
   '[User] Init success',

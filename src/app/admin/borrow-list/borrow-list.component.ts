@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IBorrow } from '../../interfaces/IBorrow';
+import { IBorrow } from '@src/common/types';
 import { Store } from '@ngrx/store';
-import * as BorrowActionsTypes from '../../store/borrow/borrow.actions';
-import { AppStateShape } from '../../store';
+import * as BorrowActionsTypes from '@src/store/borrow/borrow.actions';
+import { AppStateShape } from '@src/store';
 
 @Component({
   selector: 'app-borrow-list',

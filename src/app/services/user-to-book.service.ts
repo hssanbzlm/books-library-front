@@ -1,8 +1,8 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { userToBookUrl } from '../../API/api';
-import { IBorrow, Status } from '../interfaces/IBorrow';
-import { map, mergeMap } from 'rxjs';
+import { userToBookUrl } from '@api/api';
+import { IBorrow, Status } from '../common/types';
+import { map } from 'rxjs';
 import { format } from 'date-fns';
 
 @Injectable({

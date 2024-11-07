@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Category, IBook } from '../../interfaces/IBook';
-import { AppStateShape } from '../../store';
+import { Category, IBook, LanguageDirection } from '@src/common/types';
+import { AppStateShape } from '@src/store';
 import { Store } from '@ngrx/store';
-import { Subject, takeUntil, takeWhile } from 'rxjs';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { Subject, takeUntil } from 'rxjs';
+import { TranslateFacadeService } from '@src/services/translate-facade.service';
 
 @Component({
   selector: 'app-update-book',
@@ -38,14 +38,19 @@ export class UpdateBookComponent {
     'Science',
     'N/A',
   ];
-  pageDirection!: 'rtl' | 'ltr';
+  pageDirection!: LanguageDirection;
   constructor(
     private fb: FormBuilder,
     private store: Store<{ appState: AppStateShape }>,
-    private translate: TranslateService
+    private translate: TranslateFacadeService
   ) {}
   ngOnInit(): void {
-    this.pageDirection = this.translate.currentLang == 'ar' ? 'rtl' : 'ltr';
+    this.translate
+      .getPageDirection()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((pageDirection) => {
+        this.pageDirection = pageDirection;
+      });
     this.updatingBook = { ...this.book };
     const authorsArray = this.updatingBook.authors.map((author) =>
       this.createAuthor(author)
@@ -96,6 +101,10 @@ export class UpdateBookComponent {
       this.newCoverImg = event.target.files[0];
     }
   }
+  setDirectionClass() {
+    return this.translate.getDirectionClass();
+  }
+
   updateBook() {
     if (this.bookForm.valid) {
       this.confirmUpdate = true;

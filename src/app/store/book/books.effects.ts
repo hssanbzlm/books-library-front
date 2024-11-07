@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { BookService } from '../../services/book.service';
+import { BookService } from '@src/services/book.service';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import * as BooksActions from './books.actions';
 

@@ -1,16 +1,13 @@
 <div class="w-96 mx-auto" [dir]="pageDirection">
   <div class="bg-white rounded px-8 pt-6 pb-8 mb-4">
-    <h2
-      class="text-2xl font-semibold mb-4"
-      [align]="pageDirection == 'rtl' ? 'right' : 'left'"
-    >
+    <h2 class="text-2xl font-semibold mb-4" [ngClass]="setDirectionClass()">
       {{ "update.borrow" | translate }}
     </h2>
 
-    <p [align]="pageDirection == 'rtl' ? 'right' : 'left'">
+    <p [ngClass]="setDirectionClass()">
       {{ "update-borrow.current-status" | translate }} : {{ borrow.status }}
     </p>
-    <div [align]="pageDirection == 'rtl' ? 'right' : 'left'">
+    <div [ngClass]="setDirectionClass()">
       <mat-form-field>
         <mat-label>status</mat-label>
         <mat-select [(value)]="selectedStatus">

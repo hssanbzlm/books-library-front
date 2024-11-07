@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IBorrow, Status } from '../../interfaces/IBorrow';
+import { IBorrow, Status } from '@src/common/types';
 
 export const init = createAction('[Borrow] Init');
 export const initSuccess = createAction(

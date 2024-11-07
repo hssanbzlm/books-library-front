@@ -1,16 +1,10 @@
 <div class="w-96 mx-auto">
   <div class="bg-white rounded px-8 pt-6 pb-8 mb-4" [dir]="pageDirection">
-    <h2
-      class="text-2xl font-semibold mb-4"
-      [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
-    >
+    <h2 class="text-2xl font-semibold mb-4" [ngClass]="setDirectionClass()">
       {{ "update-book.page-title" | translate }}
     </h2>
     <form [formGroup]="bookForm" (ngSubmit)="updateBook()">
-      <div
-        class="mb-4"
-        [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
-      >
+      <div class="mb-4" [ngClass]="setDirectionClass()">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
           {{ "update-book.title" | translate }}
         </label>
@@ -31,10 +25,7 @@
         </div>
       </div>
 
-      <div
-        class="mb-4"
-        [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
-      >
+      <div class="mb-4" [ngClass]="setDirectionClass()">
         <label
           class="block text-gray-700 text-sm font-bold mb-2"
           for="numberOfPages"
@@ -59,10 +50,7 @@
         </div>
       </div>
 
-      <div
-        class="mb-4"
-        [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
-      >
+      <div class="mb-4" [ngClass]="setDirectionClass()">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="edition">
           {{ "update-book.edition" | translate }}
         </label>
@@ -75,10 +63,7 @@
         />
       </div>
 
-      <div
-        class="mb-4"
-        [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
-      >
+      <div class="mb-4" [ngClass]="setDirectionClass()">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="year">
           {{ "update-book.year" | translate }}
         </label>
@@ -100,7 +85,7 @@
       <div class="mb-4">
         <label
           class="block text-gray-700 text-sm font-bold mb-2"
-          [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
+          [ngClass]="setDirectionClass()"
           for="category"
         >
           {{ "update-book.category" | translate }}
@@ -117,10 +102,7 @@
         </select>
       </div>
 
-      <div
-        class="mb-4"
-        [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
-      >
+      <div class="mb-4" [ngClass]="setDirectionClass()">
         <label
           class="block text-gray-700 text-sm font-bold mb-2"
           for="quantity"
@@ -145,10 +127,7 @@
         </div>
       </div>
 
-      <div
-        class="mb-4"
-        [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
-      >
+      <div class="mb-4" [ngClass]="setDirectionClass()">
         <label
           class="block text-gray-700 text-sm font-bold mb-2"
           for="coverPath"
@@ -187,11 +166,7 @@
         </div>
       </div>
 
-      <div
-        class="mb-4"
-        formArrayName="authors"
-        [ngClass]="pageDirection == 'rtl' ? 'text-right' : 'text-left'"
-      >
+      <div class="mb-4" formArrayName="authors" [ngClass]="setDirectionClass()">
         <div
           *ngFor="let authorControl of authorControls; let i = index"
           [formGroupName]="i"

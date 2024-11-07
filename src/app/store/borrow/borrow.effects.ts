@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of } from 'rxjs';
-import { UserToBookService } from '../../services/user-to-book.service';
+import { UserToBookService } from '@src/services/user-to-book.service';
 import { format } from 'date-fns';
 import * as BorrowActions from './borrow.actions';
 

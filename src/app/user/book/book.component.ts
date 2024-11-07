@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { IBook } from '../../interfaces/IBook';
-import { AuthService } from '../../services/auth.service';
-import { IUser } from '../../interfaces/IUser';
+import { IBook, IUser } from '@src/common/types';
+import { AuthService } from '@src/services/auth.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({

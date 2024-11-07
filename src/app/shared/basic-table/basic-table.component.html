@@ -1,11 +1,7 @@
 <div class="container w-100 px-4 mx-auto sm:px-8">
   <div class="py-8">
     <div class="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
-      <div
-        *ngIf="addable"
-        class="mt-4 mb-8"
-        [ngClass]="langDir == 'rtl' ? 'text-right' : 'text-left'"
-      >
+      <div *ngIf="addable" class="mt-4 mb-8" [ngClass]="setDirectionClass()">
         <button
           class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           (click)="onAdd()"
@@ -14,14 +10,14 @@
         </button>
       </div>
       <div class="inline-block min-w-full overflow-hidden rounded-lg shadow">
-        <table [dir]="langDir" class="min-w-full leading-normal">
+        <table [dir]="pageDirection" class="min-w-full leading-normal">
           <thead>
             <tr>
               <th
                 *ngFor="let item of columns"
                 scope="col"
                 class="px-5 py-3 text-sm font-normal text-gray-800 uppercase bg-white border-b border-gray-200"
-                [ngClass]="langDir == 'rtl' ? 'text-right' : 'text-left'"
+                [ngClass]="setDirectionClass()"
               >
                 {{ "table." + item.column | translate }}
               </th>

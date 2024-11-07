@@ -70,7 +70,7 @@
         <mat-label>Language</mat-label>
         <mat-select
           (valueChange)="onLanguageChange($event)"
-          [(ngModel)]="selectedLanguage"
+          [(ngModel)]="currentLanguage"
         >
           @for (language of languages; track language) {
           <mat-option [value]="language.value">{{

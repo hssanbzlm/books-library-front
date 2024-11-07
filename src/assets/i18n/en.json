@@ -19,7 +19,8 @@
     "page": {
         "Books": "Books",
         "Users": "Users",
-        "Dashboard": "Dashboard"
+        "Dashboard": "Dashboard",
+        "Borrow": "Borrow"
     },
     "navbar": {
         "Dashboard": "Dashboard",

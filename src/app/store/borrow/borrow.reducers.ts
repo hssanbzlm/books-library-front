@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { IBorrow } from '../../interfaces/IBorrow';
+import { IBorrow } from '@src/common/types';
 import * as BorrowActionsTypes from './borrow.actions';
 
 export interface BorrowStateShape {

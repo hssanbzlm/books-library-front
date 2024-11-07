@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppStateShape } from '../../store';
+import { AppStateShape } from '@src/store';
 import { Store } from '@ngrx/store';
 import { PageEvent } from '@angular/material/paginator';
 

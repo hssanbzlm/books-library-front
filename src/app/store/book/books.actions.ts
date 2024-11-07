@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IBook } from '../../interfaces/IBook';
+import { IBook } from '@src/common/types';
 
 export const init = createAction('[Book] Init');
 export const initSuccess = createAction(

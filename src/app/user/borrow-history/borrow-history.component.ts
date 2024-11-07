@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { UserToBookService } from '../../services/user-to-book.service';
-import { IBorrow } from '../../interfaces/IBorrow';
+import { UserToBookService } from '@src/services/user-to-book.service';
+import { IBorrow } from '@src/common/types';
 import { take } from 'rxjs';
 
 @Component({
