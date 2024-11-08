@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { IBook, IUser } from '@src/common/types';
 import { AuthService } from '@src/services/auth.service';
+import { UserToBookService } from '@src/services/user-to-book.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -13,9 +14,16 @@ export class BookComponent {
   @Input() book!: IBook;
   show = false;
   isAuth!: IUser | null;
+  isCheckingAvailabitly = false;
+  showSnackBar = false;
+  snackBarMessage!: string;
   private destroy$ = new Subject();
 
-  constructor(private router: Router, private authservice: AuthService) {}
+  constructor(
+    private router: Router,
+    private authservice: AuthService,
+    private userToBookService: UserToBookService
+  ) {}
   ngOnInit(): void {
     this.authservice
       .getAuthListener()
@@ -29,8 +37,21 @@ export class BookComponent {
   }
   borrow(event: Event) {
     event.stopPropagation();
-    if (this.isAuth) this.showModal(event);
-    else this.router.navigateByUrl('auth');
+    if (this.isAuth) {
+      this.isCheckingAvailabitly = true;
+      this.showSnackBar = false;
+      this.userToBookService.isReadyToBorrow(this.book.id).subscribe({
+        next: () => {
+          this.isCheckingAvailabitly = false;
+          this.showModal(event);
+        },
+        error: ({ error }) => {
+          this.isCheckingAvailabitly = false;
+          this.showSnackBar = true;
+          this.snackBarMessage = error.message;
+        },
+      });
+    } else this.router.navigateByUrl('auth');
   }
 
   showModal(event?: Event) {

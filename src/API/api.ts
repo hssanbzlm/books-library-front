@@ -6,3 +6,4 @@ export const userToBookUrl = `${environment.apiUrl}/user-to-book`;
 export const notificationEventSourceUrl = `${environment.apiUrl}/user-to-book/borrow-notification`;
 export const missedNotificationUrl = `${environment.apiUrl}/user-to-book/notifications`;
 export const notificationsSeenUrl = `${environment.apiUrl}/user-to-book/notifications-seen`;
+export const isBookReadyToBorrow = `${environment.apiUrl}/user-to-book/is-ready-to-borrow`;

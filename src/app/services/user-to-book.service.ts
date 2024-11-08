@@ -1,6 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { userToBookUrl } from '@api/api';
+import { isBookReadyToBorrow, userToBookUrl } from '@api/api';
 import { IBorrow, Status } from '../common/types';
 import { map } from 'rxjs';
 import { format } from 'date-fns';
@@ -63,5 +63,10 @@ export class UserToBookService {
       { borrowId, status: newStatus },
       { withCredentials: true }
     );
+  }
+  isReadyToBorrow(bookId: number) {
+    return this.http.get(`${isBookReadyToBorrow}/${bookId}`, {
+      withCredentials: true,
+    });
   }
 }
