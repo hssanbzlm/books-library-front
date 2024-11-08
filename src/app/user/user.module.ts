@@ -23,6 +23,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BorrowRequestComponent } from './borrow-request/borrow-request.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { BasicTableComponent } from '../shared/basic-table/basic-table.component';
+import { FullScreenLoaderComponent } from '@src/shared/full-screen-loader/full-screen-loader.component';
+import { BaseSnackbarComponent } from '@src/shared/base-snackbar/base-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { BasicTableComponent } from '../shared/basic-table/basic-table.component
     MatEndDate,
     MatFormFieldModule,
     MatPaginatorModule,
+    FullScreenLoaderComponent,
+    BaseSnackbarComponent,
   ],
 })
 export class UserModule {}

@@ -46,4 +46,6 @@
     (onDismiss)="showModal()"
     [bookId]="book.id"
   />
+  <app-full-screen-loader [isLoading]="isCheckingAvailabitly" />
+  <app-base-snackbar [message]="snackBarMessage" [open]="showSnackBar" />
 </div>
