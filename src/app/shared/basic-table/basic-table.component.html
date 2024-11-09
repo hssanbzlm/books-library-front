@@ -10,7 +10,12 @@
         </button>
       </div>
       <div class="inline-block min-w-full overflow-hidden rounded-lg shadow">
-        <table [dir]="pageDirection" class="min-w-full leading-normal">
+        <table
+          matSort
+          (matSortChange)="sortData($event)"
+          [dir]="pageDirection"
+          class="min-w-full leading-normal"
+        >
           <thead>
             <tr>
               <th
@@ -18,6 +23,7 @@
                 scope="col"
                 class="px-5 py-3 text-sm font-normal text-gray-800 uppercase bg-white border-b border-gray-200"
                 [ngClass]="setDirectionClass()"
+                [mat-sort-header]="item.dataKey"
               >
                 {{ "table." + item.column | translate }}
               </th>
@@ -35,7 +41,7 @@
           <tbody>
             <tr
               *ngFor="
-                let item of data
+                let item of sortedData
                   | slice : page * pageSize : page * pageSize + pageSize
               "
             >
@@ -86,10 +92,10 @@
             </tr>
           </tbody>
         </table>
-        <div *ngIf="data?.length">
+        <div *ngIf="sortedData?.length">
           <mat-paginator
             (page)="handlePageEvent($event)"
-            [length]="data.length"
+            [length]="sortedData.length"
             [pageSize]="pageSize"
             [pageSizeOptions]="pageSizeOptions"
           >

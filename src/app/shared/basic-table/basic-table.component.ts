@@ -1,10 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { UserStatusPipe } from '@src/pipes/user-status.pipe';
 import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
 import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
 import { TranslateFacadeService } from '@src/services/translate-facade.service';
 import { LanguageDirection } from '@src/common/types';
+import { MatSortModule, Sort } from '@angular/material/sort';
+import { compare } from '@src/common/helper';
 
 @Component({
   selector: 'app-basic-table',
@@ -15,6 +23,7 @@ import { LanguageDirection } from '@src/common/types';
     MatPaginatorModule,
     TranslatePipe,
     TranslateDirective,
+    MatSortModule,
   ],
   templateUrl: './basic-table.component.html',
   styleUrl: './basic-table.component.css',
@@ -34,8 +43,14 @@ export class BasicTableComponent {
   languages = this.translate.getLanguages();
   currentLanguage!: string;
   pageDirection!: LanguageDirection;
+  sortedData!: any[];
 
   constructor(private translate: TranslateFacadeService) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data'] && this.data) {
+      this.sortedData = [...this.data];
+    }
+  }
   ngOnInit(): void {
     this.translate.getCurrentLanguage().subscribe((currentLanguage) => {
       this.currentLanguage = currentLanguage;
@@ -61,5 +76,15 @@ export class BasicTableComponent {
   }
   onDelete(item: any) {
     this.delete.emit(item);
+  }
+  sortData(sort: Sort) {
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = [...this.data];
+      return;
+    }
+    this.sortedData.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      return compare(a[sort.active], b[sort.active], isAsc);
+    });
   }
 }
