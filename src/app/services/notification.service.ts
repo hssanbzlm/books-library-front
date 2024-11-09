@@ -8,15 +8,14 @@ import {
 } from '@api/api';
 import { HttpClient } from '@angular/common/http';
 import { IBorrow } from '@src/common/types';
-import { ReplaySubject, Subject, take } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
   eventSource!: EventSource;
-  notifications: IBorrow[] = [];
-  notifications$ = new ReplaySubject<IBorrow[]>();
+  notifications$ = new BehaviorSubject<IBorrow[]>([]);
 
   constructor(private authService: AuthService, private http: HttpClient) {
     this.authService
@@ -38,15 +37,16 @@ export class NotificationService {
     this.eventSource.onmessage = ({ data }) => {
       if (data) {
         const borrowData: IBorrow = JSON.parse(data);
-        const notifIndex = this.notifications.findIndex(
+        const notifications = this.notifications$.value;
+        const notifIndex = notifications.findIndex(
           (notification) => notification.userToBookId == borrowData.userToBookId
         );
         if (notifIndex >= 0) {
-          this.notifications[notifIndex] = borrowData;
+          notifications[notifIndex] = borrowData;
         } else {
-          this.notifications.push(borrowData);
+          notifications.push(borrowData);
         }
-        this.notifications$.next(this.notifications);
+        this.notifications$.next(notifications);
       }
     };
     this.eventSource.onerror = (err) => {
@@ -65,7 +65,6 @@ export class NotificationService {
       .get<IBorrow[]>(missedNotificationUrl, { withCredentials: true })
       .pipe(take(1))
       .subscribe((notifications: IBorrow[]) => {
-        this.notifications.push(...notifications);
         this.notifications$.next(notifications);
       });
   }
@@ -73,8 +72,9 @@ export class NotificationService {
     return this.notifications$;
   }
   notificationSeen() {
-    if (this.notifications.filter((notif) => !notif.receiverSeen).length > 0) {
-      const notificationsIds = this.notifications.map(
+    let notifications = this.notifications$.value;
+    if (notifications.filter((notif) => !notif.receiverSeen).length > 0) {
+      const notificationsIds = notifications.map(
         (userToBook) => userToBook.userToBookId
       );
       this.http
@@ -88,11 +88,11 @@ export class NotificationService {
         .pipe(take(1))
         .subscribe({
           next: () => {
-            this.notifications = this.notifications.map((userToBook) => ({
+            notifications = notifications.map((userToBook) => ({
               ...userToBook,
               receiverSeen: true,
             }));
-            this.notifications$.next(this.notifications);
+            this.notifications$.next(notifications);
           },
           error: (error) => {
             console.log('error ', error);

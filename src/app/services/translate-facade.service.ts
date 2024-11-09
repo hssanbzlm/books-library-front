@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { LanguageDirection } from '@src/common/types';
-import { ReplaySubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TranslateFacadeService {
-  pageDirection = new ReplaySubject<LanguageDirection>();
-  currentLanguage = new ReplaySubject<string>();
+  $pageDirection = new BehaviorSubject<LanguageDirection>('ltr');
+  $currentLanguage = new BehaviorSubject<string>('en');
   languages = [
     { value: 'ar', viewValue: 'Arabic' },
     { value: 'fr', viewValue: 'French' },
@@ -19,11 +19,10 @@ export class TranslateFacadeService {
     const language = localStorage.getItem('borrow-language');
     if (language) this.translate.use(language);
     else this.translate.use('en');
-    this.currentLanguage.next(this.translate.currentLang);
+    this.$currentLanguage.next(this.translate.currentLang);
   }
   private setPageDirection() {
-    if (this.translate.currentLang == 'ar') this.pageDirection.next('rtl');
-    else this.pageDirection.next('ltr');
+    if (this.translate.currentLang == 'ar') this.$pageDirection.next('rtl');
   }
   setup() {
     this.translate.addLangs(['en', 'fr', 'ar']);
@@ -31,9 +30,8 @@ export class TranslateFacadeService {
     this.setCurrentLanguage();
     this.setPageDirection();
     this.translate.onLangChange.subscribe((languageEvent: LangChangeEvent) => {
-      this.currentLanguage.next(languageEvent.lang);
-      if (languageEvent.lang == 'ar') this.pageDirection.next('rtl');
-      else this.pageDirection.next('ltr');
+      this.$currentLanguage.next(languageEvent.lang);
+      if (languageEvent.lang == 'ar') this.$pageDirection.next('rtl');
     });
   }
 
@@ -44,10 +42,10 @@ export class TranslateFacadeService {
     return this.languages;
   }
   getPageDirection() {
-    return this.pageDirection.asObservable();
+    return this.$pageDirection.asObservable();
   }
   getCurrentLanguage() {
-    return this.currentLanguage.asObservable();
+    return this.$currentLanguage.asObservable();
   }
   onLanguageChange(newLanguage: string) {
     this.translate.use(newLanguage);

@@ -3,7 +3,14 @@ import { Component, Input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@src/services/auth.service';
 import { IUser, LanguageDirection } from '@src/common/types';
-import { fromEvent, ReplaySubject, Subject, take, takeUntil } from 'rxjs';
+import {
+  BehaviorSubject,
+  fromEvent,
+  Observable,
+  Subject,
+  take,
+  takeUntil,
+} from 'rxjs';
 import { NotificationService } from '@src/services/notification.service';
 import { IBorrow } from '@src/common/types';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -42,7 +49,7 @@ export class NavbarComponent {
   showUserMenu = false;
   showUserNotification = false;
   isAuth!: IUser | null;
-  notifications$!: ReplaySubject<IBorrow[]>;
+  notifications$ = new Observable<IBorrow[]>();
   languages = this.translate.getLanguages();
   currentLanguage!: string;
   pageDirection!: LanguageDirection;
