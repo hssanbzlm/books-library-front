@@ -26,10 +26,7 @@ import { TranslateFacadeService } from './services/translate-facade.service';
 export class AppComponent {
   title = 'books-library';
 
-  constructor(
-    private store: Store<{ appState: AppStateShape }>,
-    private translate: TranslateFacadeService
-  ) {}
+  constructor(private store: Store<{ appState: AppStateShape }>) {}
   ngOnInit(): void {
     this.store.dispatch(BooksActionsTypes.init());
   }
