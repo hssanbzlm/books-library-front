@@ -24,7 +24,7 @@ import { TranslateFacadeService } from './services/translate-facade.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'borrow-books';
+  title = 'borrow-book';
 
   constructor(private store: Store<{ appState: AppStateShape }>) {}
   ngOnInit(): void {
