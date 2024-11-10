@@ -1,20 +1,16 @@
-name: AI Code Reviewer
+name: Reviewdog Linting
 
 on:
   pull_request:
     types: [opened, synchronize]
-permissions: write-all
 jobs:
-  review:
+  lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-
-      - name: AI Code Reviewer
-        uses: anc95/ChatGPT-CodeReview@main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          MODEL: gpt-3.5-turbo
-          IGNORE_PATTERNS: /node_modules
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run Linter with Reviewdog
+        uses: reviewdog/action-eslint@v1
+        with:
+          reporter: github-pr-review
+          level: warning
