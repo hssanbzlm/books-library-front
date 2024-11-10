@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: reviewdog/action-setup@v1
-      - run: reviewdog -versio
+      - run: reviewdog -version
