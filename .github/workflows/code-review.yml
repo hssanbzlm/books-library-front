@@ -13,7 +13,7 @@ jobs:
 
       - name: AI Code Reviewer
         uses: anc95/ChatGPT-CodeReview@main
-        with:
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPEhNAI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           IGNORE_PATTERNS: /node_modules,*.md ,**/*.json,
