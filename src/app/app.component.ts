@@ -32,6 +32,5 @@ export class AppComponent {
   ) {}
   ngOnInit(): void {
     this.store.dispatch(BooksActionsTypes.init());
-    this.translate.setup();
   }
 }

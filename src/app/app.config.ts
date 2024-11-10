@@ -14,6 +14,8 @@ import { BorrowEffects } from './store/borrow/borrow.effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateFacadeService } from './services/translate-facade.service';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
   http: HttpClient
@@ -36,6 +38,12 @@ export const appConfig: ApplicationConfig = {
         provide: TranslateLoader,
         useFactory: httpLoaderFactory,
         deps: [HttpClient],
+      },
+    }),
+    provideTranslateService({
+      loader: {
+        provide: MatPaginatorIntl,
+        useClass: TranslateFacadeService,
       },
     }),
   ],

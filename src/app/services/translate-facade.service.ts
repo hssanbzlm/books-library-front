@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { LanguageDirection } from '@src/common/types';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TranslateFacadeService {
+export class TranslateFacadeService extends MatPaginatorIntl {
   $pageDirection = new BehaviorSubject<LanguageDirection>('ltr');
   $currentLanguage = new BehaviorSubject<string>('en');
   languages = [
@@ -14,7 +15,10 @@ export class TranslateFacadeService {
     { value: 'fr', viewValue: 'French' },
     { value: 'en', viewValue: 'English' },
   ];
-  constructor(private translate: TranslateService) {}
+  constructor(private translate: TranslateService) {
+    super();
+    this.setup();
+  }
   private setCurrentLanguage() {
     const language = localStorage.getItem('borrow-language');
     if (language) this.translate.use(language);
@@ -23,15 +27,23 @@ export class TranslateFacadeService {
   }
   private setPageDirection() {
     if (this.translate.currentLang == 'ar') this.$pageDirection.next('rtl');
+    else this.$pageDirection.next('ltr');
   }
   setup() {
     this.translate.addLangs(['en', 'fr', 'ar']);
-    this.translate.setDefaultLang('en');
     this.setCurrentLanguage();
     this.setPageDirection();
     this.translate.onLangChange.subscribe((languageEvent: LangChangeEvent) => {
+      console.log('hope ', languageEvent);
       this.$currentLanguage.next(languageEvent.lang);
       if (languageEvent.lang == 'ar') this.$pageDirection.next('rtl');
+      else this.$pageDirection.next('ltr');
+      this.itemsPerPageLabel = this.translate.instant(
+        'paginator.items-per-page'
+      );
+      this.nextPageLabel = this.translate.instant('paginator.next');
+      this.previousPageLabel = this.translate.instant('paginator.previous');
+      this.changes.next();
     });
   }
 

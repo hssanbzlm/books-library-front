@@ -58,5 +58,10 @@
         "author": "المؤلف",
         "update-btn": "تحديث",
         "update-btn-waiting": "جاري التحديث"
+    },
+    "paginator": {
+        "items-per-page": "عناصر لكل صفحة",
+        "next": "التالي",
+        "previous": "السابق"
     }
 }

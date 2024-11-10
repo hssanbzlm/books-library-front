@@ -58,5 +58,11 @@
         "author": "Author",
         "update-btn": "Update",
         "update-btn-waiting": "Updating..."
+    },
+    "next": "next",
+    "paginator": {
+        "items-per-page": "Item per page",
+        "next": "next",
+        "previous": "previous"
     }
 }

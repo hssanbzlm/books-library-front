@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { UserStatusPipe } from '@src/pipes/user-status.pipe';
 import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
-import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { TranslateFacadeService } from '@src/services/translate-facade.service';
 import { LanguageDirection } from '@src/common/types';
 import { MatSortModule, Sort } from '@angular/material/sort';
@@ -22,7 +22,6 @@ import { compare } from '@src/common/helper';
     UserStatusPipe,
     MatPaginatorModule,
     TranslatePipe,
-    TranslateDirective,
     MatSortModule,
   ],
   templateUrl: './basic-table.component.html',
