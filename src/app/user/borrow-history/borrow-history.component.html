@@ -1,1 +1,14 @@
-<app-basic-table [columns]="columns" [data]="borrowList" [addable]="false" />
+<app-basic-table
+  [columns]="columns"
+  [data]="(borrowList$ | async) || []"
+  [addable]="false"
+  (edit)="onEditBorrow($event)"
+/>
+<app-modal *ngIf="showUpdateBorrowModal" (dismiss)="toggleUpdateBorrowModal()">
+  <ng-container modal-content>
+    <app-update-borrow
+      (updateUserBorrow)="handleUpdateBorrow()"
+      [borrow]="updatingBorrow"
+    />
+  </ng-container>
+</app-modal>

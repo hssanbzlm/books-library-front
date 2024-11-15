@@ -34,7 +34,6 @@ export class TranslateFacadeService extends MatPaginatorIntl {
     this.setCurrentLanguage();
     this.setPageDirection();
     this.translate.onLangChange.subscribe((languageEvent: LangChangeEvent) => {
-      console.log('hope ', languageEvent);
       this.$currentLanguage.next(languageEvent.lang);
       if (languageEvent.lang == 'ar') this.$pageDirection.next('rtl');
       else this.$pageDirection.next('ltr');

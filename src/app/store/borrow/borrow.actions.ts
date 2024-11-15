@@ -24,3 +24,17 @@ export const updateError = createAction(
   '[Borrow] Update error',
   props<{ payload: string }>()
 );
+export const updateUserBorrow = createAction(
+  '[Borrow] Update user borrow',
+  props<{ borrowId: number; startDate: string; endDate: string }>()
+);
+
+export const updateUserBorrowSuccess = createAction(
+  '[Borrow] Update user borrow success',
+  props<{ borrow: IBorrow }>()
+);
+
+export const updateUserBorrowError = createAction(
+  '[Borrow] Update user borrow error',
+  props<{ payload: string }>()
+);

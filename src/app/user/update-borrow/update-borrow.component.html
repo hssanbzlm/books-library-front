@@ -1,0 +1,39 @@
+<div class="w-96 mx-auto">
+  <h3 class="text-base font-semibold leading-6 text-gray-900">Update borrow</h3>
+  <p *ngIf="!isSuccess && !isError" class="text-sm text-gray-500">
+    <mat-form-field>
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input
+          (dateChange)="onStartChange($event)"
+          matStartDate
+          placeholder="Start date"
+          [ngModel]="selectedStartDate"
+        />
+        <input
+          (dateChange)="onEndChange($event)"
+          [ngModel]="selectedEndDate"
+          matEndDate
+          placeholder="End date"
+        />
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+  </p>
+  <p *ngIf="isSuccess">Your request has been saved successfully</p>
+  <p *ngIf="isError">Error while making the request</p>
+
+  <button
+    *ngIf="!isSuccess && !isError"
+    (click)="confirmRequest()"
+    type="button"
+    class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto mt-3 sm:mt-0"
+  >
+    Confirm
+  </button>
+</div>
