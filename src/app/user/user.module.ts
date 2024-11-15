@@ -25,6 +25,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { BasicTableComponent } from '../shared/basic-table/basic-table.component';
 import { FullScreenLoaderComponent } from '@src/shared/full-screen-loader/full-screen-loader.component';
 import { BaseSnackbarComponent } from '@src/shared/base-snackbar/base-snackbar.component';
+import { UpdateBorrowComponent } from './update-borrow/update-borrow.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { BaseSnackbarComponent } from '@src/shared/base-snackbar/base-snackbar.c
     BookDetailsComponent,
     BorrowHistoryComponent,
     BorrowRequestComponent,
+    UpdateBorrowComponent,
   ],
   imports: [
     BasicTableComponent,
@@ -53,6 +56,7 @@ import { BaseSnackbarComponent } from '@src/shared/base-snackbar/base-snackbar.c
     MatPaginatorModule,
     FullScreenLoaderComponent,
     BaseSnackbarComponent,
+    FormsModule,
   ],
 })
 export class UserModule {}

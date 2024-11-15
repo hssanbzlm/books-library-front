@@ -1,6 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { isBookReadyToBorrow, userToBookUrl } from '@api/api';
+import { isBookReadyToBorrow, updateUserBorrow, userToBookUrl } from '@api/api';
 import { IBorrow, Status } from '../common/types';
 import { map } from 'rxjs';
 import { format } from 'date-fns';
@@ -42,8 +42,8 @@ export class UserToBookService {
         map((value) => {
           return value.map((borrowItem) => ({
             ...borrowItem,
-            endDate: format(borrowItem.endDate, 'dd-MM-yyyy'),
-            startDate: format(borrowItem.startDate, 'dd-MM-yyyy'),
+            endDate: format(borrowItem.endDate, 'dd/MM/yyyy'),
+            startDate: format(borrowItem.startDate, 'dd/MM/yyyy'),
           }));
         })
       );
@@ -68,5 +68,13 @@ export class UserToBookService {
     return this.http.get(`${isBookReadyToBorrow}/${bookId}`, {
       withCredentials: true,
     });
+  }
+
+  updateUserBorrow(borrowId: number, startDate: string, endDate: string) {
+    return this.http.put<IBorrow>(
+      updateUserBorrow,
+      { borrowId, startDate, endDate },
+      { withCredentials: true }
+    );
   }
 }

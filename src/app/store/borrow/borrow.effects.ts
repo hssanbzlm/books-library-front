@@ -4,6 +4,7 @@ import { catchError, map, mergeMap, of } from 'rxjs';
 import { UserToBookService } from '@src/services/user-to-book.service';
 import { format } from 'date-fns';
 import * as BorrowActions from './borrow.actions';
+import { IBorrow } from '@src/common/types';
 
 @Injectable({
   providedIn: 'root',
@@ -35,8 +36,8 @@ export class BorrowEffects {
             BorrowActions.updateSuccess({
               borrow: {
                 ...updatedBorrow[0],
-                endDate: format(updatedBorrow[0].endDate, 'dd-MM-yyyy'),
-                startDate: format(updatedBorrow[0].startDate, 'dd-MM-yyyy'),
+                endDate: format(updatedBorrow[0].endDate, 'dd/MM/yyyy'),
+                startDate: format(updatedBorrow[0].startDate, 'dd/MM/yyyy'),
               },
             })
           ),
@@ -48,6 +49,33 @@ export class BorrowEffects {
             )
           )
         );
+      })
+    )
+  );
+  updateUserBorrow$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BorrowActions.updateUserBorrow),
+      mergeMap(({ borrowId, startDate, endDate }) => {
+        return this.userToBookService
+          .updateUserBorrow(borrowId, startDate, endDate)
+          .pipe(
+            map((updatedBorrow: IBorrow) =>
+              BorrowActions.updateUserBorrowSuccess({
+                borrow: {
+                  ...updatedBorrow,
+                  endDate: format(updatedBorrow.endDate, 'dd/MM/yyyy'),
+                  startDate: format(updatedBorrow.startDate, 'dd/MM/yyyy'),
+                },
+              })
+            ),
+            catchError(() =>
+              of(
+                BorrowActions.updateUserBorrowError({
+                  payload: 'Error updating this borrow',
+                })
+              )
+            )
+          );
       })
     )
   );
