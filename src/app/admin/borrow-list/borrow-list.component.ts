@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IBorrow } from '@src/common/types';
 import { Store } from '@ngrx/store';
-import * as BorrowActionsTypes from '@src/store/borrow/borrow.actions';
 import { AppStateShape } from '@src/store';
 
 @Component({
@@ -27,13 +26,7 @@ export class BorrowListComponent {
   ];
 
   constructor(private store: Store<{ appState: AppStateShape }>) {}
-  ngOnInit(): void {
-    this.getBorrowList();
-  }
 
-  getBorrowList() {
-    this.store.dispatch(BorrowActionsTypes.init());
-  }
   onEditStatus(borrow: IBorrow) {
     this.updatingBorrow = borrow;
     this.toggleUpdateStatusModal();

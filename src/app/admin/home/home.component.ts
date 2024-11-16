@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { Subject, Subscription, takeUntil } from 'rxjs';
-import { AppStateShape } from '@src/store';
-import * as UsersActionsTypes from '@src/store/user/users.actions';
 import { LanguageDirection } from '@src/common/types';
 import { TranslateFacadeService } from '@src/services/translate-facade.service';
 
@@ -25,10 +22,8 @@ export class HomeComponent {
   ];
   constructor(
     private router: Router,
-    private store: Store<{ appState: AppStateShape }>,
     private translate: TranslateFacadeService
   ) {
-    this.store.dispatch(UsersActionsTypes.init());
     this.title = this.getCurrentTitle(this.router.url);
   }
   ngOnInit(): void {
