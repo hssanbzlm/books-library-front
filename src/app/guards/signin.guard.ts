@@ -6,7 +6,7 @@ import { AuthService } from '../services/auth.service';
 export const signinGuard = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
-  return authService.whoami().pipe(
+  return authService.getAuthListener().pipe(
     take(1),
     map((user) => {
       if (user && user.active) return router.navigateByUrl('user');

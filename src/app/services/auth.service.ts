@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { authUrl } from '@api/api';
 import { IUser } from '@src/common/types';
-import { BehaviorSubject, take } from 'rxjs';
+import { BehaviorSubject, catchError, map, of, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,17 +10,19 @@ import { BehaviorSubject, take } from 'rxjs';
 export class AuthService {
   private $user: BehaviorSubject<IUser | null> =
     new BehaviorSubject<IUser | null>(null);
-  constructor(private http: HttpClient) {
-    this.whoami()
-      .pipe(take(1))
-      .subscribe({
-        next: (user) => {
-          this.$user.next(user);
-        },
-        error: () => {
-          this.$user?.next(null);
-        },
-      });
+  constructor(private http: HttpClient) {}
+
+  fetchWhoAmi() {
+    return this.whoami().pipe(
+      take(1),
+      map((data) => {
+        this.$user.next(data);
+      }),
+      catchError(() => {
+        this.$user.next(null);
+        return of('error');
+      })
+    );
   }
 
   signin(email: string, password: string) {
