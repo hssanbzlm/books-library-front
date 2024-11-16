@@ -3,7 +3,6 @@ import { UserToBookService } from '@src/services/user-to-book.service';
 import { IBorrow } from '@src/common/types';
 import { Store } from '@ngrx/store';
 import { AppStateShape } from '@src/store';
-import * as BorrowActions from '@src/store/borrow/borrow.actions';
 
 @Component({
   selector: 'app-borrow-history',
@@ -23,17 +22,12 @@ export class BorrowHistoryComponent {
   showUpdateBorrowModal = false;
   updatingBorrow!: IBorrow;
 
-  constructor(private store: Store<{ appState: AppStateShape }>) {
-    this.getBorrowList();
-  }
+  constructor(private store: Store<{ appState: AppStateShape }>) {}
   onEditBorrow(borrow: IBorrow) {
     this.updatingBorrow = borrow;
     this.toggleUpdateBorrowModal();
   }
 
-  getBorrowList() {
-    this.store.dispatch(BorrowActions.init());
-  }
   toggleUpdateBorrowModal() {
     this.showUpdateBorrowModal = !this.showUpdateBorrowModal;
   }

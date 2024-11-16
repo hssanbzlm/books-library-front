@@ -6,7 +6,7 @@ import { catchError, map, take } from 'rxjs';
 export const adminGuard = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
-  return authService.whoami().pipe(
+  return authService.getAuthListener().pipe(
     take(1),
     map((user) => {
       if (user && user.active && user.admin) return true;

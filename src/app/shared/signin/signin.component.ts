@@ -8,6 +8,10 @@ import { Subject, take, takeUntil } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageDirection } from '@src/common/types';
 import { TranslateFacadeService } from '@src/services/translate-facade.service';
+import { AppStateShape } from '@src/store';
+import { Store } from '@ngrx/store';
+import * as BorrowActionsTypes from '@src/store/borrow/borrow.actions';
+import * as UserActionsTypes from '@src/store/user/users.actions';
 
 @Component({
   selector: 'app-signin',
@@ -27,7 +31,8 @@ export class SigninComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private translate: TranslateFacadeService
+    private translate: TranslateFacadeService,
+    private store: Store<{ appState: AppStateShape }>
   ) {}
   ngOnInit(): void {
     this.translate
@@ -47,8 +52,13 @@ export class SigninComponent {
       .subscribe({
         next: (response) => {
           this.authService.setAuthUser(response);
-          if (response.admin) this.router.navigateByUrl('admin');
-          else this.router.navigateByUrl('user');
+          this.store.dispatch(BorrowActionsTypes.init());
+          if (response.admin) {
+            this.store.dispatch(UserActionsTypes.init());
+            this.router.navigateByUrl('admin');
+          } else {
+            this.router.navigateByUrl('user');
+          }
         },
         error: (error) => {
           this.errorMessage = 'Please verify your credentials';
