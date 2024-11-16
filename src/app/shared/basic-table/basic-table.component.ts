@@ -13,6 +13,7 @@ import { TranslateFacadeService } from '@src/services/translate-facade.service';
 import { LanguageDirection } from '@src/common/types';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { compare } from '@src/common/helper';
+import { IsEditablePipe } from '@src/pipes/is-editable.pipe';
 
 @Component({
   selector: 'app-basic-table',
@@ -23,6 +24,7 @@ import { compare } from '@src/common/helper';
     MatPaginatorModule,
     TranslatePipe,
     MatSortModule,
+    IsEditablePipe,
   ],
   templateUrl: './basic-table.component.html',
   styleUrl: './basic-table.component.css',

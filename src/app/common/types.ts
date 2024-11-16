@@ -46,6 +46,13 @@ export type Status =
   | 'Returned'
   | 'Overdue'
   | 'Canceled';
+type EditableStatus =
+  | 'Pending'
+  | 'Checked-out'
+  | 'Accepted'
+  | 'Lost'
+  | 'Overdue';
+export type NotAllowedEditStatus = Exclude<Status, EditableStatus>;
 export interface IUser {
   id: number;
   email: string;
