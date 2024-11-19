@@ -20,28 +20,30 @@ export class TranslateFacadeService extends MatPaginatorIntl {
     this.setup();
   }
   private setCurrentLanguage() {
-    const language = localStorage.getItem('borrow-language');
-    if (language) this.translate.use(language);
-    else this.translate.use('en');
-    this.$currentLanguage.next(this.translate.currentLang);
+    const language = localStorage.getItem('borrow-language') || 'en';
+    this.translate.use(language);
+    this.$currentLanguage.next(language);
   }
   private setPageDirection() {
     if (this.translate.currentLang == 'ar') this.$pageDirection.next('rtl');
     else this.$pageDirection.next('ltr');
   }
+  private setPaginatorLang() {
+    this.itemsPerPageLabel = this.translate.instant('paginator.items-per-page');
+    this.nextPageLabel = this.translate.instant('paginator.next');
+    this.previousPageLabel = this.translate.instant('paginator.previous');
+  }
   setup() {
     this.translate.addLangs(['en', 'fr', 'ar']);
     this.setCurrentLanguage();
     this.setPageDirection();
+    this.setPaginatorLang();
+
     this.translate.onLangChange.subscribe((languageEvent: LangChangeEvent) => {
       this.$currentLanguage.next(languageEvent.lang);
       if (languageEvent.lang == 'ar') this.$pageDirection.next('rtl');
       else this.$pageDirection.next('ltr');
-      this.itemsPerPageLabel = this.translate.instant(
-        'paginator.items-per-page'
-      );
-      this.nextPageLabel = this.translate.instant('paginator.next');
-      this.previousPageLabel = this.translate.instant('paginator.previous');
+      this.setPaginatorLang();
       this.changes.next();
     });
   }
