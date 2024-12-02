@@ -3,27 +3,15 @@ import { Component, Input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@src/services/auth.service';
 import { IUser, LanguageDirection } from '@src/common/types';
-import {
-  BehaviorSubject,
-  fromEvent,
-  Observable,
-  Subject,
-  take,
-  takeUntil,
-} from 'rxjs';
+import { fromEvent, Observable, Subject, take, takeUntil } from 'rxjs';
 import { NotificationService } from '@src/services/notification.service';
 import { IBorrow } from '@src/common/types';
 import { MatBadgeModule } from '@angular/material/badge';
 import { NotSeenNotifPipe } from '@src/pipes/not-seen-notif.pipe';
 import { TranslatePipe } from '@ngx-translate/core';
-import {
-  MatSelect,
-  MatFormField,
-  MatLabel,
-  MatOption,
-} from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { TranslateFacadeService } from '@src/services/translate-facade.service';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-navbar',
@@ -33,11 +21,8 @@ import { TranslateFacadeService } from '@src/services/translate-facade.service';
     MatBadgeModule,
     NotSeenNotifPipe,
     TranslatePipe,
-    MatSelect,
-    MatFormField,
-    MatLabel,
-    MatOption,
     FormsModule,
+    MatMenuModule,
   ],
   standalone: true,
   templateUrl: './navbar.component.html',
@@ -51,7 +36,8 @@ export class NavbarComponent {
   isAuth!: IUser | null;
   notifications$ = new Observable<IBorrow[]>();
   languages = this.translate.getLanguages();
-  currentLanguage!: string;
+  currentLanguage!: { value: string; flag: string };
+  currentFlag!: string;
   pageDirection!: LanguageDirection;
 
   private destroy$ = new Subject();

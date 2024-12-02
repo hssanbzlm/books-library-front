@@ -9,20 +9,26 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class TranslateFacadeService extends MatPaginatorIntl {
   $pageDirection = new BehaviorSubject<LanguageDirection>('ltr');
-  $currentLanguage = new BehaviorSubject<string>('en');
+  $currentLanguage = new BehaviorSubject<any>({
+    value: 'en',
+    flag: 'assets/flags/uk.png',
+  });
   languages = [
-    { value: 'ar', viewValue: 'Arabic' },
-    { value: 'fr', viewValue: 'French' },
-    { value: 'en', viewValue: 'English' },
+    { value: 'ar', viewValue: 'Arabic', flag: 'assets/flags/tunisia.png' },
+    { value: 'fr', viewValue: 'French', flag: 'assets/flags/france.png' },
+    { value: 'en', viewValue: 'English', flag: 'assets/flags/uk.png' },
   ];
   constructor(private translate: TranslateService) {
     super();
     this.setup();
   }
   private setCurrentLanguage() {
-    const language = localStorage.getItem('borrow-language') || 'en';
-    this.translate.use(language);
-    this.$currentLanguage.next(language);
+    const currentLanguage = localStorage.getItem('borrow-language') || 'en';
+    this.translate.use(currentLanguage);
+    const currentFlag = this.languages.find(
+      (language) => language.value == currentLanguage
+    )!.flag;
+    this.$currentLanguage.next({ value: currentLanguage, flag: currentFlag });
   }
   private setPageDirection() {
     if (this.translate.currentLang == 'ar') this.$pageDirection.next('rtl');
@@ -40,7 +46,13 @@ export class TranslateFacadeService extends MatPaginatorIntl {
     this.setPaginatorLang();
 
     this.translate.onLangChange.subscribe((languageEvent: LangChangeEvent) => {
-      this.$currentLanguage.next(languageEvent.lang);
+      const currentFlag = this.languages.find(
+        (language) => language.value == languageEvent.lang
+      )?.flag;
+      this.$currentLanguage.next({
+        value: languageEvent.lang,
+        flag: currentFlag,
+      });
       if (languageEvent.lang == 'ar') this.$pageDirection.next('rtl');
       else this.$pageDirection.next('ltr');
       this.setPaginatorLang();
