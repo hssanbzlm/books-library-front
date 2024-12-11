@@ -14,8 +14,8 @@ export class TranslateFacadeService extends MatPaginatorIntl {
     flag: 'assets/flags/uk.png',
   });
   languages = [
-    { value: 'ar', viewValue: 'Arabic', flag: 'assets/flags/tunisia.png' },
-    { value: 'fr', viewValue: 'French', flag: 'assets/flags/france.png' },
+    { value: 'ar', viewValue: 'العربية', flag: 'assets/flags/tunisia.png' },
+    { value: 'fr', viewValue: 'Français', flag: 'assets/flags/france.png' },
     { value: 'en', viewValue: 'English', flag: 'assets/flags/uk.png' },
   ];
   constructor(private translate: TranslateService) {
