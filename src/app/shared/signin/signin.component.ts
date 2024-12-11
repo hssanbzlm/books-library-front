@@ -57,7 +57,11 @@ export class SigninComponent {
             this.store.dispatch(UserActionsTypes.init());
             this.router.navigateByUrl('admin');
           } else {
-            this.router.navigateByUrl('user');
+            const redirectUrl = this.authService.getRedirectUrl();
+            if (redirectUrl) {
+              this.router.navigateByUrl(redirectUrl);
+              this.authService.setRedirectUrl('');
+            } else this.router.navigateByUrl('user');
           }
         },
         error: (error) => {

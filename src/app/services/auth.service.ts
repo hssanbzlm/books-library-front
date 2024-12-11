@@ -10,6 +10,7 @@ import { BehaviorSubject, catchError, map, of, take } from 'rxjs';
 export class AuthService {
   private $user: BehaviorSubject<IUser | null> =
     new BehaviorSubject<IUser | null>(null);
+  private redirectUrl = '';
   constructor(private http: HttpClient) {}
 
   fetchWhoAmi() {
@@ -49,5 +50,11 @@ export class AuthService {
 
   getAuthListener() {
     return this.$user;
+  }
+  setRedirectUrl(url: string) {
+    this.redirectUrl = url;
+  }
+  getRedirectUrl() {
+    return this.redirectUrl;
   }
 }

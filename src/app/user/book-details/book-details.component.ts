@@ -38,7 +38,10 @@ export class BookDetailsComponent {
 
   onBorrow() {
     if (this.isAuth) this.showModal();
-    else this.router.navigateByUrl('auth');
+    else {
+      this.authService.setRedirectUrl(`user/book/${this.bookId}`);
+      this.router.navigateByUrl('auth');
+    }
   }
 
   showModal() {

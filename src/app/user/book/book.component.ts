@@ -51,7 +51,10 @@ export class BookComponent {
           this.snackBarMessage = error.message;
         },
       });
-    } else this.router.navigateByUrl('auth');
+    } else {
+      this.authservice.setRedirectUrl(`user/book/${this.book.id}`);
+      this.router.navigateByUrl('auth');
+    }
   }
 
   showModal(event?: Event) {
