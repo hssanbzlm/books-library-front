@@ -63,5 +63,12 @@
         "items-per-page": "عناصر لكل صفحة",
         "next": "التالي",
         "previous": "السابق"
+    },
+    "book-details": {
+        "resume": "ملخص",
+        "pages": "عدد الصفحات",
+        "authors": "المؤلفون",
+        "year": "السنة",
+        "borrow": "استعارة"
     }
 }

@@ -16,45 +16,45 @@
                 (click)="onBorrow()"
                 class="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
               >
-                Borrow
+                {{ "book-details.borrow" | translate }}
               </button>
             </div>
           </div>
         </div>
-        <div class="md:flex-1 px-4">
+        <div class="md:flex-1 px-4" [dir]="pageDirection">
           <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">
             {{ book.title }}
           </h2>
           <div class="flex mb-4">
             <div class="mr-4">
-              <span class="font-bold text-gray-700 dark:text-gray-300"
-                >Pages</span
-              >
+              <span class="font-bold text-gray-700 dark:text-gray-300">
+                {{ "book-details.pages" | translate }}
+              </span>
               <span class="text-gray-600 dark:text-gray-300">{{
                 book.numberOfPages
               }}</span>
             </div>
             <div class="mr-4">
-              <span class="font-bold text-gray-700 dark:text-gray-300"
-                >Authors:</span
-              >
+              <span class="font-bold text-gray-700 dark:text-gray-300">
+                {{ "book-details.authors" | translate }}:
+              </span>
               <span class="text-gray-600 dark:text-gray-300">{{
                 book.authors
               }}</span>
             </div>
             <div>
-              <span class="font-bold text-gray-700 dark:text-gray-300"
-                >Year</span
-              >
+              <span class="font-bold text-gray-700 dark:text-gray-300">
+                {{ "book-details.year" | translate }}:
+              </span>
               <span class="text-gray-600 dark:text-gray-300">{{
                 book.year
               }}</span>
             </div>
           </div>
           <div>
-            <span class="font-bold text-gray-700 dark:text-gray-300"
-              >Resume</span
-            >
+            <span class="font-bold text-gray-700 dark:text-gray-300">
+              {{ "book-details.resume" | translate }}:
+            </span>
             <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed
               ante justo. Integer euismod libero id mauris malesuada tincidunt.

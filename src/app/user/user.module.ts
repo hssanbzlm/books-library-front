@@ -27,6 +27,7 @@ import { FullScreenLoaderComponent } from '@src/shared/full-screen-loader/full-s
 import { BaseSnackbarComponent } from '@src/shared/base-snackbar/base-snackbar.component';
 import { UpdateBorrowComponent } from './update-borrow/update-borrow.component';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { FormsModule } from '@angular/forms';
     FullScreenLoaderComponent,
     BaseSnackbarComponent,
     FormsModule,
+    TranslatePipe,
   ],
 })
 export class UserModule {}

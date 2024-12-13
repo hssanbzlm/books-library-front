@@ -59,10 +59,16 @@
         "update-btn": "Update",
         "update-btn-waiting": "Updating..."
     },
-    "next": "next",
     "paginator": {
         "items-per-page": "Item per page",
         "next": "next",
         "previous": "previous"
+    },
+    "book-details": {
+        "resume": "Resume",
+        "pages": "Pages",
+        "authors": "Authors",
+        "year": "Year",
+        "borrow": "Borrow"
     }
 }
