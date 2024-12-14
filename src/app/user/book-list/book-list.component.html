@@ -1,22 +1,42 @@
 <div *ngIf="loading$ | async">LOADING</div>
 <div *ngIf="error$ | async">Eroor</div>
 
-<ng-container *ngIf="books$ | async as books">
-  <div class="flex flex-wrap items-center justify-center mt-10 w-screen">
-    <app-book
-      *ngFor="
-        let book of books | slice : page * pageSize : page * pageSize + pageSize
-      "
-      [book]="book"
+<form class="flex items-center justify-center mt-5">
+  <mat-form-field>
+    <mat-label>Search your next book</mat-label>
+    <input
+      (input)="onSearch()"
+      [(ngModel)]="searchedText"
+      name="search"
+      matInput
+      placeholder="Search"
+      class="search-input"
     />
+  </mat-form-field>
+</form>
+<div class="flex flex-wrap items-center justify-center mt-10 w-screen">
+  <app-book
+    *ngFor="
+      let book of filtredBooks
+        | slice : page * pageSize : page * pageSize + pageSize
+    "
+    [book]="book"
+  />
+</div>
+<div
+  *ngIf="filtredBooks.length; else emptyResult"
+  class="flex justify-center w-screen"
+>
+  <mat-paginator
+    (page)="handlePageEvent($event)"
+    [length]="filtredBooks.length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+  >
+  </mat-paginator>
+</div>
+<ng-template #emptyResult>
+  <div class="flex justify-center">
+    <h1>NO books available</h1>
   </div>
-  <div *ngIf="books.length" class="flex justify-center w-screen">
-    <mat-paginator
-      (page)="handlePageEvent($event)"
-      [length]="books.length"
-      [pageSize]="pageSize"
-      [pageSizeOptions]="pageSizeOptions"
-    >
-    </mat-paginator>
-  </div>
-</ng-container>
+</ng-template>

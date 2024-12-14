@@ -28,6 +28,7 @@ import { BaseSnackbarComponent } from '@src/shared/base-snackbar/base-snackbar.c
 import { UpdateBorrowComponent } from './update-borrow/update-borrow.component';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     BaseSnackbarComponent,
     FormsModule,
     TranslatePipe,
+    MatInputModule,
   ],
 })
 export class UserModule {}
