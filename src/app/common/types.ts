@@ -11,6 +11,10 @@ export type Category =
   | 'Sport'
   | 'Science'
   | 'N/A';
+export interface IBookCategoriesDropdown {
+  value: Category;
+  viewValue: string;
+}
 export interface IBook {
   id: number;
   title: string;

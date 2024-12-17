@@ -13,6 +13,16 @@
       class="search-input"
     />
   </mat-form-field>
+  <mat-form-field>
+    <mat-label>Category</mat-label>
+    <mat-select (selectionChange)="onChangeCategory($event)">
+      <mat-option>None</mat-option>
+
+      @for (category of categories; track category) {
+      <mat-option [value]="category.value">{{ category.viewValue }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 </form>
 <div class="flex flex-wrap items-center justify-center mt-10 w-screen">
   <app-book

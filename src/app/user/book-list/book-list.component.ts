@@ -3,7 +3,9 @@ import { AppStateShape } from '@src/store';
 import { Store } from '@ngrx/store';
 import { PageEvent } from '@angular/material/paginator';
 import { IBook } from '@src/common/types';
-import { Subject, take, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
+import { MatSelectChange } from '@angular/material/select';
+import { categoriesDropdown } from '@src/common/helper';
 
 @Component({
   selector: 'app-book-list',
@@ -16,6 +18,8 @@ export class BookListComponent {
   error$ = this.store.select(({ appState }) => appState.books.error);
   destroy$ = new Subject();
   filtredBooks: IBook[] = [];
+  categories = categoriesDropdown;
+  selectedCategory: string | undefined = undefined;
   constructor(private store: Store<{ appState: AppStateShape }>) {}
   ngOnInit(): void {
     this.initBooks();
@@ -31,20 +35,39 @@ export class BookListComponent {
   }
 
   onSearch() {
-    if (this.searchedText) {
-      this.filtredBooks = this.filtredBooks.filter((book) => {
-        return book.title
-          .toLowerCase()
-          .includes(this.searchedText.toLowerCase());
-      });
+    this.onFilter();
+  }
+  onChangeCategory(e: MatSelectChange) {
+    this.selectedCategory = e.value;
+    this.onFilter();
+  }
+  onFilter() {
+    this.initBooks();
+    if (this.selectedCategory) {
+      this.filterByCategories();
+      if (this.searchedText) this.filterByTitle();
     } else {
-      this.initBooks();
+      if (this.searchedText) {
+        this.filterByTitle();
+      }
     }
   }
 
   private initBooks() {
     this.books$.pipe(takeUntil(this.destroy$)).subscribe((books) => {
       this.filtredBooks = books;
+    });
+  }
+  private filterByCategories() {
+    this.filtredBooks = this.filtredBooks.filter((book) => {
+      return book.category == this.selectedCategory;
+    });
+  }
+  private filterByTitle() {
+    this.filtredBooks = this.filtredBooks.filter((book) => {
+      return book.title
+        .toLowerCase()
+        .includes(this.searchedText.toLocaleLowerCase());
     });
   }
 

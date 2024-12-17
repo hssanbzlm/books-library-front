@@ -29,6 +29,7 @@ import { UpdateBorrowComponent } from './update-borrow/update-borrow.component';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { MatInputModule } from '@angular/material/input';
     FormsModule,
     TranslatePipe,
     MatInputModule,
+    MatSelectModule,
   ],
 })
 export class UserModule {}
