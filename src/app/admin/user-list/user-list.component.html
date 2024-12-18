@@ -1,7 +1,6 @@
 <div *ngIf="users$ | async as userList">
   <app-basic-table
     [data]="userList"
-    [deletable]="true"
     [columns]="columns"
     (add)="onUserAdd()"
     (edit)="onUserEdit($event)"

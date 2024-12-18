@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { UserToBookService } from '@src/services/user-to-book.service';
 import { IBorrow } from '@src/common/types';
 import { Store } from '@ngrx/store';
 import { AppStateShape } from '@src/store';
@@ -20,18 +19,30 @@ export class BorrowHistoryComponent {
     { column: 'status', dataKey: 'status' },
   ];
   showUpdateBorrowModal = false;
+  showCancelBorrowModal = false;
   updatingBorrow!: IBorrow;
+  cancelingBorrow!: IBorrow;
 
   constructor(private store: Store<{ appState: AppStateShape }>) {}
   onEditBorrow(borrow: IBorrow) {
     this.updatingBorrow = borrow;
     this.toggleUpdateBorrowModal();
   }
+  onDeleteBorrow(borrow: IBorrow) {
+    this.cancelingBorrow = borrow;
+    this.toggleCancelBorrowModal();
+  }
 
   toggleUpdateBorrowModal() {
     this.showUpdateBorrowModal = !this.showUpdateBorrowModal;
   }
+  toggleCancelBorrowModal() {
+    this.showCancelBorrowModal = !this.showCancelBorrowModal;
+  }
   handleUpdateBorrow() {
     this.toggleUpdateBorrowModal();
+  }
+  handleCancelBorrow() {
+    this.toggleCancelBorrowModal();
   }
 }

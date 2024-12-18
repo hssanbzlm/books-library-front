@@ -1,6 +1,11 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { isBookReadyToBorrow, updateUserBorrow, userToBookUrl } from '@api/api';
+import {
+  isBookReadyToBorrow,
+  updateUserBorrow,
+  cancelUserBorrow,
+  userToBookUrl,
+} from '@api/api';
 import { IBorrow, Status } from '../common/types';
 import { map } from 'rxjs';
 import { format } from 'date-fns';
@@ -74,6 +79,13 @@ export class UserToBookService {
     return this.http.put<IBorrow>(
       updateUserBorrow,
       { borrowId, startDate, endDate },
+      { withCredentials: true }
+    );
+  }
+  cancelUserBorrow(borrowId: number) {
+    return this.http.put<IBorrow>(
+      cancelUserBorrow,
+      { borrowId },
       { withCredentials: true }
     );
   }

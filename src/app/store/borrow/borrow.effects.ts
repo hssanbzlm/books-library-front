@@ -79,6 +79,31 @@ export class BorrowEffects {
       })
     )
   );
+  cancelUserBorrow$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BorrowActions.cancelBorrow),
+      mergeMap(({ borrowId }) => {
+        return this.userToBookService.cancelUserBorrow(borrowId).pipe(
+          map((canceledBorrow: IBorrow) =>
+            BorrowActions.updateUserBorrowSuccess({
+              borrow: {
+                ...canceledBorrow,
+                endDate: format(canceledBorrow.endDate, 'dd/MM/yyyy'),
+                startDate: format(canceledBorrow.startDate, 'dd/MM/yyyy'),
+              },
+            })
+          ),
+          catchError(() =>
+            of(
+              BorrowActions.cancelError({
+                payload: 'Error canceling this borrow',
+              })
+            )
+          )
+        );
+      })
+    )
+  );
   constructor(
     private actions$: Actions,
     private userToBookService: UserToBookService
