@@ -14,6 +14,7 @@ import { LanguageDirection } from '@src/common/types';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { compare } from '@src/common/helper';
 import { IsEditablePipe } from '@src/pipes/is-editable.pipe';
+import { IsDeletablePipe } from '@src/pipes/is-deletable.pipe';
 
 @Component({
   selector: 'app-basic-table',
@@ -25,6 +26,7 @@ import { IsEditablePipe } from '@src/pipes/is-editable.pipe';
     TranslatePipe,
     MatSortModule,
     IsEditablePipe,
+    IsDeletablePipe,
   ],
   templateUrl: './basic-table.component.html',
   styleUrl: './basic-table.component.css',

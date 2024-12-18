@@ -3,12 +3,21 @@
   [data]="(borrowList$ | async) || []"
   [addable]="false"
   (edit)="onEditBorrow($event)"
+  (delete)="onDeleteBorrow($event)"
 />
 <app-modal *ngIf="showUpdateBorrowModal" (dismiss)="toggleUpdateBorrowModal()">
   <ng-container modal-content>
     <app-update-borrow
       (updateUserBorrow)="handleUpdateBorrow()"
       [borrow]="updatingBorrow"
+    />
+  </ng-container>
+</app-modal>
+<app-modal *ngIf="showCancelBorrowModal" (dismiss)="toggleCancelBorrowModal()">
+  <ng-container modal-content>
+    <app-cancel-borrow
+      (cancelBorrow)="handleCancelBorrow()"
+      [borrow]="cancelingBorrow"
     />
   </ng-container>
 </app-modal>

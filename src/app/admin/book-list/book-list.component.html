@@ -1,7 +1,6 @@
 <app-basic-table
   [columns]="columns"
   [data]="(books$ | async)!"
-  [deletable]="true"
   (add)="onAddBook()"
   (edit)="onEditBook($event)"
   (delete)="onDeleteBook($event)"

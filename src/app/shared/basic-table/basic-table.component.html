@@ -32,7 +32,6 @@
                 class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200"
               ></th>
               <th
-                *ngIf="deletable"
                 scope="col"
                 class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200"
               ></th>
@@ -68,11 +67,9 @@
                 </a>
               </td>
 
-              <td
-                class="px-5 py-5 text-sm bg-white border-b border-gray-200"
-                *ngIf="deletable"
-              >
+              <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
                 <a
+                  *ngIf="item | isDeletable"
                   class="text-red-600 hover:text-red-900 cursor-pointer"
                   (click)="onDelete(item)"
                 >

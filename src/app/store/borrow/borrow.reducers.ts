@@ -68,5 +68,24 @@ export const borrowReducer = createReducer(
     ...state,
     loading: false,
     error: payload,
+  })),
+  on(BorrowActionsTypes.cancelBorrow, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(BorrowActionsTypes.cancelSuccess, (state, { borrow }) => ({
+    loading: false,
+    error: null,
+    borrowList: state.borrowList.map((localBorrow) => {
+      return localBorrow.userToBookId == borrow.userToBookId
+        ? borrow
+        : localBorrow;
+    }),
+  })),
+  on(BorrowActionsTypes.cancelError, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    error: payload,
   }))
 );

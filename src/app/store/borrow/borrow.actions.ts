@@ -38,3 +38,17 @@ export const updateUserBorrowError = createAction(
   '[Borrow] Update user borrow error',
   props<{ payload: string }>()
 );
+export const cancelBorrow = createAction(
+  '[Borrow] Cancel',
+  props<{ borrowId: number }>()
+);
+
+export const cancelSuccess = createAction(
+  '[Borrow] Cancel success',
+  props<{ borrow: IBorrow }>()
+);
+
+export const cancelError = createAction(
+  '[Borrow] Cancel error',
+  props<{ payload: string }>()
+);

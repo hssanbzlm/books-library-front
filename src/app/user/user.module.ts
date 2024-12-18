@@ -30,6 +30,7 @@ import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { CancelBorrowComponent } from './cancel-borrow/cancel-borrow.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { MatSelectModule } from '@angular/material/select';
     BorrowHistoryComponent,
     BorrowRequestComponent,
     UpdateBorrowComponent,
+    CancelBorrowComponent,
   ],
   imports: [
     BasicTableComponent,
