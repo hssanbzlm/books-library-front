@@ -146,11 +146,22 @@
             tabindex="-1"
           >
             <ng-container *ngIf="notifications$ | async as notifications">
-              @for (item of notifications; track item.bookId) {
-              <div>{{ item.bookTitle }} is now in {{ item.status }} state</div>
-              } @empty {
-              <div>You dont have any notif right now</div>
-              }
+              <ng-container
+                *ngIf="notifications.length > 0; else noNotifications"
+              >
+                <div
+                  *ngFor="let item of notifications"
+                  class="px-4 py-2 text-sm text-gray-700"
+                >
+                  <div class="font-medium">{{ item.bookTitle }}</div>
+                  <div class="text-xs text-gray-500">{{ item.status }}</div>
+                </div>
+              </ng-container>
+              <ng-template #noNotifications>
+                <div class="px-4 py-2 text-sm text-gray-700">
+                  You don't have any notifications right now
+                </div>
+              </ng-template>
             </ng-container>
           </div>
         </div>

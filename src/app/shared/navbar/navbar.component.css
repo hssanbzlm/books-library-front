@@ -1,0 +1,4 @@
+#user-menu-dropdown {
+    max-height: 100px;
+    overflow-y: auto;
+}
