@@ -6,7 +6,11 @@
     <p *ngIf="!isSuccess && !isError" class="text-sm text-gray-500">
       <mat-form-field>
         <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [rangePicker]="picker">
+        <mat-date-range-input
+          [rangePicker]="picker"
+          [min]="minDate"
+          [max]="maxDate"
+        >
           <input
             (dateChange)="onStartChange($event)"
             matStartDate
