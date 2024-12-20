@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '@src/services/auth.service';
 import { IUser, IBook, LanguageDirection } from '@src/common/types';
 import { AppStateShape } from '@src/store';

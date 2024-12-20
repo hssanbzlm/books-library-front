@@ -31,6 +31,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CancelBorrowComponent } from './cancel-borrow/cancel-borrow.component';
+import { NotFoundComponent } from '../shared/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { CancelBorrowComponent } from './cancel-borrow/cancel-borrow.component';
     TranslatePipe,
     MatInputModule,
     MatSelectModule,
+    NotFoundComponent,
   ],
 })
 export class UserModule {}

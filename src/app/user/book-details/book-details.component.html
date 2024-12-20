@@ -70,7 +70,9 @@
     </div>
   </div>
 </ng-container>
-<ng-template #NotFound> Book does not exist </ng-template>
+<ng-template #NotFound>
+  <app-not-found></app-not-found>
+</ng-template>
 <div *ngIf="book$ | async as book">
   <app-borrow-request
     *ngIf="show"
