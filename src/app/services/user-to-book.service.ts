@@ -47,6 +47,7 @@ export class UserToBookService {
         map((value) => {
           return value.map((borrowItem) => ({
             ...borrowItem,
+            createdDate: format(borrowItem.createdDate, 'dd/MM/yyyy'),
             endDate: format(borrowItem.endDate, 'dd/MM/yyyy'),
             startDate: format(borrowItem.startDate, 'dd/MM/yyyy'),
           }));

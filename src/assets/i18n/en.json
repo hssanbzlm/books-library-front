@@ -12,6 +12,7 @@
         "email": "email",
         "book title": "title",
         "start date": "start date",
+        "created date": "created date",
         "end date": "end date",
         "last name": "Last name",
         "status": "status"

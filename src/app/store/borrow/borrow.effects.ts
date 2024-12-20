@@ -36,6 +36,7 @@ export class BorrowEffects {
             BorrowActions.updateSuccess({
               borrow: {
                 ...updatedBorrow[0],
+                createdDate: format(updatedBorrow[0].createdDate, 'dd/MM/yyyy'),
                 endDate: format(updatedBorrow[0].endDate, 'dd/MM/yyyy'),
                 startDate: format(updatedBorrow[0].startDate, 'dd/MM/yyyy'),
               },
@@ -63,6 +64,7 @@ export class BorrowEffects {
               BorrowActions.updateUserBorrowSuccess({
                 borrow: {
                   ...updatedBorrow,
+                  createdDate: format(updatedBorrow.createdDate, 'dd/MM/yyyy'),
                   endDate: format(updatedBorrow.endDate, 'dd/MM/yyyy'),
                   startDate: format(updatedBorrow.startDate, 'dd/MM/yyyy'),
                 },
@@ -88,6 +90,7 @@ export class BorrowEffects {
             BorrowActions.updateUserBorrowSuccess({
               borrow: {
                 ...canceledBorrow,
+                createdDate: format(canceledBorrow.createdDate, 'dd/MM/yyyy'),
                 endDate: format(canceledBorrow.endDate, 'dd/MM/yyyy'),
                 startDate: format(canceledBorrow.startDate, 'dd/MM/yyyy'),
               },

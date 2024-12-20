@@ -37,6 +37,7 @@ export interface IBorrow {
   bookTitle: string;
   endDate: string;
   startDate: string;
+  createdDate: string;
   receiverRole: 'admin' | 'user';
   receiverSeen: boolean;
 }
