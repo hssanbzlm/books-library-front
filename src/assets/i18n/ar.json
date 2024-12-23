@@ -70,5 +70,10 @@
         "authors": "المؤلفون",
         "year": "السنة",
         "borrow": "استعارة"
+    },
+    "filter-books": {
+        "search-placeholder": "بحث",
+        "search-label": "ابحث عن كتابك التالي",
+        "category-label": "الفئة"
     }
 }

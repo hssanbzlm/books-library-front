@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { AppStateShape } from '@src/store';
 import { Store } from '@ngrx/store';
 import { PageEvent } from '@angular/material/paginator';
-import { IBook } from '@src/common/types';
+import { IBook, LanguageDirection } from '@src/common/types';
 import { Subject, takeUntil } from 'rxjs';
 import { MatSelectChange } from '@angular/material/select';
 import { categoriesDropdown } from '@src/common/helper';
+import { TranslateFacadeService } from '@src/services/translate-facade.service';
 
 @Component({
   selector: 'app-book-list',
@@ -20,9 +21,17 @@ export class BookListComponent {
   filtredBooks: IBook[] = [];
   categories = categoriesDropdown;
   selectedCategory: string | undefined = undefined;
-  constructor(private store: Store<{ appState: AppStateShape }>) {}
+  pageDirection!: LanguageDirection;
+
+  constructor(
+    private store: Store<{ appState: AppStateShape }>,
+    private translate: TranslateFacadeService
+  ) {}
   ngOnInit(): void {
     this.initBooks();
+    this.translate.getPageDirection().subscribe((pageDirection) => {
+      this.pageDirection = pageDirection;
+    });
   }
   pageSize = 4;
   page = 0;

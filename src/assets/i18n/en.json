@@ -71,5 +71,10 @@
         "authors": "Authors",
         "year": "Year",
         "borrow": "Borrow"
+    },
+    "filter-books": {
+        "search-placeholder": "Search",
+        "search-label": "Search your next book",
+        "category-label": "Category"
     }
 }

@@ -2,19 +2,19 @@
 <div *ngIf="error$ | async">Eroor</div>
 
 <form class="flex items-center justify-center mt-5">
-  <mat-form-field>
-    <mat-label>Search your next book</mat-label>
+  <mat-form-field [dir]="pageDirection">
+    <mat-label>{{ "filter-books.search-label" | translate }}</mat-label>
     <input
       (input)="onSearch()"
       [(ngModel)]="searchedText"
       name="search"
       matInput
-      placeholder="Search"
+      [placeholder]="'filter-books.search-placeholder' | translate"
       class="search-input"
     />
   </mat-form-field>
-  <mat-form-field>
-    <mat-label>Category</mat-label>
+  <mat-form-field [dir]="pageDirection">
+    <mat-label>{{ "filter-books.category-label" | translate }}</mat-label>
     <mat-select (selectionChange)="onChangeCategory($event)">
       <mat-option>None</mat-option>
 
