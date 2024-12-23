@@ -13,6 +13,7 @@ export class BorrowHistoryComponent {
   isLoading$ = this.store.select(({ appState }) => appState.borrow.loading);
   isError$ = this.store.select(({ appState }) => appState.borrow.error);
   columns = [
+    { column: 'created date', dataKey: 'createdDate' },
     { column: 'book title', dataKey: 'bookTitle' },
     { column: 'start date', dataKey: 'startDate' },
     { column: 'end date', dataKey: 'endDate' },

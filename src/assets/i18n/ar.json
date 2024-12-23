@@ -14,7 +14,8 @@
         "start date": "تاريخ البدء",
         "end date": "تاريخ الانتهاء",
         "last name": "اسم العائلة",
-        "status": "الحالة"
+        "status": "الحالة",
+        "created date": "تاريخ الإنشاء"
     },
     "page": {
         "Books": "الكتب",
