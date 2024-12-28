@@ -76,5 +76,17 @@
         "search-placeholder": "Search",
         "search-label": "Search your next book",
         "category-label": "Category"
+    },
+    "borrow-request": {
+        "start-date": "Start date",
+        "end-date": "End date",
+        "date-label": "Enter a date range",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "date-hint": "MM/DD/YYYY – MM/DD/YYYY"
+    },
+    "user-menu": {
+        "Profile": "Profile",
+        "Logout": "Logout"
     }
 }

@@ -4,8 +4,8 @@
   </ng-container>
   <ng-container modal-content>
     <p *ngIf="!isSuccess && !isError" class="text-sm text-gray-500">
-      <mat-form-field>
-        <mat-label>Enter a date range</mat-label>
+      <mat-form-field [dir]="languageDirecaion">
+        <mat-label>{{ "borrow-request.date-label" | translate }}</mat-label>
         <mat-date-range-input
           [rangePicker]="picker"
           [min]="minDate"
@@ -14,15 +14,15 @@
           <input
             (dateChange)="onStartChange($event)"
             matStartDate
-            placeholder="Start date"
+            [placeholder]="'borrow-request.start-date' | translate"
           />
           <input
             (dateChange)="onEndChange($event)"
             matEndDate
-            placeholder="End date"
+            [placeholder]="'borrow-request.end-date' | translate"
           />
         </mat-date-range-input>
-        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-hint>{{ "borrow-request.date-hint" | translate }}</mat-hint>
         <mat-datepicker-toggle
           matIconSuffix
           [for]="picker"
@@ -39,7 +39,7 @@
       type="button"
       class="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:w-auto"
     >
-      Cancel
+      {{ "borrow-request.cancel" | translate }}
     </button>
     <button
       *ngIf="!isSuccess && !isError"
@@ -47,7 +47,7 @@
       type="button"
       class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto mt-3 sm:mt-0"
     >
-      Confirm
+      {{ "borrow-request.confirm" | translate }}
     </button>
   </ng-container>
 </app-modal>

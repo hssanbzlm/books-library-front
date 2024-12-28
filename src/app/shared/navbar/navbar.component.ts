@@ -30,6 +30,10 @@ import { MatMenuModule } from '@angular/material/menu';
 })
 export class NavbarComponent {
   @Input() navItems: { title: string; path: string }[] = [];
+  userMenu: { title: string; action?: () => void }[] = [
+    { title: 'Profile' },
+    { title: 'Logout', action: () => this.logout() },
+  ];
   show = false;
   showUserMenu = false;
   showUserNotification = false;
@@ -51,6 +55,9 @@ export class NavbarComponent {
   ngOnInit(): void {
     this.translate.getCurrentLanguage().subscribe((currentLanguage) => {
       this.currentLanguage = currentLanguage;
+    });
+    this.translate.getPageDirection().subscribe((pageDirection) => {
+      this.pageDirection = pageDirection;
     });
     this.notifications$ = this.notificationService.getNotificationsStream();
     this.authService

@@ -3,6 +3,8 @@ import {
   DateRange,
   MatDatepickerInputEvent,
 } from '@angular/material/datepicker';
+import { LanguageDirection } from '@src/common/types';
+import { TranslateFacadeService } from '@src/services/translate-facade.service';
 import { UserToBookService } from '@src/services/user-to-book.service';
 
 @Component({
@@ -21,8 +23,17 @@ export class BorrowRequestComponent {
   isError = false;
   minDate = new Date(new Date().setDate(new Date().getDate() + 2));
   maxDate!: Date;
+  languageDirecaion!: LanguageDirection;
+  constructor(
+    private userToBookService: UserToBookService,
+    private translateFacade: TranslateFacadeService
+  ) {}
+
   ngOnInit(): void {
     this.updateMaxDate();
+    this.translateFacade.getPageDirection().subscribe((pageDirection) => {
+      this.languageDirecaion = pageDirection;
+    });
   }
 
   updateMaxDate() {
@@ -31,8 +42,6 @@ export class BorrowRequestComponent {
       this.maxDate = new Date(start.setMonth(start.getMonth() + 1));
     }
   }
-
-  constructor(private userToBookService: UserToBookService) {}
 
   showModal(event?: Event) {
     event?.stopPropagation();

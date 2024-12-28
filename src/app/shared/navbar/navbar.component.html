@@ -47,7 +47,7 @@
       <div
         class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
       >
-        <div class="flex flex-shrink-0 items-center">
+        <div class="flex flex-shrink-0 items-center logo">
           <img
             class="h-8 w-auto"
             src="assets/logo/logo.png"
@@ -66,41 +66,43 @@
           </div>
         </div>
       </div>
-      <mat-menu #languageMenu="matMenu">
-        <button
-          mat-menu-item
-          *ngFor="let language of languages"
-          (click)="onLanguageChange(language.value)"
-        >
-          <div class="flex gap-2">
+
+      <div
+        class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+      >
+        <div class="relative mr-2">
+          <mat-menu #languageMenu="matMenu">
+            <button
+              mat-menu-item
+              *ngFor="let language of languages"
+              (click)="onLanguageChange(language.value)"
+            >
+              <div class="flex gap-2 mr-2">
+                <img
+                  width="20px"
+                  height="20px"
+                  [src]="language.flag"
+                  alt="{{ language.value }} Flag"
+                  class="flag-icon"
+                />
+                <span class="text-sm">
+                  {{ language.viewValue }}
+                </span>
+              </div>
+            </button>
+          </mat-menu>
+          <button mat-button [matMenuTriggerFor]="languageMenu" class="mr-3">
             <img
               width="20px"
               height="20px"
-              [src]="language.flag"
-              alt="{{ language.value }} Flag"
+              [src]="currentLanguage.flag"
+              alt="{{ currentLanguage.value }} Flag"
               class="flag-icon"
             />
-            <span class="text-sm">
-              {{ language.viewValue }}
-            </span>
-          </div>
-        </button>
-      </mat-menu>
-      <button mat-button [matMenuTriggerFor]="languageMenu">
-        <img
-          width="20px"
-          height="20px"
-          [src]="currentLanguage.flag"
-          alt="{{ currentLanguage.value }} Flag"
-          class="flag-icon"
-        />
-      </button>
-      <div
-        *ngIf="isAuth"
-        class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
-      >
-        <div class="relative ml-3">
-          <ng-container *ngIf="notifications$ | async as notifications">
+          </button>
+          <ng-container
+            *ngIf="isAuth && notifications$ | async as notifications"
+          >
             <button
               [matBadge]="notifications | notSeenNotif"
               [matBadgeHidden]="(notifications | notSeenNotif) == 0"
@@ -166,7 +168,7 @@
           </div>
         </div>
 
-        <div class="relative ml-3">
+        <div class="relative ml-3" *ngIf="isAuth">
           <button
             id="user-menu"
             type="button"
@@ -192,21 +194,17 @@
             aria-labelledby="user-menu-button"
             tabindex="-1"
           >
-            <a
-              class="block px-4 py-2 text-sm text-gray-700"
+            <p
+              *ngFor="let item of userMenu"
+              class="px-4 py-2 text-sm text-gray-700 flex"
+              [ngClass]="{ 'justify-end': pageDirection === 'rtl' }"
               role="menuitem"
               tabindex="-1"
               id="user-menu-item-0"
-              >Your Profile</a
+              (click)="item.action && item.action()"
             >
-            <a
-              (click)="logout()"
-              class="block px-4 py-2 text-sm text-gray-700"
-              role="menuitem"
-              tabindex="-1"
-              id="user-menu-item-2"
-              >Sign out</a
-            >
+              {{ "user-menu." + item.title | translate }}
+            </p>
           </div>
         </div>
       </div>
@@ -219,8 +217,8 @@
         [routerLink]="[item.path]"
         class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
         aria-current="page"
-        >{{ item.title }}</a
-      >
+        >{{ "navbar." + item.title | translate }}
+      </a>
     </div>
   </div>
 </nav>

@@ -76,5 +76,17 @@
         "search-placeholder": "بحث",
         "search-label": "ابحث عن كتابك التالي",
         "category-label": "الفئة"
+    },
+    "borrow-request": {
+        "start-date": "تاريخ البدء",
+        "end-date": "تاريخ الانتهاء",
+        "date-label": "أدخل نطاق التاريخ",
+        "cancel": "إلغاء",
+        "confirm": "تأكيد",
+        "date-hint": "شهر/يوم/سنة – شهر/يوم/سنة"
+    },
+    "user-menu": {
+        "Profile": "الملف الشخصي",
+        "Logout": "تسجيل الخروج"
     }
 }

@@ -55,9 +55,6 @@ export class BasicTableComponent {
     }
   }
   ngOnInit(): void {
-    this.translate.getCurrentLanguage().subscribe((currentLanguage) => {
-      this.currentLanguage = currentLanguage;
-    });
     this.translate.getPageDirection().subscribe((pageDirection) => {
       this.pageDirection = pageDirection;
     });
