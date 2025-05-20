@@ -24,6 +24,7 @@ export interface IBook {
   category: Category;
   quantity: number;
   coverPath: string;
+  synopsis: string;
   authors: string[];
 }
 export interface IBorrow {

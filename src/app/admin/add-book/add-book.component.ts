@@ -47,7 +47,11 @@ export class AddBookComponent {
       category: ['N/A'],
       quantity: ['', [Validators.required, Validators.min(1)]],
       coverPath: ['', [Validators.required]],
-      authors: this.fb.array([this.createAuthor()]),
+      authors: this.fb.array([this.createAuthor()]),      
+      synopsis: [
+        '',
+        [Validators.required, Validators.minLength(15)],
+      ],
     });
     this.bookState$.pipe(takeUntil(this.destroy$)).subscribe((bookState) => {
       this.adding = bookState.loading;
@@ -90,17 +94,17 @@ export class AddBookComponent {
         'numberOfPages',
         this.bookForm.get('numberOfPages')!.value
       );
-      formData.append('edition', this.bookForm.get('edition')?.value);
-      formData.append('year', this.bookForm.get('year')!.value);
-      formData.append('category', this.bookForm.get('category')!.value);
-      formData.append('quantity', this.bookForm.get('quantity')!.value);
-      for (let i = 0; i < this.bookForm.get('authors')!.value.length; i++) {
-        formData.append(
-          'authors[]',
-          this.bookForm.get('authors')!.value[i].author
-        );
+      const fields = ['edition', 'year', 'category', 'quantity', 'synopsis'];
+      fields.forEach(field => {
+        formData.append(field, this.bookForm.get(field)!.value);
+      });
+      if (this.coverImg) {
+        formData.append('cover', this.coverImg);
       }
-      formData.append('cover', this.coverImg);
+      const authors = this.bookForm.get('authors')!.value as { author: string }[];
+      authors.forEach(({ author }) => {
+        formData.append('authors[]', author);
+      });
       this.store.dispatch({ type: '[Book] Add', book: formData });
     }
   }
