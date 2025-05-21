@@ -59,13 +59,13 @@
         rows="4"
       ></textarea>
       <div
-        *ngIf="(bookForm.get('synopsis')?.touched && (bookForm.get('synopsis')?.value?.length < 15))"
+        *ngIf="bookForm.get('synopsis')?.errors?.['minlength'] && bookForm.get('synopsis')?.touched"
         class="text-red-500 text-xs mt-1"
       >
         Synopsis must be more than 15 characters
       </div>
       <div
-        *ngIf="bookForm.get('synopsis')?.invalid && bookForm.get('synopsis')?.touched"
+        *ngIf="bookForm.get('synopsis')?.errors?.['required'] && bookForm.get('synopsis')?.touched"
         class="text-red-500 text-xs mt-1"
       >
         Synopsis is required
