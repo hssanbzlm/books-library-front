@@ -30,8 +30,10 @@ import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import  {MatIcon} from '@angular/material/icon'
 import { CancelBorrowComponent } from './cancel-borrow/cancel-borrow.component';
 import { NotFoundComponent } from '../shared/not-found/not-found.component';
+import { ChatBotComponent } from './chat-bot/chat-bot.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { NotFoundComponent } from '../shared/not-found/not-found.component';
     BorrowRequestComponent,
     UpdateBorrowComponent,
     CancelBorrowComponent,
+    ChatBotComponent,
   ],
   imports: [
     BasicTableComponent,
@@ -55,6 +58,7 @@ import { NotFoundComponent } from '../shared/not-found/not-found.component';
     MatDatepickerToggle,
     MatHint,
     MatLabel,
+    MatIcon,
     MatFormField,
     MatStartDate,
     MatEndDate,
