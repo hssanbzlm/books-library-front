@@ -9,3 +9,4 @@ export const notificationsSeenUrl = `${environment.apiUrl}/notifications/notific
 export const isBookReadyToBorrow = `${environment.apiUrl}/user-to-book/is-ready-to-borrow`;
 export const updateUserBorrow = `${environment.apiUrl}/user-to-book/update-user-borrow`;
 export const cancelUserBorrow = `${environment.apiUrl}/user-to-book/cancel-user-borrow`;
+export const recommendBooks = `${environment.apiUrl}/book/recommend`

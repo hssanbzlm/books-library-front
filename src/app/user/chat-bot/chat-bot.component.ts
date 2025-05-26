@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { BookService } from '@src/services/book.service';
 
 @Component({
   selector: 'app-chat-bot',
@@ -24,27 +25,25 @@ import { trigger, style, animate, transition } from '@angular/animations';
   ],
 })
 export class ChatBotComponent {
+  constructor(private bookService: BookService) {}
   isChatOpen = false;
-  messages = [
-    { sender: 'bot', text: 'Hi there! Need help finding a book?' },
-    { sender: 'user', text: 'Yes, can you recommend me something?' },
-    { sender: 'bot', text: 'Sure! What genre are you into?' },
-  ];
+  messages = [{ sender: 'assistant', text: 'Hi there! Need help finding a book?' }];
 
   newMessage = '';
 
   sendMessage() {
     if (!this.newMessage.trim()) return;
     this.messages.push({ sender: 'user', text: this.newMessage });
-    const userMsg = this.newMessage;
+    this.bookService.recommendBooks(this.newMessage).subscribe({
+      next: (response) => {
+        const contentResult = response.content.replace(/\((http[^)]+)\)/g, `<a class="book-link" href="$1" target="_blank">Read more</a>`) 
+        console.log('content result ',contentResult)
+        this.messages.push({ sender: response.role, text: contentResult });
+      },
+      error: () => {
+        this.messages.push({sender:'assistant',text:'Sorry I do not have an answer now, come back later'})
+      },
+    });
     this.newMessage = '';
-
-    // Simulate bot response
-    setTimeout(() => {
-      this.messages.push({
-        sender: 'bot',
-        text: `You said: "${userMsg}". I'll look into that!`,
-      });
-    }, 1000);
   }
 }
