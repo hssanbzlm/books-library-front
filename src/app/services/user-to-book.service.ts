@@ -1,20 +1,15 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  isBookReadyToBorrow,
-  updateUserBorrow,
-  cancelUserBorrow,
-  userToBookUrl,
-} from '@api/api';
 import { IBorrow, Status } from '../common/types';
 import { map } from 'rxjs';
 import { format } from 'date-fns';
+import { Apollo, gql } from 'apollo-angular';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserToBookService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private readonly apollo: Apollo) {}
 
   getStatusProperties(status: Status) {
     let possibleNextStatus: Status[] = [];
@@ -23,9 +18,9 @@ export class UserToBookService {
         possibleNextStatus = ['Accepted', 'Refused'];
         break;
       case 'Accepted':
-        possibleNextStatus = ['Checked-out', 'Canceled'];
+        possibleNextStatus = ['Checkedout', 'Canceled'];
         break;
-      case 'Checked-out':
+      case 'Checkedout':
         possibleNextStatus = ['Returned', 'Damaged', 'Lost', 'Overdue'];
         break;
       case 'Overdue':
@@ -39,55 +34,138 @@ export class UserToBookService {
   }
 
   borrowList() {
-    return this.http
-      .get<IBorrow[]>(`${userToBookUrl}`, {
-        withCredentials: true,
+    return this.apollo
+      .query<{ borrowList: IBorrow[] }>({
+        query: gql`
+          {
+            borrowList {
+              userToBookId
+              createdDate
+              endDate
+              startDate
+              bookId
+              bookTitle
+              status
+              userId
+              userName
+              userLastName
+              email
+            }
+          }
+        `,
       })
       .pipe(
-        map((value) => {
-          return value.map((borrowItem) => ({
+        map(({ data }) => {
+          return data.borrowList.map((borrowItem) => ({
             ...borrowItem,
-            createdDate: format(borrowItem.createdDate, 'dd/MM/yyyy'),
-            endDate: format(borrowItem.endDate, 'dd/MM/yyyy'),
-            startDate: format(borrowItem.startDate, 'dd/MM/yyyy'),
+            createdDate: format(
+              new Date(+borrowItem.createdDate),
+              'dd/MM/yyyy'
+            ),
+            endDate: format(new Date(+borrowItem.endDate), 'dd/MM/yyyy'),
+            startDate: format(new Date(+borrowItem.startDate), 'dd/MM/yyyy'),
           }));
         })
       );
   }
 
   borrow(idBook: number, startDate: string, endDate: string) {
-    return this.http.post<HttpResponse<any>>(
-      `${userToBookUrl}/borrow`,
-      { idBook, startDate, endDate },
-      { withCredentials: true }
-    );
+    const BORROW = gql`
+      mutation borrow($borrowDetails: BorrowInput!) {
+        borrow(borrowDetails: $borrowDetails) {
+          title
+          id
+        }
+      }
+    `;
+    return this.apollo.mutate({
+      mutation: BORROW,
+      variables: { borrowDetails: { idBook: +idBook, startDate, endDate } },
+    });
   }
 
   updateBorrow(borrowId: number, newStatus: string) {
-    return this.http.patch(
-      `${userToBookUrl}/borrow-status`,
-      { borrowId, status: newStatus },
-      { withCredentials: true }
-    );
+    const UPDATEBORROW = gql`
+      mutation updateBorrow($borrowUpdate: UpdateBorrowInput!) {
+        updateBorrow(borrowUpdate: $borrowUpdate) {
+          userToBookId
+          createdDate
+          endDate
+          startDate
+          bookId
+          bookTitle
+          status
+          userId
+          userName
+          userLastName
+          email
+        }
+      }
+    `;
+    return this.apollo.mutate<{updateBorrow:IBorrow}>({
+      mutation: UPDATEBORROW,
+      variables: { borrowUpdate: { borrowId, status: newStatus } },
+    });
   }
   isReadyToBorrow(bookId: number) {
-    return this.http.get(`${isBookReadyToBorrow}/${bookId}`, {
-      withCredentials: true,
+    const ISREADYTOBORROW = gql`
+      mutation isReadyToBorrow($bookId: ID!) {
+        isReadyToBorrow(bookId: $bookId) {
+          title
+          id
+        }
+      }
+    `;
+    return this.apollo.mutate({
+      mutation: ISREADYTOBORROW,
+      variables: { bookId },
     });
   }
 
   updateUserBorrow(borrowId: number, startDate: string, endDate: string) {
-    return this.http.put<IBorrow>(
-      updateUserBorrow,
-      { borrowId, startDate, endDate },
-      { withCredentials: true }
-    );
+    const UPDATEUSERBORROW = gql`
+      mutation updateUserBorrow($borrowUpdate: UpdateUserBorrowInput!) {
+        updateUserBorrow(borrowUpdate: $borrowUpdate) {
+          userToBookId
+          status
+          userId
+          userName
+          userLastName
+          email
+          bookId
+          bookTitle
+          endDate
+          startDate
+          createdDate
+        }
+      }
+    `;
+    return this.apollo.mutate<{ updateUserBorrow: IBorrow }>({
+      mutation: UPDATEUSERBORROW,
+      variables: { borrowUpdate: { borrowId, startDate, endDate } },
+    });
   }
   cancelUserBorrow(borrowId: number) {
-    return this.http.put<IBorrow>(
-      cancelUserBorrow,
-      { borrowId },
-      { withCredentials: true }
-    );
+    const CANCELUSERBORROW = gql`
+      mutation cancelUserBorrow($borrowId: ID!) {
+        cancelUserBorrow(borrowId: $borrowId) {
+          userToBookId
+          status
+          userId
+          userName
+          userLastName
+          email
+          bookId
+          bookTitle
+          endDate
+          startDate
+          createdDate
+        }
+      }
+    `;
+    return this.apollo.mutate<{ cancelUserBorrow: IBorrow }>({
+      mutation: CANCELUSERBORROW,
+      variables: { borrowId },
+    });
   }
 }

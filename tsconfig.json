@@ -1,4 +1,3 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -20,13 +19,19 @@
     "useDefineForClassFields": false,
     "lib": [
       "ES2022",
-      "dom"
+      "dom",
+      "esnext.asynciterable"
     ],
     "baseUrl": "src",
     "paths": {
-      "@src/*":["app/*"],
-      "@api/*":["API/*"]
-    }
+      "@src/*": [
+        "app/*"
+      ],
+      "@api/*": [
+        "API/*"
+      ]
+    },
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

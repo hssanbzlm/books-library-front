@@ -26,25 +26,21 @@ export class UpdateBorrowComponent {
 
   isSuccess = false;
   isError!: null | string;
-  newBorrow!: IBorrow;
+  newBorrow!: any;
   isLoading!: boolean;
   confirmUpdate = false;
   selectedStartDate!: any;
   selectedEndDate!: Date;
   constructor(private store: Store<{ appState: AppStateShape }>) {}
   ngOnInit(): void {
-    this.newBorrow = { ...this.borrow };
-    this.selectedStartDate = parse(
-      this.newBorrow.startDate,
-      'dd/MM/yyyy',
-      new Date()
-    );
+    this.newBorrow = {
+      ...this.borrow,
+      startDate: parse(this.borrow.startDate, 'dd/MM/yyyy', new Date()),
+      endDate: parse(this.borrow.endDate, 'dd/MM/yyyy', new Date()),
+    };
+    this.selectedStartDate = this.newBorrow.startDate;
 
-    this.selectedEndDate = parse(
-      this.newBorrow.endDate,
-      'dd/MM/yyyy',
-      new Date()
-    );
+    this.selectedEndDate = this.newBorrow.endDate;
 
     this.borrowList$.pipe(takeUntil(this.destroy$)).subscribe((borrowList) => {
       this.isLoading = borrowList.loading;
@@ -59,12 +55,13 @@ export class UpdateBorrowComponent {
     event?.stopPropagation();
   }
   onStartChange(event: MatDatepickerInputEvent<any, DateRange<any>>) {
-    this.newBorrow.startDate = new Date(event.value).toLocaleDateString();
+    this.newBorrow.startDate = new Date(event.value)
   }
   onEndChange(event: MatDatepickerInputEvent<any, DateRange<any>>) {
-    this.newBorrow.endDate = new Date(event.value).toLocaleDateString();
+    this.newBorrow.endDate = new Date(event.value)
   }
   confirmRequest() {
+    console.log('new borrow ', this.newBorrow);
     this.store.dispatch(
       BorrowActionsTypes.updateUserBorrow({
         borrowId: this.newBorrow.userToBookId,

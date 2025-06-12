@@ -4,6 +4,8 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppStateShape } from '@src/store';
 import { Subject, takeUntil } from 'rxjs';
+import * as BooksActionsTypes from '../../store/book/books.actions';
+
 
 @Component({
   selector: 'app-add-book',
@@ -47,11 +49,8 @@ export class AddBookComponent {
       category: ['N/A'],
       quantity: ['', [Validators.required, Validators.min(1)]],
       coverPath: ['', [Validators.required]],
-      authors: this.fb.array([this.createAuthor()]),      
-      synopsis: [
-        '',
-        [Validators.required, Validators.minLength(15)],
-      ],
+      authors: this.fb.array([this.createAuthor()]),
+      synopsis: ['', [Validators.required, Validators.minLength(15)]],
     });
     this.bookState$.pipe(takeUntil(this.destroy$)).subscribe((bookState) => {
       this.adding = bookState.loading;
@@ -88,24 +87,20 @@ export class AddBookComponent {
   addBook() {
     if (this.bookForm.valid) {
       this.confirmAdd = true;
-      const formData = new FormData();
-      formData.append('title', this.bookForm.get('title')!.value);
-      formData.append(
-        'numberOfPages',
-        this.bookForm.get('numberOfPages')!.value
-      );
-      const fields = ['edition', 'year', 'category', 'quantity', 'synopsis'];
-      fields.forEach(field => {
-        formData.append(field, this.bookForm.get(field)!.value);
-      });
-      if (this.coverImg) {
-        formData.append('cover', this.coverImg);
-      }
-      const authors = this.bookForm.get('authors')!.value as { author: string }[];
-      authors.forEach(({ author }) => {
-        formData.append('authors[]', author);
-      });
-      this.store.dispatch({ type: '[Book] Add', book: formData });
+      const createBookInput = {
+        title: this.bookForm.get('title')!.value,
+        numberOfPages: +this.bookForm.get('numberOfPages')!.value,
+        edition: this.bookForm.get('edition')!.value,
+        year: +this.bookForm.get('year')!.value,
+        category: this.bookForm.get('category')!.value,
+        quantity: +this.bookForm.get('quantity')!.value,
+        synopsis: this.bookForm.get('synopsis')!.value,
+        authors: (
+          this.bookForm.get('authors')!.value as { author: string }[]
+        ).map(({ author }) => author),
+      };
+
+      this.store.dispatch(BooksActionsTypes.add({book:createBookInput,cover:this.coverImg}));
     }
   }
   ngOnDestroy(): void {

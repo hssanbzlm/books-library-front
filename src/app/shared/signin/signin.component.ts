@@ -50,10 +50,10 @@ export class SigninComponent {
       .signin(this.userEmail, this.userPassword)
       .pipe(take(1))
       .subscribe({
-        next: (response) => {
-          this.authService.setAuthUser(response);
+        next: ({data}) => {
+          this.authService.setAuthUser(data!.login);
           this.store.dispatch(BorrowActionsTypes.init());
-          if (response.admin) {
+          if (data?.login.admin) {
             this.store.dispatch(UserActionsTypes.init());
             this.router.navigateByUrl('admin');
           } else {

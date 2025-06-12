@@ -108,27 +108,22 @@ export class UpdateBookComponent {
   updateBook() {
     if (this.bookForm.valid) {
       this.confirmUpdate = true;
-      const formData = new FormData();
-      formData.append('title', this.bookForm.get('title')!.value);
-      formData.append(
-        'numberOfPages',
-        this.bookForm.get('numberOfPages')!.value
-      );
-      formData.append('edition', this.bookForm.get('edition')?.value);
-      formData.append('year', this.bookForm.get('year')!.value);
-      formData.append('category', this.bookForm.get('category')!.value);
-      formData.append('quantity', this.bookForm.get('quantity')!.value);
-      for (let i = 0; i < this.bookForm.get('authors')!.value.length; i++) {
-        formData.append(
-          'authors[]',
-          this.bookForm.get('authors')!.value[i].author
-        );
+      const updateBookInput = {
+        title: this.bookForm.get('title')!.value,
+        numberOfPages: +this.bookForm.get('numberOfPages')!.value,
+        edition: this.bookForm.get('edition')!.value,
+        year: +this.bookForm.get('year')!.value,
+        category: this.bookForm.get('category')!.value,
+        quantity: +this.bookForm.get('quantity')!.value,
+        authors: (
+          this.bookForm.get('authors')!.value as { author: string }[]
+        ).map(({ author }) => author),
       }
-      if (this.newCoverImg) formData.append('cover', this.newCoverImg);
       this.store.dispatch({
         type: '[Book] Update',
-        book: formData,
+        book: updateBookInput,
         id: this.book.id,
+        cover:this.newCoverImg
       });
     }
   }
