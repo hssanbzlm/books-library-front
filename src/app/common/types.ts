@@ -27,6 +27,13 @@ export interface IBook {
   synopsis: string;
   authors: string[];
 }
+export type createBookDto = Omit<IBook, 'id' | 'coverPath'>;
+export type updateBookDto = Omit<IBook, 'id'>;
+export interface IBorrowDetails {
+  idBook: number;
+  startDate: string;
+  endDate: string;
+}
 export interface IBorrow {
   userToBookId: number;
   status: Status;
@@ -44,7 +51,7 @@ export interface IBorrow {
 }
 export type Status =
   | 'Pending'
-  | 'Checked-out'
+  | 'Checkedout'
   | 'Refused'
   | 'Accepted'
   | 'Damaged'
@@ -54,7 +61,7 @@ export type Status =
   | 'Canceled';
 type EditableStatus =
   | 'Pending'
-  | 'Checked-out'
+  | 'Checkedout'
   | 'Accepted'
   | 'Lost'
   | 'Overdue';

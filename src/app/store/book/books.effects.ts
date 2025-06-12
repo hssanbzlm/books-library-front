@@ -13,7 +13,7 @@ export class BooksEffects {
       ofType(BooksActions.init),
       mergeMap(() => {
         return this.bookService.getBooks().pipe(
-          map((books) => ({ type: '[Book] Init success', books })),
+          map(({data}) => ({ type: '[Book] Init success', books:data.books })),
           catchError(() =>
             of(BooksActions.initError({ payload: 'Error loading book list' }))
           )
@@ -25,9 +25,9 @@ export class BooksEffects {
   addBook$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BooksActions.add),
-      mergeMap(({ book }) => {
-        return this.bookService.addBook(book).pipe(
-          map((book) => BooksActions.addSuccess({ book })),
+      mergeMap(({book,cover}) => {
+        return this.bookService.addBook(book,cover).pipe(
+          map(({data}) => BooksActions.addSuccess({ book:data!.addBook })),
           catchError(() =>
             of(BooksActions.addError({ payload: 'Error adding this book' }))
           )
@@ -39,9 +39,10 @@ export class BooksEffects {
   updateBook$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BooksActions.update),
-      mergeMap(({ book, id }) => {
-        return this.bookService.updateBook(id, book).pipe(
-          map((book) => BooksActions.updateSuccess({ book })),
+      mergeMap(({ book, id,cover }) => {
+        return this.bookService.updateBook(id, book,cover).pipe(
+          map(({data}) => { 
+            return BooksActions.updateSuccess({ book:data!.updateBook })}),
           catchError(() =>
             of(
               BooksActions.updateError({ payload: 'Error updating this book' })

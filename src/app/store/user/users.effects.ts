@@ -10,7 +10,7 @@ export class UsersEffects {
       ofType(UserActions.add),
       mergeMap(({ user }) => {
         return this.usersService.addUser(user).pipe(
-          map((user) => UserActions.addUserSuccess({ payload: user })),
+          map(({data}) => UserActions.addUserSuccess({ payload: data!.signup })),
           catchError(() =>
             of(
               UserActions.addUserError({
@@ -28,7 +28,7 @@ export class UsersEffects {
       ofType(UserActions.init),
       mergeMap(() => {
         return this.usersService.getUsers().pipe(
-          map((users) => UserActions.initSuccess({ users })),
+          map(({data}) => UserActions.initSuccess({ users:data.users })),
           catchError(() =>
             of(UserActions.initError({ payload: 'Error while loading users' }))
           )
