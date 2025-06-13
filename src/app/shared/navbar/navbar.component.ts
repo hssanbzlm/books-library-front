@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@src/services/auth.service';
-import { IUser, LanguageDirection } from '@src/common/types';
+import { INotification, IUser, LanguageDirection } from '@src/common/types';
 import { fromEvent, Observable, Subject, take, takeUntil } from 'rxjs';
 import { NotificationService } from '@src/services/notification.service';
 import { IBorrow } from '@src/common/types';
@@ -38,7 +38,7 @@ export class NavbarComponent {
   showUserMenu = false;
   showUserNotification = false;
   isAuth!: IUser | null;
-  notifications$ = new Observable<IBorrow[]>();
+  notifications$ = new Observable<INotification[]>();
   languages = this.translate.getLanguages();
   currentLanguage!: { value: string; flag: string };
   currentFlag!: string;

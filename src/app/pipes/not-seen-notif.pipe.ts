@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IBorrow } from '@src/common/types';
+import { IBorrow, INotification } from '@src/common/types';
 
 @Pipe({
   name: 'notSeenNotif',
@@ -7,7 +7,7 @@ import { IBorrow } from '@src/common/types';
   pure: false,
 })
 export class NotSeenNotifPipe implements PipeTransform {
-  transform(value: IBorrow[]) {
+  transform(value: INotification[]) {
     return value.filter((notif) => notif.receiverSeen == false).length;
   }
 }

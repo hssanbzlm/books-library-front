@@ -48,11 +48,11 @@ export class BorrowRequestComponent {
     this.onDismiss.emit('dismiss');
   }
   onStartChange(event: MatDatepickerInputEvent<any, DateRange<any>>) {
-    this.startDate = new Date(event.value).toLocaleDateString();
+    this.startDate = new Date(event.value).toLocaleDateString("en-US");
     this.updateMaxDate();
   }
   onEndChange(event: MatDatepickerInputEvent<any, DateRange<any>>) {
-    this.endDate = new Date(event.value).toLocaleDateString();
+    this.endDate = new Date(event.value).toLocaleDateString("en-US");
   }
   confirmRequest() {
     this.userToBookService

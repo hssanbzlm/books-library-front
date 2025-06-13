@@ -52,3 +52,15 @@ export const cancelError = createAction(
   '[Borrow] Cancel error',
   props<{ payload: string }>()
 );
+
+export const isReadyToBorrow = createAction(
+  '[Borrow] IsReady',
+  props<{ bookId: number }>()
+);
+export const isReadyToBorrowSuccess = createAction(
+  '[Borrow] IsReady success'
+);
+export const isReadyToBorrowError = createAction(
+  '[Borrow IsReady error]',
+  props<{ payload: string }>()
+);

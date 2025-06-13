@@ -61,7 +61,6 @@ export class UpdateBorrowComponent {
     this.newBorrow.endDate = new Date(event.value)
   }
   confirmRequest() {
-    console.log('new borrow ', this.newBorrow);
     this.store.dispatch(
       BorrowActionsTypes.updateUserBorrow({
         borrowId: this.newBorrow.userToBookId,

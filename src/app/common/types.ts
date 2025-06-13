@@ -74,4 +74,12 @@ export interface IUser {
   admin: boolean;
   active: boolean;
 }
+export interface INotification {
+  id:number;
+  receiver:IUser;
+  sender:IUser;
+  message:string;
+  date:Date;
+  receiverSeen:boolean;
+}
 export type LanguageDirection = 'rtl' | 'ltr';

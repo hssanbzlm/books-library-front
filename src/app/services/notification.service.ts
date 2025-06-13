@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
-import { IUser } from '@src/common/types';
+import { INotification, IUser } from '@src/common/types';
 import {
   missedNotificationUrl,
   notificationEventSourceUrl,
   notificationsSeenUrl,
 } from '@api/api';
 import { HttpClient } from '@angular/common/http';
-import { IBorrow } from '@src/common/types';
 import { BehaviorSubject, take } from 'rxjs';
 
 @Injectable({
@@ -15,7 +14,7 @@ import { BehaviorSubject, take } from 'rxjs';
 })
 export class NotificationService {
   eventSource!: EventSource;
-  notifications$ = new BehaviorSubject<IBorrow[]>([]);
+  notifications$ = new BehaviorSubject<INotification[]>([]);
 
   constructor(private authService: AuthService, private http: HttpClient) {
     this.authService
@@ -30,22 +29,17 @@ export class NotificationService {
   }
 
   initSseEventSource(user: IUser) {
-    const roleReceiver = user.admin ? 'admin-notif' : 'user-notif';
+    const roleReceiver = 'user-notif';
     this.eventSource = new EventSource(
-      `${notificationEventSourceUrl}/${roleReceiver}/${user.id}`
+      `${notificationEventSourceUrl}/${roleReceiver}/${user?.id}`
     );
     this.eventSource.onmessage = ({ data }) => {
       if (data) {
-        const borrowData: IBorrow = JSON.parse(data);
+        const notification: INotification = JSON.parse(data);
         const notifications = this.notifications$.value;
-        const notifIndex = notifications.findIndex(
-          (notification) => notification.userToBookId == borrowData.userToBookId
-        );
-        if (notifIndex >= 0) {
-          notifications[notifIndex] = borrowData;
-        } else {
-          notifications.push(borrowData);
-        }
+
+        notifications.push(notification);
+
         this.notifications$.next(notifications);
       }
     };
@@ -62,9 +56,9 @@ export class NotificationService {
 
   private getNotifications() {
     this.http
-      .get<IBorrow[]>(missedNotificationUrl, { withCredentials: true })
+      .get<INotification[]>(missedNotificationUrl, { withCredentials: true })
       .pipe(take(1))
-      .subscribe((notifications: IBorrow[]) => {
+      .subscribe((notifications: INotification[]) => {
         this.notifications$.next(notifications);
       });
   }
@@ -75,7 +69,7 @@ export class NotificationService {
     let notifications = this.notifications$.value;
     if (notifications.filter((notif) => !notif.receiverSeen).length > 0) {
       const notificationsIds = notifications.map(
-        (userToBook) => userToBook.userToBookId
+        (notification) => notification.id
       );
       this.http
         .put(

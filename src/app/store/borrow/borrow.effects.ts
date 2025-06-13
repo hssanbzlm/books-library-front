@@ -29,13 +29,22 @@ export class BorrowEffects {
       ofType(BorrowActions.update),
       mergeMap(({ borrowId, status }) => {
         return this.userToBookService.updateBorrow(borrowId, status).pipe(
-          map(({data}) =>
+          map(({ data }) =>
             BorrowActions.updateSuccess({
               borrow: {
                 ...data!.updateBorrow,
-                createdDate: format(new Date(+data!.updateBorrow.createdDate), 'dd/MM/yyyy'),
-                endDate: format(new Date(+data!.updateBorrow.endDate), 'dd/MM/yyyy'),
-                startDate: format(new Date(+data!.updateBorrow.startDate), 'dd/MM/yyyy'),
+                createdDate: format(
+                  new Date(+data!.updateBorrow.createdDate),
+                  'dd/MM/yyyy'
+                ),
+                endDate: format(
+                  new Date(+data!.updateBorrow.endDate),
+                  'dd/MM/yyyy'
+                ),
+                startDate: format(
+                  new Date(+data!.updateBorrow.startDate),
+                  'dd/MM/yyyy'
+                ),
               },
             })
           ),
@@ -57,26 +66,32 @@ export class BorrowEffects {
         return this.userToBookService
           .updateUserBorrow(borrowId, startDate, endDate)
           .pipe(
-            map(({data}) =>
+            map(({ data }) =>
               BorrowActions.updateUserBorrowSuccess({
                 borrow: {
                   ...data!.updateUserBorrow,
-                  createdDate: format(new Date(+data!.updateUserBorrow.createdDate), 'dd/MM/yyyy'),
-                  endDate: format(new Date(+data!.updateUserBorrow.endDate), 'dd/MM/yyyy'),
-                  startDate: format(new Date(+data!.updateUserBorrow.startDate), 'dd/MM/yyyy'),
+                  createdDate: format(
+                    new Date(+data!.updateUserBorrow.createdDate),
+                    'dd/MM/yyyy'
+                  ),
+                  endDate: format(
+                    new Date(+data!.updateUserBorrow.endDate),
+                    'dd/MM/yyyy'
+                  ),
+                  startDate: format(
+                    new Date(+data!.updateUserBorrow.startDate),
+                    'dd/MM/yyyy'
+                  ),
                 },
               })
             ),
-            catchError((err) =>{
-              console.log('error ',err)
-
+            catchError((err) => {
               return of(
                 BorrowActions.updateUserBorrowError({
                   payload: 'Error updating this borrow',
                 })
-              )
-            }
-            )
+              );
+            })
           );
       })
     )
@@ -86,13 +101,22 @@ export class BorrowEffects {
       ofType(BorrowActions.cancelBorrow),
       mergeMap(({ borrowId }) => {
         return this.userToBookService.cancelUserBorrow(borrowId).pipe(
-          map(({data}) =>
+          map(({ data }) =>
             BorrowActions.updateUserBorrowSuccess({
               borrow: {
                 ...data!.cancelUserBorrow,
-                createdDate: format(new Date(+data!.cancelUserBorrow.createdDate), 'dd/MM/yyyy'),
-                endDate: format(new Date(+data!.cancelUserBorrow.endDate), 'dd/MM/yyyy'),
-                startDate: format(new Date(+data!.cancelUserBorrow.startDate), 'dd/MM/yyyy'),
+                createdDate: format(
+                  new Date(+data!.cancelUserBorrow.createdDate),
+                  'dd/MM/yyyy'
+                ),
+                endDate: format(
+                  new Date(+data!.cancelUserBorrow.endDate),
+                  'dd/MM/yyyy'
+                ),
+                startDate: format(
+                  new Date(+data!.cancelUserBorrow.startDate),
+                  'dd/MM/yyyy'
+                ),
               },
             })
           ),
@@ -107,6 +131,25 @@ export class BorrowEffects {
       })
     )
   );
+  isReadyToBorrow$ = createEffect(() => 
+    this.actions$.pipe(ofType(BorrowActions.isReadyToBorrow),
+      mergeMap(({ bookId }) => {
+        return this.userToBookService.isReadyToBorrow(bookId).pipe(
+          map(() =>
+            BorrowActions.isReadyToBorrowSuccess()
+          ),
+          catchError((error) =>
+            of(
+              BorrowActions.isReadyToBorrowError({
+                payload:
+                  error?.graphQLErrors?.[0]?.message ||
+                  'An unexpected error occurred',
+              })
+            )
+          )
+        );
+      })
+  ));
   constructor(
     private actions$: Actions,
     private userToBookService: UserToBookService
