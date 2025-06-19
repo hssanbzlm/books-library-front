@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { authUrl } from '@api/api';
 import { IUser } from '@src/common/types';
 import { Apollo, gql } from 'apollo-angular';
 import { BehaviorSubject, catchError, map, of, take } from 'rxjs';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,13 +11,15 @@ export class AuthService {
   private $user: BehaviorSubject<IUser | null> =
     new BehaviorSubject<IUser | null>(null);
   private redirectUrl = '';
-  constructor(private readonly apollo: Apollo) {}
+  constructor(private readonly apollo: Apollo,private notificationService:NotificationService) {}
 
   fetchWhoAmi() {
     return this.whoami().pipe(
       take(1),
       map(({ data }) => {
         this.$user.next(data.whoami);
+        this.notificationService.initSseEventSource(data.whoami);
+        this.notificationService.getNotifications()
       }),
       catchError(() => {
         this.$user.next(null);
@@ -31,6 +32,7 @@ export class AuthService {
     const SIGNIN = gql`
       mutation login($email: String!, $password: String!) {
         login(email: $email, password: $password) {
+          id
           email
           name
           lastName

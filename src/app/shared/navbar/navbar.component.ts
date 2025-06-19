@@ -98,12 +98,12 @@ export class NavbarComponent {
       .pipe(take(1))
       .subscribe(() => {
         this.authService.setAuthUser(null);
+        this.notificationService.closeEventSource()
         this.router.navigateByUrl('auth');
       });
   }
   ngOnDestroy(): void {
     this.destroy$.next(true);
-    this.notificationService.closeEventSource();
   }
   onLanguageChange(newLanguage: string) {
     this.translate.onLanguageChange(newLanguage);

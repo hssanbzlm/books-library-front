@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from './auth.service';
 import { INotification, IUser } from '@src/common/types';
 import {
   missedNotificationUrl,
@@ -16,17 +15,7 @@ export class NotificationService {
   eventSource!: EventSource;
   notifications$ = new BehaviorSubject<INotification[]>([]);
 
-  constructor(private authService: AuthService, private http: HttpClient) {
-    this.authService
-      .getAuthListener()
-      .pipe(take(1))
-      .subscribe((user: IUser | null) => {
-        if (user) {
-          this.initSseEventSource(user);
-          this.getNotifications();
-        }
-      });
-  }
+  constructor( private http: HttpClient) {}
 
   initSseEventSource(user: IUser) {
     const roleReceiver = 'user-notif';
@@ -37,9 +26,7 @@ export class NotificationService {
       if (data) {
         const notification: INotification = JSON.parse(data);
         const notifications = this.notifications$.value;
-
         notifications.push(notification);
-
         this.notifications$.next(notifications);
       }
     };
@@ -54,7 +41,7 @@ export class NotificationService {
     }
   }
 
-  private getNotifications() {
+   getNotifications() {
     this.http
       .get<INotification[]>(missedNotificationUrl, { withCredentials: true })
       .pipe(take(1))

@@ -11,6 +11,8 @@ import * as UserActionsTypes from './store/user/users.actions';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
 import { AuthService } from './services/auth.service';
+import { NotificationService } from './services/notification.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -31,17 +33,22 @@ export class AppComponent {
 
   constructor(
     private store: Store<{ appState: AppStateShape }>,
-    private authService: AuthService
+    private authService: AuthService,
+    private notificationService:NotificationService
   ) {}
   ngOnInit(): void {
     this.store.dispatch(BooksActionsTypes.init());
-    this.authService.getAuthListener().subscribe((user) => {
-      if (user) {
+    this.authService.getAuthListener().pipe(take(1)).subscribe((user) => {
+      if (user) { 
         this.store.dispatch(BorrowActionsTypes.init());
         if (user?.admin) {
           this.store.dispatch(UserActionsTypes.init());
         }
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.notificationService.closeEventSource();
   }
 }

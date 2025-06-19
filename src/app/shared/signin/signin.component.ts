@@ -12,6 +12,7 @@ import { AppStateShape } from '@src/store';
 import { Store } from '@ngrx/store';
 import * as BorrowActionsTypes from '@src/store/borrow/borrow.actions';
 import * as UserActionsTypes from '@src/store/user/users.actions';
+import { NotificationService } from '@src/services/notification.service';
 
 @Component({
   selector: 'app-signin',
@@ -30,6 +31,7 @@ export class SigninComponent {
 
   constructor(
     private authService: AuthService,
+    private notificationService:NotificationService,
     private router: Router,
     private translate: TranslateFacadeService,
     private store: Store<{ appState: AppStateShape }>
@@ -52,6 +54,8 @@ export class SigninComponent {
       .subscribe({
         next: ({data}) => {
           this.authService.setAuthUser(data!.login);
+          this.notificationService.initSseEventSource(data!.login)
+          this.notificationService.getNotifications()
           this.store.dispatch(BorrowActionsTypes.init());
           if (data?.login.admin) {
             this.store.dispatch(UserActionsTypes.init());
