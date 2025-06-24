@@ -59,11 +59,11 @@ export class UserToBookService {
           return data.borrowList.map((borrowItem) => ({
             ...borrowItem,
             createdDate: format(
-              new Date(+borrowItem.createdDate),
+              new Date(borrowItem.createdDate),
               'dd/MM/yyyy'
             ),
-            endDate: format(new Date(+borrowItem.endDate), 'dd/MM/yyyy'),
-            startDate: format(new Date(+borrowItem.startDate), 'dd/MM/yyyy'),
+            endDate: format(new Date(borrowItem.endDate), 'dd/MM/yyyy'),
+            startDate: format(new Date(borrowItem.startDate), 'dd/MM/yyyy'),
           }));
         })
       );

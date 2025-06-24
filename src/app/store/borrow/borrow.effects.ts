@@ -15,7 +15,7 @@ export class BorrowEffects {
       mergeMap(() => {
         return this.userToBookService.borrowList().pipe(
           map((borrowList) =>
-            BorrowActions.initSuccess({ borrow: borrowList })
+            BorrowActions.initSuccess({ borrow: borrowList})
           ),
           catchError((err) => {
             return of(BorrowActions.initError({ payload: 'error loading' }));
@@ -34,15 +34,15 @@ export class BorrowEffects {
               borrow: {
                 ...data!.updateBorrow,
                 createdDate: format(
-                  new Date(+data!.updateBorrow.createdDate),
+                  new Date(data!.updateBorrow.createdDate),
                   'dd/MM/yyyy'
                 ),
                 endDate: format(
-                  new Date(+data!.updateBorrow.endDate),
+                  new Date(data!.updateBorrow.endDate),
                   'dd/MM/yyyy'
                 ),
                 startDate: format(
-                  new Date(+data!.updateBorrow.startDate),
+                  new Date(data!.updateBorrow.startDate),
                   'dd/MM/yyyy'
                 ),
               },
@@ -71,15 +71,15 @@ export class BorrowEffects {
                 borrow: {
                   ...data!.updateUserBorrow,
                   createdDate: format(
-                    new Date(+data!.updateUserBorrow.createdDate),
+                    new Date(data!.updateUserBorrow.createdDate),
                     'dd/MM/yyyy'
                   ),
                   endDate: format(
-                    new Date(+data!.updateUserBorrow.endDate),
+                    new Date(data!.updateUserBorrow.endDate),
                     'dd/MM/yyyy'
                   ),
                   startDate: format(
-                    new Date(+data!.updateUserBorrow.startDate),
+                    new Date(data!.updateUserBorrow.startDate),
                     'dd/MM/yyyy'
                   ),
                 },
@@ -106,15 +106,15 @@ export class BorrowEffects {
               borrow: {
                 ...data!.cancelUserBorrow,
                 createdDate: format(
-                  new Date(+data!.cancelUserBorrow.createdDate),
+                  new Date(data!.cancelUserBorrow.createdDate),
                   'dd/MM/yyyy'
                 ),
                 endDate: format(
-                  new Date(+data!.cancelUserBorrow.endDate),
+                  new Date(data!.cancelUserBorrow.endDate),
                   'dd/MM/yyyy'
                 ),
                 startDate: format(
-                  new Date(+data!.cancelUserBorrow.startDate),
+                  new Date(data!.cancelUserBorrow.startDate),
                   'dd/MM/yyyy'
                 ),
               },
