@@ -34,6 +34,7 @@ export class BookService {
     const ADDBOOK = gql`
       mutation addBook($book: BookInput!, $cover: Upload!) {
         addBook(book: $book, cover: $cover) {
+          id
           title
           coverPath
           synopsis
