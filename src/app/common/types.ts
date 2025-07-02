@@ -83,3 +83,9 @@ export interface INotification {
   receiverSeen:boolean;
 }
 export type LanguageDirection = 'rtl' | 'ltr';
+export type Visibility = 'always' | 'connected' | 'guest'
+export interface INavItem {
+  path:string,
+  title:string,
+  visibility:Visibility
+}

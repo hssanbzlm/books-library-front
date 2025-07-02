@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject, Subscription, takeUntil } from 'rxjs';
-import { LanguageDirection } from '@src/common/types';
+import { INavItem, LanguageDirection } from '@src/common/types';
 import { TranslateFacadeService } from '@src/services/translate-facade.service';
 
 @Component({
@@ -14,11 +14,11 @@ export class HomeComponent {
   $routeChange: Subscription = new Subscription();
   $destroy = new Subject();
   pageDirection!: LanguageDirection;
-  navItems = [
-    { title: 'Dashboard', path: '/admin' },
-    { title: 'Borrow', path: './borrow-list' },
-    { title: 'Books', path: './book-list' },
-    { title: 'Users', path: './user-list' },
+  navItems:INavItem[] = [
+    { title: 'Dashboard', path: '/admin',visibility:'connected' },
+    { title: 'Borrow', path: './borrow-list',visibility:'connected' },
+    { title: 'Books', path: './book-list',visibility:'connected' },
+    { title: 'Users', path: './user-list',visibility:'connected' },
   ];
   constructor(
     private router: Router,

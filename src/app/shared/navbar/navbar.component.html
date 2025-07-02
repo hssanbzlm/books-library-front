@@ -56,13 +56,19 @@
         </div>
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
-            <a
-              *ngFor="let item of navItems"
-              [routerLink]="[item.path]"
-              class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-              aria-current="page"
-              >{{ "navbar." + item.title | translate }}</a
-            >
+            <ng-container *ngFor="let item of navItems">
+              <a
+                *ngIf="
+                  (item.visibility == 'guest' && !isAuth) ||
+                  (item.visibility == 'connected' && isAuth) ||
+                  item.visibility == 'always'
+                "
+                [routerLink]="[item.path]"
+                class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                aria-current="page"
+                >{{ "navbar." + item.title | translate }}</a
+              >
+            </ng-container>
           </div>
         </div>
       </div>

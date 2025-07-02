@@ -27,7 +27,8 @@
         "Dashboard": "Dashboard",
         "Borrow": "Borrow",
         "Books": "Books",
-        "Users": "Users"
+        "Users": "Users",
+        "Connect":"Connect"
     },
     "update": {
         "borrow": "Update borrow"

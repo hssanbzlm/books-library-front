@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@src/services/auth.service';
-import { INotification, IUser, LanguageDirection } from '@src/common/types';
+import { INavItem, INotification, IUser, LanguageDirection, Visibility } from '@src/common/types';
 import { fromEvent, Observable, Subject, take, takeUntil } from 'rxjs';
 import { NotificationService } from '@src/services/notification.service';
 import { IBorrow } from '@src/common/types';
@@ -28,8 +28,9 @@ import { MatMenuModule } from '@angular/material/menu';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
+
 export class NavbarComponent {
-  @Input() navItems: { title: string; path: string }[] = [];
+  @Input() navItems: INavItem[] = [];
   userMenu: { title: string; action?: () => void }[] = [
     { title: 'Profile' },
     { title: 'Logout', action: () => this.logout() },
@@ -90,8 +91,7 @@ export class NavbarComponent {
     if (this.showUserNotification) {
       this.notificationService.notificationSeen();
     }
-  }
-
+  } 
   logout() {
     this.authService
       .signout()
