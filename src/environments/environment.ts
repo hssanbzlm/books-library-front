@@ -1,5 +1,5 @@
 export const environment = {
   production:true,
-  apiUrl: 'http://localhost:3000',
-  graphql:'http://localhost:3000/graphql'
+  apiUrl: 'https://books-library-q3fs.onrender.com',
+  graphql:'https://books-library-q3fs.onrender.com/graphql'
 };
